@@ -13,9 +13,6 @@ class Producto
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $id_producto = null;
-
     #[ORM\Column(length: 60)]
     private ?string $nombre = null;
 
@@ -40,18 +37,6 @@ class Producto
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdProducto(): ?int
-    {
-        return $this->id_producto;
-    }
-
-    public function setIdProducto(int $id_producto): self
-    {
-        $this->id_producto = $id_producto;
-
-        return $this;
     }
 
     public function getNombre(): ?string
