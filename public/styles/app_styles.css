@@ -1,3 +1,4 @@
+/*-- GLOBAL -- */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Playfair+Display:ital,wght@1,600&display=swap");
 
 :root {
@@ -9,7 +10,49 @@ body {
   font-family: var(--sm-font);
 }
 
-/* footer */
+/* button */
+.bg-primary {
+  background-color: var(--pink) !important;
+}
+
+.btn:not(.nav-btns button) {
+  background-color: #fff;
+  color: rgb(85, 85, 85);
+  padding: 10px 28px;
+  border-radius: 25px;
+  border: 1px solid rgb(85, 85, 85);
+}
+.btn:not(.nav-btns button):hover {
+  background-color: var(--pink);
+  color: #fff;
+  border-color: var(--pink);
+}
+
+/* text color */
+.text-primary {
+  color: var(--pink) !important;
+}
+
+/* -- NAVBAR -- */
+.navbar {
+  -webkit-box-shadow: 0 3px 9px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 9px 3px rgba(0, 0, 0, 0.1);
+}
+.navbar-brand img {
+  width: 30px;
+}
+.navbar-brand span {
+  letter-spacing: 2px;
+  font-family: var(--lg-font);
+}
+.nav-link:hover {
+  color: var(--pink) !important;
+}
+.nav-item {
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.05);
+}
+
+/* -- FOOTER -- */
 footer .brand {
   font-family: var(--lg-font);
   letter-spacing: 2px;
@@ -30,7 +73,69 @@ footer a:hover {
   }
 }
 
-/*Pagina Principal*/
+/* -- HOMEPAGE -- */
+
+/* header */
+#header {
+  background: url(../images/banner-img-1.jpg) top/cover no-repeat;
+}
+
+/* collection */
+.active-filter-btn {
+  background-color: var(--pink) !important;
+  color: #fff !important;
+  border-color: var(--pink) !important;
+}
+.filter-button-group .btn:hover {
+  color: #fff !important;
+}
+.collection-img span {
+  top: 20px;
+  right: 20px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+}
+
+/* special features */
+.special-img span {
+  top: 20px;
+  right: 20px;
+}
+.special-img img {
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.special-img:hover img {
+  -webkit-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  transform: scale(1.2);
+}
+
+/* offers */
+#offers {
+  background: url(../images/offer_img.jpg) center/cover no-repeat;
+}
+#offers .row {
+  min-height: 60vh;
+}
+.offers-content span {
+  font-size: 28px;
+}
+.offers-content h2 {
+  font-size: 40px;
+  font-family: var(--lg-font);
+}
+.offers-content .btn {
+  border-color: transparent !important;
+}
+
+/*testimonials*/
+.testimonial-img {
+  width: 180px;
+}
+
 /* newsletter */
 #newsletter {
   background-color: #d686c52a;
