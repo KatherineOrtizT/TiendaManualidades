@@ -34,7 +34,7 @@ class ProductoController extends AbstractController
             return $this->redirectToRoute('app_producto_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('producto/new.html.twig', [
+        return $this->render('producto/new.html.twig', [
             'producto' => $producto,
             'form' => $form,
         ]);
@@ -60,7 +60,7 @@ class ProductoController extends AbstractController
             return $this->redirectToRoute('app_producto_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('producto/edit.html.twig', [
+        return $this->render('producto/edit.html.twig', [
             'producto' => $producto,
             'form' => $form,
         ]);
@@ -74,5 +74,16 @@ class ProductoController extends AbstractController
         }
 
         return $this->redirectToRoute('app_producto_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/search', name: 'app_producto_search', methods: ['POST'])]
+    public function buscarProductos(Request $request, ProductoRepository $productoRepository): Response
+    {
+        $busqueda = $request->request->get('busqueda',null);
+        $resultadoBusqueda = $productoRepository->search($busqueda);
+
+        return $this->render('producto/lista_productos.html.twig', [
+            'productos' => $resultadoBusqueda,
+        ]);
     }
 }

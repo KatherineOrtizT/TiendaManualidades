@@ -34,6 +34,9 @@ class Producto
     #[ORM\Column(length: 40, nullable: true)]
     private ?string $color = null;
 
+    #[ORM\Column(length: 255, options: ["default" => "default_Imagen.svg"])]
+    private ?string $imagen = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -119,6 +122,18 @@ class Producto
     public function setColor(?string $color): self
     {
         $this->color = $color;
+
+        return $this;
+    }
+
+    public function getImagen(): ?string
+    {
+        return $this->imagen;
+    }
+
+    public function setImagen(string $imagen): self
+    {
+        $this->imagen = $imagen;
 
         return $this;
     }

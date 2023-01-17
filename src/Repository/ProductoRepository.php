@@ -39,6 +39,27 @@ class ProductoRepository extends ServiceEntityRepository
         }
     }
 
+
+    /**
+     * @return Producto[] Returns an array of Producto objects
+     */
+    public function search($value): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.name = :val')
+            ->setParameter('val', $value)
+            ->orderBy('p.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+
+
+    
+
 //    /**
 //     * @return Producto[] Returns an array of Producto objects
 //     */
