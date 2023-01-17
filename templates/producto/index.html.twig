@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Producto index{% endblock %}
+
+{% block body %}
+    {{ include('comunes/_header.html.twig') }}
+    <div class="container pb-5">
+
+    <h1 class="py-5">Producto index</h1>
+
+
+    <section id="contenedorGrid_productos" class="container py-5 bg-info">
+        <div class="row row-cols-4">
+        {% for producto in productos %}
+            <div class="flexProducto">
+                <img src="{{ asset('/images/' ~  producto.imagen) }}" alt="imagen"/>
+                <p>{{ producto.nombre }}</p>
+                <p>{{ producto.precio }} €</p>
+                <div>
+                    <a href="{{ path('app_producto_show', {'id': producto.id}) }}">Ver</a>
+                    <a href="{{ path('app_producto_edit', {'id': producto.id}) }}">Editar</a>
+                </div>
+            </div>
+        {% else %}
+            <p>no records found</p>
+        {% endfor %}
+        </div>
+    </section>
+    
+
+    <a href="{{ path('app_producto_new') }}">Create new</a>
+
+    </div>
+
+
+    {{ include('comunes/_footer.html.twig') }}
+
+{% endblock %}
