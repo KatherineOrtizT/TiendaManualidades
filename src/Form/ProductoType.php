@@ -19,6 +19,9 @@ class ProductoType extends AbstractType
             ->add('categoria')
             ->add('material')
             ->add('color')
+            ->add('imagen'/* , TextType::class, [
+                'required' => false,
+            ] */)
         ;
     }
 
