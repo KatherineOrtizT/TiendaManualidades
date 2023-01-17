@@ -3,45 +3,36 @@
 {% block title %}Producto index{% endblock %}
 
 {% block body %}
-    <h1>Producto index</h1>
+    {{ include('comunes/_header.html.twig') }}
+    <div class="container pb-5">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Descripcion</th>
-                <th>Precio</th>
-                <th>Descuento</th>
-                <th>Categoria</th>
-                <th>Material</th>
-                <th>Color</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <h1 class="py-5">Producto index</h1>
+
+
+    <section id="contenedorGrid_productos" class="container py-5 bg-info">
+        <div class="row row-cols-4">
         {% for producto in productos %}
-            <tr>
-                <td>{{ producto.id }}</td>
-                <td>{{ producto.nombre }}</td>
-                <td>{{ producto.descripcion }}</td>
-                <td>{{ producto.precio }}</td>
-                <td>{{ producto.descuento }}</td>
-                <td>{{ producto.categoria }}</td>
-                <td>{{ producto.material }}</td>
-                <td>{{ producto.color }}</td>
-                <td>
-                    <a href="{{ path('app_producto_show', {'id': producto.id}) }}">show</a>
-                    <a href="{{ path('app_producto_edit', {'id': producto.id}) }}">edit</a>
-                </td>
-            </tr>
+            <div class="flexProducto">
+                <img src="{{ asset('/images/' ~  producto.imagen) }}" alt="imagen"/>
+                <p>{{ producto.nombre }}</p>
+                <p>{{ producto.precio }} €</p>
+                <div>
+                    <a href="{{ path('app_producto_show', {'id': producto.id}) }}">Ver</a>
+                    <a href="{{ path('app_producto_edit', {'id': producto.id}) }}">Editar</a>
+                </div>
+            </div>
         {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
+            <p>no records found</p>
         {% endfor %}
-        </tbody>
-    </table>
+        </div>
+    </section>
+    
 
     <a href="{{ path('app_producto_new') }}">Create new</a>
+
+    </div>
+
+
+    {{ include('comunes/_footer.html.twig') }}
+
 {% endblock %}
