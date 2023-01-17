@@ -76,7 +76,7 @@ class ProductoController extends AbstractController
         return $this->redirectToRoute('app_producto_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/search', name: 'app_producto_search', methods: ['POST'])]
+    #[Route('/search', name: 'app_producto_search', methods: ['POST', 'GET'])]
     public function buscarProductos(Request $request, ProductoRepository $productoRepository): Response
     {
         $busqueda = $request->request->get('busqueda',null);
