@@ -46,7 +46,7 @@ class ProductoRepository extends ServiceEntityRepository
     public function search($value): array
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.nombre = :val')
+            ->andWhere('p.name Like :val')
             ->setParameter('val', $value)
             ->orderBy('p.id', 'ASC')
             ->setMaxResults(10)
