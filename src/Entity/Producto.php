@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductoRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductoRepository::class)]
@@ -36,6 +38,14 @@ class Producto
 
     #[ORM\Column(length: 255, options: ["default" => "default_Imagen.svg"])]
     private ?string $imagen = null;
+
+    #[ORM\OneToMany(mappedBy: 'idProducto', targetEntity: Compras::class)]
+    private Collection $compras;
+
+    public function __construct()
+    {
+        $this->compras = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -134,6 +144,36 @@ class Producto
     public function setImagen(string $imagen): self
     {
         $this->imagen = $imagen;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Compras>
+     */
+    public function getCompras(): Collection
+    {
+        return $this->compras;
+    }
+
+    public function addCompra(Compras $compra): self
+    {
+        if (!$this->compras->contains($compra)) {
+            $this->compras->add($compra);
+            $compra->setIdProducto($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompra(Compras $compra): self
+    {
+        if ($this->compras->removeElement($compra)) {
+            // set the owning side to null (unless already changed)
+            if ($compra->getIdProducto() === $this) {
+                $compra->setIdProducto(null);
+            }
+        }
 
         return $this;
     }
