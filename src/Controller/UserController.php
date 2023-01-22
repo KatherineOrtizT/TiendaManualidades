@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Compras;
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\ComprasRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/user')]
 class UserController extends AbstractController
 {
     private $em;
@@ -46,4 +49,19 @@ class UserController extends AbstractController
             'registration_form' => $registration_form->createView()
         ]);
     }
+
+
+    #[Route('/{id}/compras', name: 'app_user_compras', methods: ['GET'])]
+    public function listarCompras(Request $request, Compras $compras): Response
+    {
+        return $this->render('user/show.html.twig', [
+            'compras' => $compras
+        ]);
+    }
+
+
+
+
+
+
 }

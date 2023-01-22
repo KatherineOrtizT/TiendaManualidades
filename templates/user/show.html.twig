@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Usuario{% endblock %}
+
+{% block body %}
+    {{ include('comunes/_header.html.twig') }}
+    <h1>Usuario</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Foto</th>
+                <td>
+                    <img
+                        src="{{ asset('/images/' ~  user.photo) }}"
+                        class="rounded-circle"
+                        height="25"
+                        alt="Imagen de usuario"
+                        loading="lazy"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <th>Rol</th>
+                <td>{{ user.roles }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <a href="{{ path('app_homepage_index') }}">back to Homepage</a>
+   
+
+
+{% endblock %}

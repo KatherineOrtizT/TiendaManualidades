@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use JsonSerializable;
 use App\Repository\ProductoRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductoRepository::class)]
-class Producto
+class Producto implements JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -45,6 +46,21 @@ class Producto
     public function __construct()
     {
         $this->compras = new ArrayCollection();
+    }
+
+    public function jsonSerialize()
+    {
+        return array(
+            'id'=> $this->id,
+            'nombre' => $this->nombre,
+            //'descripcion'=> $this->descripcion,
+            'precio' => $this->precio,
+            'descuento'=> $this->descuento,
+            /* 'categoria' => $this->categoria,
+            'material'=> $this->material,
+            'color'=> $this->color, */
+            'imagen' => $this->imagen,
+        );
     }
 
     public function getId(): ?int

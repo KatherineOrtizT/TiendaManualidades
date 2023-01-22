@@ -11,8 +11,8 @@ $('.filter-button-group').on( 'click', 'button', function() {
 });
 
 var filterBtns = $('.filter-button-group').find('button');
-function resetFilterBtns(){
-  filterBtns.each(function(){
-    $(this).removeClass('active-filter-btn');
-  });
+  function resetFilterBtns(){
+    filterBtns.each(function(){
+      $(this).removeClass('active-filter-btn');
+    });
 }
