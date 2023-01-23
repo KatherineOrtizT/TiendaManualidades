@@ -41,6 +41,7 @@
             <button type="button" class="btn m-2 text-dark" data-filter=".new">
               Nuevos
             </button>
+            <a href="{{ path('app_producto_new') }}">Create new</a>
           </div>
 
           <div class="collection-list mt-4 row gx-0 gy-3">
@@ -54,8 +55,9 @@
 
                 <div class="col-md-6 col-lg-4 col-xl-3 p-2 best">
                     <div class="collection-img position-relative">
+                      <a href="{{ path('app_producto_show', {'id': producto.id}) }}">
                         <img src="{{ asset('/images/' ~  producto.imagen) }}" class="w-100" />
-                    
+                      </a>                    
                     </div>
                     <div class="text-center">
                         <div class="rating mt-3">

@@ -43,7 +43,11 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_producto_index') }}">back to list</a>
+     <div id="path-to-controller" data-href="{{ path('app_producto_carrito', {'id': producto.id}) }}"> </div>
+
+    <button id="botonAñadirCarrito">Añadir a la Cesta</button>
+
+    <a href="{{ path('app_homepage_index') }}">back to list</a>
 
     <a href="{{ path('app_producto_edit', {'id': producto.id}) }}">edit</a>
 
