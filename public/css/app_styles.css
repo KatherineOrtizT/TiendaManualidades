@@ -27,6 +27,16 @@ body {
   color: #fff;
   border-color: var(--pink);
 }
+.pink-btn {
+  background-color: var(--pink) !important;
+  color: #fff !important;
+  border-color: var(--pink) !important;
+  border-radius: 25px;
+}
+.outline-btn {
+  border-color: black;
+  border-radius: 25px;
+}
 
 /* text color */
 .text-primary {
