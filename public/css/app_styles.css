@@ -51,6 +51,12 @@ body {
 .nav-item {
   border-bottom: 0.5px solid rgba(0, 0, 0, 0.05);
 }
+.login-btn {
+  background-color: var(--pink);
+  color: #fff;
+  border-color: var(--pink);
+  border-radius: 25px;
+}
 
 /* -- FOOTER -- */
 footer .brand {

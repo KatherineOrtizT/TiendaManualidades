@@ -1,50 +1,276 @@
-
-<header>
-  <!-- Navbar -->
-  <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-    <!-- Container wrapper -->
-    <div class="container-fluid">
-      <!-- Toggle button -->
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-mdb-toggle="collapse"
-        data-mdb-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <i class="fas fa-bars"></i>
-      </button>
-
-      <!-- Collapsible wrapper -->
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <!-- Navbar brand -->
-        <a class="navbar-brand mt-2 mt-lg-0" href="#">
-          <img
-            src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
-            height="15"
-            alt="MDB Logo"
-            loading="lazy"
-          />
+<!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top">
+      <div class="container">
+        <a
+          class="navbar-brand d-flex justify-content-between align-items-center order-lg-0"
+          href="#"
+        >
+          <img src="images/logo-icon.png" alt="site logo icon" />
+          <span class="fw-lighter ms-2">AF</span>
         </a>
-        <!-- Left links -->
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="#">Dashboard</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Team</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Projects</a>
-          </li>
-        </ul>
-        <!-- Left links -->
-      </div>
-      <!-- Collapsible wrapper -->
 
-      <!-- Right elements -->
+        <div class="order-lg-2 nav-btns">
+          <!-- Button trigger modal SEARCH -->
+          <button
+            type="button"
+            class="btn position-relative"
+            data-bs-toggle="modal"
+            data-bs-target="#searchModal"
+          >
+            <i class="fa fa-search"></i>
+          </button>
+
+          <!-- Button CART page -->
+          <button
+            type="button"
+            onclick="location.href='cart.html';"
+            class="btn mx-2 position-relative"
+          >
+            <i class="fa fa-shopping-cart"></i>
+          </button>
+
+          <!-- Button trigger modal LOGIN -->
+          <button
+            type="button"
+            class="btn outline-btn me-2 px-3 position-relative"
+          >
+            <span
+              class="me-2"
+              data-bs-toggle="modal"
+              data-bs-target="#loginModal"
+              >Log In</span
+            >
+            <i class="fa fa-user"></i>
+          </button>
+
+          <!-- Button trigger modal REGISTER -->
+          <button type="button" class="btn pink-btn px-3 position-relative">
+            <span
+              class="me-2"
+              data-bs-toggle="modal"
+              data-bs-target="#registerModal"
+              >Regístrate</span
+            >
+            <i class="fa fa-user"></i>
+          </button>
+        </div>
+
+        <button
+          class="navbar-toggler border-0"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navMenu"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse order-lg-1" id="navMenu">
+          <ul class="navbar-nav mx-auto text-center">
+            <li class="nav-item px-2 py-2">
+              <a class="nav-link text-dark" href="#">Catálogo Productos</a>
+            </li>
+
+            <li class="nav-item px-2 py-2">
+              <a class="nav-link text-dark" href="#">Sobre Nosotros</a>
+            </li>
+            <li class="nav-item px-2 py-2">
+              <a class="nav-link text-dark" href="#">Contacto</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- end of navbar -->
+
+    <!-- Modal SEARCH -->
+    <div
+      class="modal fade bg-white"
+      id="searchModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="w-100 pt-1 mb-5 text-right">
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <form
+          action=""
+          method="get"
+          class="modal-content modal-body border-0 p-0"
+        >
+          <div class="input-group mb-2">
+            <input
+              type="text"
+              class="form-control"
+              id="inputModalSearch"
+              name="q"
+              placeholder="Busca producto ..."
+            />
+            <button
+              type="submit"
+              class="btn input-group-text bg-success text-light"
+            >
+              <i class="fa fa-fw fa-search text-white"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- End  Modal SEARCH -->
+
+    <!-- Modal LOGIN -->
+    <div
+      class="modal fade"
+      id="loginModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="card-body p-5">
+              <form class="mb-3 mt-md-2">
+                <h2 class="fw-bold mb-4">Inicia Sesión</h2>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="name@example.com"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Contraseña</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    placeholder="*******"
+                  />
+                </div>
+                <p class="small">
+                  <a class="text-primary" href="forget-password.html"
+                    >¿Se te olvidó tu contraseña?</a
+                  >
+                </p>
+                <div class="d-grid">
+                  <button class="btn btn-outline-dark mt-4" type="submit">
+                    Login
+                  </button>
+                </div>
+              </form>
+              <div>
+                <p class="mb-0 text-center">
+                  ¿No tienes cuenta?
+                  <span
+                    class="me-2 text-primary fw-bold text-decoration-underline"
+                    data-bs-toggle="modal"
+                    data-bs-target="#registerModal"
+                    >Regístrate</span
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Modal LOGIN -->
+
+    <!-- Modal REGISTER -->
+    <div
+      class="modal fade"
+      id="registerModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="card-body p-5">
+              <form class="mb-3 mt-md-2">
+                <h2 class="fw-bold mb-4">Crear Cuenta Usuario</h2>
+                <div class="mb-3">
+                  <label for="nombre" class="form-label">Nombre</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="nombre"
+                    placeholder="Diana"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="apellidos" class="form-label">Apellidos</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="apellidos"
+                    placeholder="Munteanu"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="fecha" class="form-label">Fecha Nacimiento</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="fecha"
+                    value="1991-01-01"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="name@example.com"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Contraseña</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    placeholder="*******"
+                  />
+                </div>
+
+                <div class="d-grid">
+                  <button class="btn btn-outline-dark mt-4" type="submit">
+                    Regístrate
+                  </button>
+                </div>
+              </form>
+              <div>
+                <p class="mb-0 text-center">
+                  ¿Ya tienes cuenta?
+                  <span
+                    class="me-2 text-primary fw-bold text-decoration-underline"
+                    data-bs-toggle="modal"
+                    data-bs-target="#loginModal"
+                    >Log In</span
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Modal REGISTER -->
+
+    <!-- Right elements
       <form class="d-flex input-group w-auto pe-3" method="post" action="{{ path ('app_producto_search') }}">
         <input
           type="search"
@@ -60,86 +286,6 @@
           </button>
         </span>
       </form>
+      
       <div class="d-flex align-items-center">
-        
-        <!-- Carrito -->
-        <a class="text-reset me-3" href="#">
-          <i class="fas fa-shopping-cart"></i>
-        </a>
-
-        <!-- Notifications -->
-        <div class="dropdown">
-          <a
-          class="text-reset me-3 dropdown-toggle hidden-arrow"
-          href="#"
-          id="navbarDropdownMenuLink"
-          role="button"
-          data-mdb-toggle="dropdown"
-          aria-expanded="false"
-          >
-            <i class="fas fa-bell"></i>
-          <span class="badge rounded-pill badge-notification bg-danger">1</span>
-          </a>
-          <ul
-            class="dropdown-menu dropdown-menu-end"
-            aria-labelledby="dropdownMenu2"
-          >
-            <li>
-              <a class="dropdown-item" href="#">Some news</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Another news</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </li>
-          </ul>
-        </div>
-        <!-- Avatar -->
-        <div class="dropdown">
-          <a
-            class="dropdown-toggle d-flex align-items-center hidden-arrow"
-            href="#"
-            id="navbarDropdownMenuAvatar"
-            role="button"
-            data-mdb-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <img
-              src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-              class="rounded-circle"
-              height="25"
-              alt="Black and White Portrait of a Man"
-              loading="lazy"
-            />
-          </a>
-          <ul
-            class="dropdown-menu dropdown-menu-end"
-            aria-labelledby="navbarDropdownMenuAvatar"
-          >
-            <li>
-              <a class="dropdown-item" href="#">My profile</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Settings</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Logout</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <!-- Right elements -->
-    </div>
-    <!-- Container wrapper -->
-  </nav>
-  <!-- Navbar -->
-
-  <!-- Jumbotron -->
-    <div class="p-5 text-center bg-light" style="margin-top: 58px;">
-      <h1 class="mb-3">Heading</h1>
-      <h4 class="mb-3">Subheading</h4>
-      <a class="btn btn-primary" href="" role="button">Call to action</a>
-    </div>
-  <!-- Jumbotron -->
-</header>
+      --> 
