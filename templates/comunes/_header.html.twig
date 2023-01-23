@@ -5,39 +5,52 @@
           class="navbar-brand d-flex justify-content-between align-items-center order-lg-0"
           href="#"
         >
-          <img src="public/images/logo-icon.png" alt="site logo icon" />
+          <img src="images/logo-icon.png" alt="site logo icon" />
           <span class="fw-lighter ms-2">AF</span>
         </a>
 
         <div class="order-lg-2 nav-btns">
-              <!-- Right elements
-      <form class="d-flex input-group w-auto pe-3" method="post" action="{{ path ('app_producto_search') }}">
-        <input
-          type="search"
-          name="busqueda"
-          class="form-control rounded"
-          placeholder="Search"
-          aria-label="Search"
-          aria-describedby="search-addon"
-        />
-        <span class="input-group-text border-0" id="search-addon">
-          <button style='border-style:none'>
-            <i class="fa fa-search" aria-hidden="true"></i>
-          </button>
-        </span>
-      </form>
-      
-      <div class="d-flex align-items-center">
-      --> 
-          <button type="button" class="btn position-relative">
+          <!-- Button trigger modal SEARCH -->
+          <button
+            type="button"
+            class="btn position-relative"
+            data-bs-toggle="modal"
+            data-bs-target="#searchModal"
+          >
             <i class="fa fa-search"></i>
           </button>
 
-          <button type="button" class="btn mx-2 position-relative">
+          <!-- Button CART page -->
+          <button
+            type="button"
+            onclick="location.href='cart.html';"
+            class="btn mx-2 position-relative"
+          >
             <i class="fa fa-shopping-cart"></i>
           </button>
-          <button type="button" class="btn login-btn px-3 position-relative">
-            <span class="me-2">Log In</span>
+
+          <!-- Button trigger modal LOGIN -->
+          <button
+            type="button"
+            class="btn outline-btn me-2 px-3 position-relative"
+          >
+            <span
+              class="me-2"
+              data-bs-toggle="modal"
+              data-bs-target="#loginModal"
+              >Log In</span
+            >
+            <i class="fa fa-user"></i>
+          </button>
+
+          <!-- Button trigger modal REGISTER -->
+          <button type="button" class="btn pink-btn px-3 position-relative">
+            <span
+              class="me-2"
+              data-bs-toggle="modal"
+              data-bs-target="#registerModal"
+              >Regístrate</span
+            >
             <i class="fa fa-user"></i>
           </button>
         </div>
@@ -68,3 +81,211 @@
       </div>
     </nav>
     <!-- end of navbar -->
+
+    <!-- Modal SEARCH -->
+    <div
+      class="modal fade bg-white"
+      id="searchModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="w-100 pt-1 mb-5 text-right">
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <form
+          action=""
+          method="get"
+          class="modal-content modal-body border-0 p-0"
+        >
+          <div class="input-group mb-2">
+            <input
+              type="text"
+              class="form-control"
+              id="inputModalSearch"
+              name="q"
+              placeholder="Busca producto ..."
+            />
+            <button
+              type="submit"
+              class="btn input-group-text bg-success text-light"
+            >
+              <i class="fa fa-fw fa-search text-white"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- End  Modal SEARCH -->
+
+    <!-- Modal LOGIN -->
+    <div
+      class="modal fade"
+      id="loginModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="card-body p-5">
+              <form class="mb-3 mt-md-2">
+                <h2 class="fw-bold mb-4">Inicia Sesión</h2>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="name@example.com"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Contraseña</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    placeholder="*******"
+                  />
+                </div>
+                <p class="small">
+                  <a class="text-primary" href="forget-password.html"
+                    >¿Se te olvidó tu contraseña?</a
+                  >
+                </p>
+                <div class="d-grid">
+                  <button class="btn btn-outline-dark mt-4" type="submit">
+                    Login
+                  </button>
+                </div>
+              </form>
+              <div>
+                <p class="mb-0 text-center">
+                  ¿No tienes cuenta?
+                  <span
+                    class="me-2 text-primary fw-bold text-decoration-underline"
+                    data-bs-toggle="modal"
+                    data-bs-target="#registerModal"
+                    >Regístrate</span
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Modal LOGIN -->
+
+    <!-- Modal REGISTER -->
+    <div
+      class="modal fade"
+      id="registerModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="card-body p-5">
+              <form class="mb-3 mt-md-2">
+                <h2 class="fw-bold mb-4">Crear Cuenta Usuario</h2>
+                <div class="mb-3">
+                  <label for="nombre" class="form-label">Nombre</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="nombre"
+                    placeholder="Diana"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="apellidos" class="form-label">Apellidos</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="apellidos"
+                    placeholder="Munteanu"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="fecha" class="form-label">Fecha Nacimiento</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="fecha"
+                    value="1991-01-01"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="name@example.com"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Contraseña</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    placeholder="*******"
+                  />
+                </div>
+
+                <div class="d-grid">
+                  <button class="btn btn-outline-dark mt-4" type="submit">
+                    Regístrate
+                  </button>
+                </div>
+              </form>
+              <div>
+                <p class="mb-0 text-center">
+                  ¿Ya tienes cuenta?
+                  <span
+                    class="me-2 text-primary fw-bold text-decoration-underline"
+                    data-bs-toggle="modal"
+                    data-bs-target="#loginModal"
+                    >Log In</span
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Modal REGISTER -->
+
+    <!-- Right elements
+      <form class="d-flex input-group w-auto pe-3" method="post" action="{{ path ('app_producto_search') }}">
+        <input
+          type="search"
+          name="busqueda"
+          class="form-control rounded"
+          placeholder="Search"
+          aria-label="Search"
+          aria-describedby="search-addon"
+        />
+        <span class="input-group-text border-0" id="search-addon">
+          <button style='border-style:none'>
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </button>
+        </span>
+      </form>
+      
+      <div class="d-flex align-items-center">
+      --> 
