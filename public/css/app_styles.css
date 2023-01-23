@@ -34,8 +34,8 @@ body {
   border-radius: 25px;
 }
 .outline-btn {
-  border-color: black;
-  border-radius: 25px;
+  border-color: black !important;
+  border-radius: 25px !important;
 }
 
 /* text color */
