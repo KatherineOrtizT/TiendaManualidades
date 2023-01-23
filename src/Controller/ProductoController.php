@@ -9,17 +9,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 #[Route('/producto')]
 class ProductoController extends AbstractController
 {
-    #[Route('/', name: 'app_producto_index', methods: ['GET'])]
+
+    /* #[Route('/', name: 'app_producto_index', methods: ['GET'])]
     public function index(ProductoRepository $productoRepository): Response
     {
         return $this->render('producto/index.html.twig', [
             'productos' => $productoRepository->findAll(),
         ]);
-    }
+    } */
 
     #[Route('/new', name: 'app_producto_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ProductoRepository $productoRepository): Response
@@ -85,5 +87,20 @@ class ProductoController extends AbstractController
         return $this->render('producto/lista_productos.html.twig', [
             'productos' => $resultadoBusqueda,
         ]);
+    }
+
+    #[Route('/{id}/aniadirCarrito', name: 'app_producto_carrito', methods: ['POST', 'GET'])]
+    public function añadirProductoAction(Request $request, Producto $producto, ProductoRepository $productoRepository): Response
+    {
+        
+        if($request->request->get('idProducto')){
+            /* $response = new Response();
+            $response->setContent(json_encode((array)$producto));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response; */
+            $arr = json_encode($producto);
+            return new JsonResponse($arr);
+        }
+    
     }
 }
