@@ -1,3 +1,5 @@
+{% extends 'base.html.twig' %}
+{% block body %}
 <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top">
       <div class="container">
@@ -137,36 +139,31 @@
         <div class="modal-content">
           <div class="modal-body">
             <div class="card-body p-5">
-              <form class="mb-3 mt-md-2">
-                <h2 class="fw-bold mb-4">Inicia Sesión</h2>
-                <div class="mb-3">
-                  <label for="emailLogin" class="form-label">Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="emailLogin"
-                    placeholder="name@example.com"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="passwordLogin" class="form-label">Contraseña</label>
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="passwordLogin"
-                    placeholder="*******"
-                  />
-                </div>
-                <p class="small">
-                  <a class="text-primary" href="forget-password.html"
-                    >¿Se te olvidó tu contraseña?</a
-                  >
-                </p>
-                <div class="d-grid">
-                  <button class="btn btn-outline-dark mt-4" type="submit">
-                    Login
-                  </button>
-                </div>
+            
+              <form class="mb-3 mt-md-2" action="{{ path('app_login') }}" method="post">
+                  <h2 class="fw-bold mb-4">Inicia Sesión</h2>
+                  <div class="mb-3">
+                    <label for="username" class="form-label">Email:</label>
+                    <input type="text" id="username" name="_username"
+                      class="form-control"
+                      id="emailLogin"
+                      placeholder="name@example.com"
+                      >
+                  </div>
+                  <div class="mb-3">
+                        <label for="password" class="form-label">Password:</label>
+                        <input type="password" name="_password" 
+                            class="form-control"
+                            id="passwordLogin"
+                            placeholder="*******">
+                  </div>   
+                                  
+                  <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"> 
+                  <div class="d-grid">
+                  <button type="submit" class="btn btn-outline-dark mt-4">login</button>
+                  </div> 
+
+
               </form>
               <div>
                 <p class="mb-0 text-center">
@@ -198,6 +195,7 @@
         <div class="modal-content">
           <div class="modal-body">
             <div class="card-body p-5">
+             {# {{ form(registration_form) }} #}
               <form class="mb-3 mt-md-2">
                 <h2 class="fw-bold mb-4">Crear Cuenta Usuario</h2>
                 <div class="mb-3">
@@ -289,3 +287,4 @@
       
       <div class="d-flex align-items-center">
       --> 
+{% endblock %}

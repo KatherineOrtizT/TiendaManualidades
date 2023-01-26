@@ -35,8 +35,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'idUsuario', targetEntity: Pedidos::class, orphanRemoval: true)]
     private Collection $pedidos;
 
-    public function __construct($id=null,$email=null,$password=null)
+    #[ORM\Column(length: 255)]
+    private ?string $Nombre = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $Apellidos = null;
+
+    public function __construct($nombre=null,$apellidos=null,$id=null,$email=null,$password=null)
     {
+        $this->Nombre = $nombre;
+        $this->Apellidos = $apellidos;
         $this->id = $id;
         $this->email = $email;
         $this->password = $password;
@@ -156,4 +164,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getNombre(): ?string
+    {
+        return $this->Nombre;
+    }
+
+    public function setNombre(string $Nombre): self
+    {
+        $this->Nombre = $Nombre;
+
+        return $this;
+    }
+
+    public function getApellidos(): ?string
+    {
+        return $this->Apellidos;
+    }
+
+    public function setApellidos(string $Apellidos): self
+    {
+        $this->Apellidos = $Apellidos;
+
+        return $this;
+    }
+
+ 
+    
 }

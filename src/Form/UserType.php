@@ -17,6 +17,8 @@ class UserType extends AbstractType
             // ->add('roles')
             ->add('password')
             ->add('photo')
+            ->add('Nombre')
+            ->add('Apellidos')
             ->add('Submit', SubmitType::class)
         ;
     }
