@@ -47,7 +47,7 @@ class UserController extends AbstractController
             $this->em->flush();
             return $this->redirectToRoute('userRegistration');
         }
-        return $this->render('user/index.html.twig', [
+        return $this->render('comunes/_header.html.twig', [
             'registration_form' => $registration_form->createView()
         ]);
     }
@@ -60,6 +60,7 @@ class UserController extends AbstractController
             'pedidos' => $pedidos
         ]);
     }
+
 
     #[Route('/{id_pedido}/compras', name: 'app_user_compras', methods: ['GET'])]
     public function listarComprasPorPedido(int $id_pedido, Request $request, ComprasRepository $comprasRepository): Response
@@ -74,9 +75,5 @@ class UserController extends AbstractController
             'compras' => $compras
         ]);
     }
-
-
-
-
 
 }
