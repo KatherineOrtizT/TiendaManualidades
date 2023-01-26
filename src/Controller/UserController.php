@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Compras;
+
+use App\Entity\Pedidos;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\ComprasRepository;
+use App\Repository\PedidosRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,14 +53,27 @@ class UserController extends AbstractController
     }
 
 
-    #[Route('/{id}/compras', name: 'app_user_compras', methods: ['GET'])]
-    public function listarCompras(Request $request, Compras $compras): Response
+    #[Route('/{id}/pedidos', name: 'app_user_pedidos', methods: ['GET'])]
+    public function listarPedidos(Request $request, Pedidos $pedidos): Response
     {
+        return $this->render('user/show.html.twig', [
+            'pedidos' => $pedidos
+        ]);
+    }
+
+    #[Route('/{id_pedido}/compras', name: 'app_user_compras', methods: ['GET'])]
+    public function listarComprasPorPedido(int $id_pedido, Request $request, ComprasRepository $comprasRepository): Response
+    {
+        /* $pedido = $pedidosRepository->findOneById($id_pedido);
+        if($pedido === null){
+            throw $this->createNotFoundException();
+        } */
+
+        $compras = $comprasRepository->findBy(array('idPedido' => $id_pedido));
         return $this->render('user/show.html.twig', [
             'compras' => $compras
         ]);
     }
-
 
 
 

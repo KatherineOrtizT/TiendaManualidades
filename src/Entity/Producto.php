@@ -37,7 +37,7 @@ class Producto implements JsonSerializable
     #[ORM\Column(length: 40, nullable: true)]
     private ?string $color = null;
 
-    #[ORM\Column(length: 255, options: ["default" => "default_Imagen.svg"])]
+    #[ORM\Column(length: 255, nullable: true, options: ["default" => "default_Imagen.png"])]
     private ?string $imagen = null;
 
     #[ORM\OneToMany(mappedBy: 'idProducto', targetEntity: Compras::class)]

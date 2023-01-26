@@ -5,7 +5,7 @@
           class="navbar-brand d-flex justify-content-between align-items-center order-lg-0"
           href="#"
         >
-          <img src="images/logo-icon.png" alt="site logo icon" />
+          <img src="/images/logo-icon.png" alt="site logo icon" />
           <span class="fw-lighter ms-2">AF</span>
         </a>
 
@@ -101,7 +101,7 @@
           ></button>
         </div>
         <form
-          action=""
+          action="{{ path ('app_producto_search') }}"
           method="get"
           class="modal-content modal-body border-0 p-0"
         >
@@ -110,7 +110,7 @@
               type="text"
               class="form-control"
               id="inputModalSearch"
-              name="q"
+              name="busqueda"
               placeholder="Busca producto ..."
             />
             <button
@@ -232,7 +232,7 @@
                   <input
                     type="email"
                     class="form-control"
-                    id="email"
+                    id="email_register"
                     placeholder="name@example.com"
                   />
                 </div>
@@ -241,7 +241,7 @@
                   <input
                     type="password"
                     class="form-control"
-                    id="password"
+                    id="password_register"
                     placeholder="*******"
                   />
                 </div>
