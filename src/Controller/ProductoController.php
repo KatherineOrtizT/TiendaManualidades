@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\Producto;
 use App\Form\ProductoType;
 use App\Repository\ProductoRepository;
+use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 #[Route('/producto')]
 class ProductoController extends AbstractController
@@ -24,16 +26,27 @@ class ProductoController extends AbstractController
     } */
 
     #[Route('/new', name: 'app_producto_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ProductoRepository $productoRepository): Response
+    public function new(Request $request, ProductoRepository $productoRepository, FileUploader $fileUploader): Response
     {
         $producto = new Producto();
         $form = $this->createForm(ProductoType::class, $producto);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('imagen')->getData();
+
+            /*'imagen' field is not required. The image file must be processed only when 
+            a file is uploaded, not every time is edited*/
+            if ($imageFile) {
+                $imageFile = $fileUploader->upload($imageFile);
+
+                // updates the 'imagen' property of Producto entity to store the imagen name (not the file)
+                $producto->setImagen($imageFile);
+            }
+
             $productoRepository->save($producto, true);
 
-            return $this->redirectToRoute('app_producto_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_homepage_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('producto/new.html.twig', [
@@ -59,7 +72,7 @@ class ProductoController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $productoRepository->save($producto, true);
 
-            return $this->redirectToRoute('app_producto_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_homepage_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('producto/edit.html.twig', [
@@ -75,7 +88,7 @@ class ProductoController extends AbstractController
             $productoRepository->remove($producto, true);
         }
 
-        return $this->redirectToRoute('app_producto_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_homepage_index', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/search', name: 'app_producto_search', methods: ['POST', 'GET'])]
@@ -85,6 +98,7 @@ class ProductoController extends AbstractController
         $resultadoBusqueda = $productoRepository->search($busqueda);
 
         return $this->render('producto/lista_productos.html.twig', [
+            /* 'busqueda' => $busqueda, */
             'productos' => $resultadoBusqueda,
         ]);
     }
