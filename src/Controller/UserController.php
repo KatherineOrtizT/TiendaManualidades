@@ -45,7 +45,7 @@ class UserController extends AbstractController
             $this->em->flush();
             return $this->redirectToRoute('userRegistration');
         }
-        return $this->render('user/index.html.twig', [
+        return $this->render('comunes/_header.html.twig', [
             'registration_form' => $registration_form->createView()
         ]);
     }
@@ -58,10 +58,4 @@ class UserController extends AbstractController
             'compras' => $compras
         ]);
     }
-
-
-
-
-
-
 }
