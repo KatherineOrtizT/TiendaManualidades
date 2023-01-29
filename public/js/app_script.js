@@ -27,13 +27,13 @@ var filterBtns = $('.filter-button-group').find('button');
 
 //Carrito
 let DB;
-
+/* let listaPrueba=[{nombre:'xxx',precio:30,cantidad:2}]; */
 window.addEventListener('load', () =>{
 
     window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
     window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
     window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
-
+    
     document.querySelector('#botonAñadirCarrito').addEventListener('click', () =>{
 
         $.ajax({
@@ -61,6 +61,12 @@ window.addEventListener('load', () =>{
 
     });
 
+    /* if(window.location.href.indexOf("user/carrito") != -1){
+        console.log("Entra MOSTRAR CARRITO");
+        mostrarCarrito();
+    } */
+
+
 });
 
 function crear_carritoDB() {
@@ -81,10 +87,10 @@ function crear_carritoDB() {
         let db = e.target.result;
 
         //Creamos una tabla en nuestra DB
-        let tabla_ProductosCarrito = db.createObjectStore('carrito', { keyPath: 'idCarro',  autoIncrement: true } );
+        let tabla_ProductosCarrito = db.createObjectStore('carrito', { keyPath: 'id'/* ,  autoIncrement: true */ } );
 
         //createindex --> Creamos las columnas de nuestra DB
-        tabla_ProductosCarrito.createIndex('id', 'id', { unique: true } );
+        //tabla_ProductosCarrito.createIndex('id', 'id', { unique: true } );
         tabla_ProductosCarrito.createIndex('nombre', 'nombre', { unique: false } );
         tabla_ProductosCarrito.createIndex('precio', 'precio', { unique: false } );
         tabla_ProductosCarrito.createIndex('descuento', 'descuento', { unique: false } );
@@ -133,7 +139,7 @@ function eliminarProducto(id_producto) {
         }else{
             console.log('Entries displayed.'); //MIRAR         
         }
-      };
+    };
 }
 
 //Se ejecutará cuando ya se haya formalizado la compra y se borre todo el carrito.
@@ -148,5 +154,42 @@ function borrarDB(){
     console.log("Database deleted successfully");
 
     console.log(event.result); // should be undefined
+    };
+}
+
+/* function mostrarCarrito(){
+    let transaction = DB.transaction(['carrito'], 'readonly');
+
+    let tabla = transaction.objectStore('carrito');
+
+    tabla.count();
+
+    tabla.openCursor().onsuccess = function(event) {
+        let cursor = event.target.result;
+        if(cursor) {
+            document.querySelector('#imagen_producto').innerHTML="{{ asset('/images/"+cursor.value.imagen+"') }}";
+            document.querySelector('#nombre_producto').innerHTML=cursor.value.nombre;
+            document.querySelector('#id_producto').innerHTML=cursor.value.id;
+            document.querySelector('#precio_producto').innerHTML=cursor.value.precio;
+
+            cursor.continue();  
+
+        }else{
+            console.log('Entries displayed.'); //MIRAR         
+        }
+    };   
+} */
+
+function mostrarCarrito(){
+    console.log("Ejecuta FUNCIÓN");
+    let transaction = DB.transaction(['carrito'], 'readonly');
+    let tabla = transaction.objectStore('carrito');
+
+    const myIndex = tabla.index('id');
+    const getAllKeysRequest = myIndex.getAllKeys();
+
+    getAllKeysRequest.onsuccess = () => {
+      console.log("GET ALL KEYS:");
+      console.log(getAllKeysRequest.result);
     };
 }

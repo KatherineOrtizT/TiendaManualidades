@@ -10,19 +10,20 @@
         <tbody>
             <tr>
                 <th>Foto</th>
-                <td>
+                <td> {# {{ asset('/images/' ~  user.photo) }} #}
                     <img
-                        src="{{ asset('/images/' ~  user.photo) }}"
+                        src="{{ asset('/images/' ~  user.photo)|default(asset('/images/default_Image.png')) }}"
                         class="rounded-circle"
                         height="25"
                         alt="Imagen de usuario"
                         loading="lazy"
+                        
                     />
                 </td>
             </tr>
             <tr>
                 <th>Rol</th>
-                <td>{{ user.roles }}</td>
+                <td></td>
             </tr>
             <tr>
                 <th>Email</th>
@@ -38,67 +39,84 @@
 
     <a href="{{ path('app_homepage_index') }}">back to Homepage</a>
 
-    {% for pedido in pedidos %}
-        <section class="h-100">
+   
+
+    <section class="h-100">
       <div class="container py-5">
+ 
+        {% for pedido in user.pedidos %}
+
+            <p>ID: {{ pedido.id }}</p>
+            <p>Fecha: {{ pedido.fecha }}</p>
+
+        
         <div class="row d-flex justify-content-center my-4">
-          <div class="col-md-8">
-            <div class="card mb-4">
-                <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                        <th scope="col" class="h5">Carrito Compra</th>
-                        <th scope="col">ID</th>
-                        <th scope="col">Unidades</th>
-                        <th scope="col">Precio</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">
-                                <div class="d-flex align-items-center">
-                                    <img
-                                        src="images/producto5.png"
-                                        class="img-fluid rounded-3"
-                                        style="width: 120px"
-                                        alt="Book"
-                                    />
-                                    <div class="flex-column ms-4">
-                                        <p class="mb-2">Nombre de producto</p>
-                                    </div>
-                                </div>
-                            </th>
-                            <td class="align-middle">
-                                <p class="mb-0" style="font-weight: 500">#6765</p>
-                            </td>
-                            <td class="align-middle">
-                                <div class="d-flex flex-row">
-                                
-                                <input
-                                    id="form1"
-                                    min="0"
-                                    name="quantity"
-                                    value="2"
-                                    type="number"
-                                    class="form-control form-control-sm"
-                                    style="width: 50px"
-                                />
-                                
-                                </div>
-                            </td>
-                            <td class="align-middle">
-                                <p class="mb-0" style="font-weight: 500">€ 9.45</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                <th scope="col" class="h5">Carrito Compra</th>
+                                <th scope="col">ID</th>
+                                <th scope="col">Unidades</th>
+                                <th scope="col">Precio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for compra in pedido.compras %}
+                                <tr>
+                                    <th scope="row">
+                                        <div class="d-flex align-items-center">
+                                            <img
+                                                src="{{ asset('/images/' ~ compra.idProducto.imagen) }}"
+                                                class="img-fluid rounded-3"
+                                                style="width: 120px"
+                                                alt="Book"
+                                            />
+                                            <div class="flex-column ms-4">
+                                                <p class="mb-2">{{ compra.idProducto.nombre }}</p>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <td class="align-middle">
+                                        <p class="mb-0" style="font-weight: 500">#6765</p>
+                                    </td>
+                                    <td class="align-middle">
+                                        <div class="d-flex flex-row">
+                                        
+                                        <input
+                                            id="form1"
+                                            min="0"
+                                            name="quantity"
+                                            value="2"
+                                            type="number"
+                                            class="form-control form-control-sm"
+                                            style="width: 50px"
+                                        />
+                                        
+                                        </div>
+                                    </td>
+                                    <td class="align-middle">
+                                        <p class="mb-0" style="font-weight: 500">{{compra.idProducto.precio}}</p>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <p>no records found</p>
+                            {% endfor %} 
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-          </div>    
+        </div>
+
+        
+          </div>   
+    </section> 
     {% else %}
         <p>no records found</p>
-    {% endfor %}
+    {% endfor %} 
    
 
 

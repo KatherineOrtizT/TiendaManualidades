@@ -52,28 +52,41 @@ class UserController extends AbstractController
         ]);
     }
 
+    #[Route('/carrito', name: 'app_user_carrito', methods: ['GET'])]
+    public function mostrarCarrito(): Response
+    {
+        
+        return $this->render('producto/carrito.html.twig', []);
+    }
 
-    #[Route('/{id}/pedidos', name: 'app_user_pedidos', methods: ['GET'])]
+    #[Route('/personal', name: 'app_user_personal', methods: ['GET'])]
+    public function ir_areaPersonal(): Response
+    {
+        $user= $this->getUser();
+        return $this->render('user/show.html.twig', ['user'=>$user]);
+    }
+
+    /* #[Route('/{id}/pedidos', name: 'app_user_pedidos', methods: ['GET'])]
     public function listarPedidos(Request $request, Pedidos $pedidos): Response
     {
         return $this->render('user/show.html.twig', [
             'pedidos' => $pedidos
         ]);
-    }
+    } */
 
 
-    #[Route('/{id_pedido}/compras', name: 'app_user_compras', methods: ['GET'])]
+   /*  #[Route('/{id_pedido}/compras', name: 'app_user_compras', methods: ['GET'])]
     public function listarComprasPorPedido(int $id_pedido, Request $request, ComprasRepository $comprasRepository): Response
     {
         /* $pedido = $pedidosRepository->findOneById($id_pedido);
         if($pedido === null){
             throw $this->createNotFoundException();
-        } */
+        }
 
         $compras = $comprasRepository->findBy(array('idPedido' => $id_pedido));
         return $this->render('user/show.html.twig', [
             'compras' => $compras
         ]);
-    }
+    } */
 
 }

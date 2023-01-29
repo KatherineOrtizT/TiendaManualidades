@@ -103,6 +103,14 @@ class ProductoController extends AbstractController
         ]);
     }
 
+    #[Route('/', name: 'app_producto_catalogo', methods: ['GET'])]
+    public function catalogo(ProductoRepository $productoRepository): Response
+    {
+        return $this->render('producto/lista_productos.html.twig', [
+            'productos' => $productoRepository->findAll(),
+        ]);
+    }
+
     #[Route('/{id}/aniadirCarrito', name: 'app_producto_carrito', methods: ['POST', 'GET'])]
     public function añadirProductoAction(Request $request, Producto $producto, ProductoRepository $productoRepository): Response
     {
