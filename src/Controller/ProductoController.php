@@ -114,6 +114,17 @@ class ProductoController extends AbstractController
     #[Route('/{id}/aniadirCarrito', name: 'app_producto_carrito', methods: ['POST', 'GET'])]
     public function añadirProductoAction(Request $request, Producto $producto): Response
     {
+        $session= $request->getSession();
+        //$session->clear();
+        $carrito = $session->get('carrito', []);
+        $carrito[]=$producto;
+        $session->set('carrito', $carrito);
+
+        /* $carrito = $session->get('carrito', []);
+        $session->set('carrito', array(
+            array_merge($carrito, [$producto]) 
+        )); */
+
         
         if($request->request->get('idProducto')){
             /* $response = new Response();

@@ -21,49 +21,57 @@
                     </tr>
                   </thead>
                   <tbody>
-
-                    <tr id="">
-                      <th scope="row">
-                        <div class="d-flex align-items-center">
-                          <img
-                            src=""
-                            id="imagen_producto"
-                            class="img-fluid rounded-3"
-                            style="width: 120px"
-                            alt="Book"
-                          />
-                          <div class="flex-column ms-4">
-                            <p class="mb-2" id="nombre_producto"></p>
+                    {% for producto in app.session.get('carrito') %}
+                      <tr id="">
+                        <th scope="row">
+                          <div class="d-flex align-items-center">
+                            <img
+                              src="{{ asset('/images/' ~  producto.imagen) }}"
+                              id="imagen_producto"
+                              class="img-fluid rounded-3"
+                              style="width: 120px"
+                              alt="Book"
+                            />
+                            <div class="flex-column ms-4">
+                              <p class="mb-2" id="nombre_producto">{{producto.nombre}}</p>
+                            </div>
                           </div>
-                        </div>
-                      </th>
-                      <td class="align-middle">
-                        <p class="mb-0" id="id_producto" style="font-weight: 500"></p>
-                      </td>
-                      <td class="align-middle">
-                        <div class="d-flex flex-row">
-                          
+                        </th>
+                        <td class="align-middle">
+                          <p class="mb-0" id="id_producto" style="font-weight: 500">{{ producto.id }}</p>
+                        </td>
+                        <td class="align-middle">
+                          <div class="d-flex flex-row">
+                            
 
-                          <input
-                            id="form1"
-                            min="0"
-                            name="quantity"
-                            value="2"
-                            type="number"
-                            class="form-control form-control-sm"
-                            style="width: 50px"
-                          />
+                            <input
+                              id="form1"
+                              min="0"
+                              name="quantity"
+                              value="1"
+                              type="number"
+                              class="form-control form-control-sm"
+                              style="width: 50px"
+                            />
 
-                          
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <p class="mb-0" id="precio_producto" style="font-weight: 500"></p>
-                      </td>
+                            
+                          </div>
+                        </td>
+                        <td class="align-middle">
+                          <p class="mb-0" id="precio_producto" style="font-weight: 500">{{ producto.precio }}</p>
+                        </td>
+                      </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="9">no records found</td>
+                        </tr>
+                    {% endfor %}
+
+                    
 
 
-                    {#</tr>
-                      <th scope="row">
+                    
+                      {#<th scope="row">
                         <div class="d-flex align-items-center">
                           <img
                             src="images/producto2.png"
@@ -141,7 +149,7 @@
               </div>
             </div>
           </div>
-
+          {# <p>{{dump(app.session.get('carrito'))}}<p> #}
 
           <div class="col-md-4">
             <div class="card mb-4">
@@ -172,11 +180,21 @@
                     <span><strong>€53.98</strong></span>
                   </li>
                 </ul>
-
-               
-                <div class="d-grid gap-2 my-2">
-                  <a href="#"class="btn pink-btn">Finalizar Compra</a>
-                </div>
+                
+                {% if app.user %}
+                    <div class="d-grid gap-2 my-2">
+                      <a href="{{ path('app_user_comprar') }}" class="btn pink-btn">Finalizar Compra</a>
+                    </div>
+                    {% else %}
+                    <div class="d-grid gap-2 my-2">
+                      <a href="#" class="btn pink-btn" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#loginModal">Finalizar Compra</a>
+                    </div>
+                {% endif %}
+                {# <div class="d-grid gap-2 my-2">
+                  <a href="{{ path('app_user_comprar') }}" class="btn pink-btn">Finalizar Compra</a>
+                </div> #}
               </div>
             </div>
           </div>

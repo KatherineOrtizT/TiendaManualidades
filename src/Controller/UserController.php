@@ -2,13 +2,16 @@
 
 namespace App\Controller;
 
-
+use App\Entity\Compras;
 use App\Entity\Pedidos;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\ComprasRepository;
+use App\Repository\PedidosRepository;
 use App\Repository\ProductoRepository;
+use Doctrine\DBAL\Schema\Identifier;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Id;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -77,6 +80,28 @@ class UserController extends AbstractController
         $user= $this->getUser();
         return $this->render('user/show.html.twig', ['user'=>$user]);
     }
+
+    #[Route('/comprar', name: 'app_user_comprar', methods: ['GET'])]
+    public function finalizarCompra(Request $request, PedidosRepository $pedidosRepository, ComprasRepository $comprasRepository): Response
+    {
+        $pedido = new Pedidos();
+        $fecha = new \DateTime('@'.strtotime('now'));
+        $pedido->setFecha($fecha);
+        $idUsuario = ($this->getUser()->get_current_user)->getId();
+        $pedido->setIdUsuario($idUsuario);
+        $pedidosRepository->save($pedido, true);
+
+        $session= $request->getSession();
+        foreach($session->get('carrito') as $producto){
+            $compra = new Compras();
+            $compra->setIdPedido($pedido->getId());
+            $compra->setIdProducto($producto->getId());
+            $comprasRepository->save($compra, true);
+        }
+
+        return $this->redirectToRoute('app_homepage_index', [], Response::HTTP_SEE_OTHER);
+    }
+
 
     /* #[Route('/{id}/pedidos', name: 'app_user_pedidos', methods: ['GET'])]
     public function listarPedidos(Request $request, Pedidos $pedidos): Response

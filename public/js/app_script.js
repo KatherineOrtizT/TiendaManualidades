@@ -48,35 +48,36 @@ window.addEventListener('load', () =>{
     window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
     window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
     
-    document.querySelector('#botonAñadirCarrito').addEventListener('click', () =>{
+    if(window.location.href.indexOf("producto") != -1){
+        document.querySelector('#botonAñadirCarrito').addEventListener('click', () =>{
 
-        $.ajax({
-            url:$("#path-to-controller-aniadir").data("href"),
-            type: "POST",
-            dataType: "json",
-            data: {
-                "idProducto": "some_var_value"
-            },
-            async: true,
+            $.ajax({
+                url:$("#path-to-controller-aniadir").data("href"),
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "idProducto": "some_var_value"
+                },
+                async: true,
 
-            /* error: function() {
-                console.log("Error");
-            }, */
+                /* error: function() {
+                    console.log("Error");
+                }, */
 
-            success: function (data)
-            {        
-                console.log(data);        
-                crear_carritoDB();
-                setTimeout( () => {
-                    producto = {id: data, cantidad: 1}
-                    aniadirProducto(producto);
-                }, 3000);
-     
-            }
+                success: function (data)
+                {        
+                    console.log(data);        
+                    crear_carritoDB();
+                    setTimeout( () => {
+                        producto = {id: data, cantidad: 1}
+                        aniadirProducto(producto);
+                    }, 3000);
+        
+                }
+            });
+
         });
-
-    });
-
+    }
     /* if(window.location.href.indexOf("user/carrito") != -1){
         console.log("Entra MOSTRAR CARRITO");
         mostrarCarrito();
@@ -103,7 +104,7 @@ function crear_carritoDB() {
         let db = e.target.result;
 
         //Creamos una tabla en nuestra DB
-        let tabla_ProductosCarrito = db.createObjectStore('carrito', { keyPath: 'id'/* ,  autoIncrement: true */ } );
+        let tabla_ProductosCarrito = db.createObjectStore('carrito', { keyPath: 'id'} );
 
         //createindex --> Creamos las columnas de nuestra DB
         /* tabla_ProductosCarrito.createIndex('id', 'id', { unique: true } );

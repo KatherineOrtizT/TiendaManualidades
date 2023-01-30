@@ -189,9 +189,8 @@ footer a:hover {
 
 /* -- SHOW (Product Detail Page) -- */
 
-body{background-color: #000}
 .card{border:none}
-.product{background-color: #eee}
+/* .product{background-color: #eee} */
 .brand{font-size: 13px}
 .act-price{color:rgb(66, 75, 80);font-weight: 700}
 .dis-price{text-decoration: line-through}
