@@ -1,17 +1,12 @@
-{#
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/main.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <title>Carrito Compra</title>
-  </head>
-  <body>
-    <section class="h-100">
-      <div class="container py-5">
+{% extends 'base.html.twig' %}
+
+{% block title %}Carrito{% endblock %}
+
+{% block body %}
+
+    {{ include('comunes/_header.html.twig') }}
+    <section class="h-100 mt-5">
+      <div class="container py-5 mt-5">
         <div class="row d-flex justify-content-center my-4">
           <div class="col-md-8">
             <div class="card mb-4">
@@ -26,45 +21,57 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">
-                        <div class="d-flex align-items-center">
-                          <img
-                            src="images/producto5.png"
-                            class="img-fluid rounded-3"
-                            style="width: 120px"
-                            alt="Book"
-                          />
-                          <div class="flex-column ms-4">
-                            <p class="mb-2">Nombre de producto</p>
+                    {% for producto in app.session.get('carrito') %}
+                      <tr id="">
+                        <th scope="row">
+                          <div class="d-flex align-items-center">
+                            <img
+                              src="{{ asset('/images/' ~  producto.imagen) }}"
+                              id="imagen_producto"
+                              class="img-fluid rounded-3"
+                              style="width: 120px"
+                              alt="Book"
+                            />
+                            <div class="flex-column ms-4">
+                              <p class="mb-2" id="nombre_producto">{{producto.nombre}}</p>
+                            </div>
                           </div>
-                        </div>
-                      </th>
-                      <td class="align-middle">
-                        <p class="mb-0" style="font-weight: 500">#6765</p>
-                      </td>
-                      <td class="align-middle">
-                        <div class="d-flex flex-row">
-                          
+                        </th>
+                        <td class="align-middle">
+                          <p class="mb-0" id="id_producto" style="font-weight: 500">{{ producto.id }}</p>
+                        </td>
+                        <td class="align-middle">
+                          <div class="d-flex flex-row">
+                            
 
-                          <input
-                            id="form1"
-                            min="0"
-                            name="quantity"
-                            value="2"
-                            type="number"
-                            class="form-control form-control-sm"
-                            style="width: 50px"
-                          />
+                            <input
+                              id="form1"
+                              min="0"
+                              name="quantity"
+                              value="1"
+                              type="number"
+                              class="form-control form-control-sm"
+                              style="width: 50px"
+                            />
 
-                          
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <p class="mb-0" style="font-weight: 500">€ 9.45</p>
-                      </td>
-                    </tr>
-                      <th scope="row">
+                            
+                          </div>
+                        </td>
+                        <td class="align-middle">
+                          <p class="mb-0" id="precio_producto" style="font-weight: 500">{{ producto.precio }}</p>
+                        </td>
+                      </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="9">no records found</td>
+                        </tr>
+                    {% endfor %}
+
+                    
+
+
+                    
+                      {#<th scope="row">
                         <div class="d-flex align-items-center">
                           <img
                             src="images/producto2.png"
@@ -82,7 +89,6 @@
                       </td>
                       <td class="align-middle">
                         <div class="d-flex flex-row">
-                          
 
                           <input
                             id="form1"
@@ -93,15 +99,13 @@
                             class="form-control form-control-sm"
                             style="width: 50px"
                           />
-
-                          
+  
                         </div>
                       </td>
                       <td class="align-middle">
                         <p class="mb-0" style="font-weight: 500">€ 15.5</p>
                       </td>
                     </tr>
-              
 
                     <tr>
                       <th scope="row" class="border-bottom-0">
@@ -139,12 +143,14 @@
                       <td class="align-middle border-bottom-0">
                         <p class="mb-0" style="font-weight: 500">€ 7.50</p>
                       </td>
-                    </tr>
+                    </tr> #}
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
+          {# <p>{{dump(app.session.get('carrito'))}}<p> #}
+
           <div class="col-md-4">
             <div class="card mb-4">
               <div class="card-body">
@@ -174,22 +180,26 @@
                     <span><strong>€53.98</strong></span>
                   </li>
                 </ul>
-
-               
-                <div class="d-grid gap-2 my-2">
-                  <a href="#"class="btn pink-btn">Finalizar Compra</a>
-                </div>
+                
+                {% if app.user %}
+                    <div class="d-grid gap-2 my-2">
+                      <a href="{{ path('app_user_comprar') }}" class="btn pink-btn">Finalizar Compra</a>
+                    </div>
+                    {% else %}
+                    <div class="d-grid gap-2 my-2">
+                      <a href="#" class="btn pink-btn" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#loginModal">Finalizar Compra</a>
+                    </div>
+                {% endif %}
+                {# <div class="d-grid gap-2 my-2">
+                  <a href="{{ path('app_user_comprar') }}" class="btn pink-btn">Finalizar Compra</a>
+                </div> #}
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-      crossorigin="anonymous"
-    ></script>
-  </body>
-</html>
-#}
+{% endblock %}
+

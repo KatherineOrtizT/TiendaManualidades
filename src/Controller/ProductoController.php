@@ -103,16 +103,35 @@ class ProductoController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/aniadirCarrito', name: 'app_producto_carrito', methods: ['POST', 'GET'])]
-    public function añadirProductoAction(Request $request, Producto $producto, ProductoRepository $productoRepository): Response
+    #[Route('/', name: 'app_producto_catalogo', methods: ['GET'])]
+    public function catalogo(ProductoRepository $productoRepository): Response
     {
+        return $this->render('producto/lista_productos.html.twig', [
+            'productos' => $productoRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/{id}/aniadirCarrito', name: 'app_producto_carrito', methods: ['POST', 'GET'])]
+    public function añadirProductoAction(Request $request, Producto $producto): Response
+    {
+        $session= $request->getSession();
+        //$session->clear();
+        $carrito = $session->get('carrito', []);
+        $carrito[]=$producto;
+        $session->set('carrito', $carrito);
+
+        /* $carrito = $session->get('carrito', []);
+        $session->set('carrito', array(
+            array_merge($carrito, [$producto]) 
+        )); */
+
         
         if($request->request->get('idProducto')){
             /* $response = new Response();
             $response->setContent(json_encode((array)$producto));
             $response->headers->set('Content-Type', 'application/json');
             return $response; */
-            $arr = json_encode($producto);
+            $arr = json_encode($producto->getId());
             return new JsonResponse($arr);
         }
     

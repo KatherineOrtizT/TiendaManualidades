@@ -186,3 +186,25 @@ footer a:hover {
   background-color: #000;
   border-color: #000;
 }
+
+/* -- SHOW (Product Detail Page) -- */
+
+.card{border:none}
+/* .product{background-color: #eee} */
+.brand{font-size: 13px}
+.act-price{color:rgb(66, 75, 80);font-weight: 700}
+.dis-price{text-decoration: line-through}
+.about{font-size: 14px}
+.color{margin-bottom:10px}
+label.radio{cursor: pointer}
+label.radio input{position: absolute;top: 0;left: 0;visibility: hidden;pointer-events: none}
+label.radio span{padding: 2px 9px;border: 2px solid var(--pink);display: inline-block;color: var(--pink);border-radius: 3px;text-transform: uppercase}
+label.radio input:checked+span{border-color: var(--pink);background-color: var(--pink);color: #fff}
+.btn-danger{background-color: var(--pink) !important;border-color: var(--pink) !important}
+.btn-danger:hover{background-color: var(--pink) !important;border-color: var(--pink) !important}
+.btn-danger:focus{box-shadow: none}
+.cart i{margin-right: 10px}
+.similar-product img {
+  height: 400px;
+}
+

@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 <!-- navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top mb-5">
       <div class="container">
         <a
           class="navbar-brand d-flex justify-content-between align-items-center order-lg-0"
-          href="#"
+          href="{{ path('app_homepage_index') }}"
         >
           <img src="/images/logo-icon.png" alt="site logo icon" />
           <span class="fw-lighter ms-2">AF</span>
@@ -23,14 +23,16 @@
           </button>
 
           <!-- Button CART page -->
-          <button
-            type="button"
-            onclick="location.href='cart.html';"
-            class="btn mx-2 position-relative"
-          >
-            <i class="fa fa-shopping-cart"></i>
-          </button>
-
+          {# <a id="enlace" href="{{ path('app_user_carrito') }}"> #}
+            <button
+              type="button"
+              id="boton_carrito"
+              onclick="mostrarCarrito()"
+              class="btn mx-2 position-relative"
+            >
+              <i class="fa fa-shopping-cart"></i>
+            </button>
+          {# </a> #}
           <!-- Button trigger modal LOGIN -->
           <button
             type="button"
@@ -69,7 +71,7 @@
         <div class="collapse navbar-collapse order-lg-1" id="navMenu">
           <ul class="navbar-nav mx-auto text-center">
             <li class="nav-item px-2 py-2">
-              <a class="nav-link text-dark" href="#">Catálogo Productos</a>
+              <a class="nav-link text-dark" href="{{ path('app_producto_catalogo') }}">Catálogo Productos</a>
             </li>
 
             <li class="nav-item px-2 py-2">
@@ -81,6 +83,8 @@
           </ul>
         </div>
       </div>
+
+      <a href="{{ path('app_user_personal') }}">Área Usuario</a>
     </nav>
     <!-- end of navbar -->
 
@@ -195,8 +199,10 @@
         <div class="modal-content">
           <div class="modal-body">
             <div class="card-body p-5">
-             {# {{ form(registration_form) }} #}
-              <form class="mb-3 mt-md-2">
+              {% if registration_form is defined %}   
+                  {{ form(registration_form) }}
+              {% endif %}
+              {# <form class="mb-3 mt-md-2">
                 <h2 class="fw-bold mb-4">Crear Cuenta Usuario</h2>
                 <div class="mb-3">
                   <label for="nombre" class="form-label">Nombre</label>
@@ -249,7 +255,7 @@
                     Regístrate
                   </button>
                 </div>
-              </form>
+              </form> #}
               <div>
                 <p class="mb-0 text-center">
                   ¿Ya tienes cuenta?
