@@ -7,7 +7,7 @@ use App\Entity\Pedidos;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\ComprasRepository;
-use App\Repository\PedidosRepository;
+use App\Repository\ProductoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,11 +52,23 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/carrito', name: 'app_user_carrito', methods: ['GET'])]
-    public function mostrarCarrito(): Response
+    #[Route('/carrito', name: 'app_user_carrito', methods: ['POST', 'GET'])]
+    public function mostrarCarritoAction(Request $request, ProductoRepository $productoRepository): Response
     {
+        $idProductosCarrito = $request->request->get('productos',null);
+        $productosCarrito= array();
+        if($idProductosCarrito){
+            foreach(json_decode($idProductosCarrito) as $idProducto){
+                $productosCarrito[] = $productoRepository->find($idProducto);
+            }
+           
+            return $this->render('producto/carrito.html.twig', [
+                'productos' => $productosCarrito,
+            ]);
+
+        }
         
-        return $this->render('producto/carrito.html.twig', []);
+        return $this->render('producto/carrito.html.twig', []);   
     }
 
     #[Route('/personal', name: 'app_user_personal', methods: ['GET'])]

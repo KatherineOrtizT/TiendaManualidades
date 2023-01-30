@@ -112,7 +112,7 @@ class ProductoController extends AbstractController
     }
 
     #[Route('/{id}/aniadirCarrito', name: 'app_producto_carrito', methods: ['POST', 'GET'])]
-    public function añadirProductoAction(Request $request, Producto $producto, ProductoRepository $productoRepository): Response
+    public function añadirProductoAction(Request $request, Producto $producto): Response
     {
         
         if($request->request->get('idProducto')){
@@ -120,7 +120,7 @@ class ProductoController extends AbstractController
             $response->setContent(json_encode((array)$producto));
             $response->headers->set('Content-Type', 'application/json');
             return $response; */
-            $arr = json_encode($producto);
+            $arr = json_encode($producto->getId());
             return new JsonResponse($arr);
         }
     

@@ -25,7 +25,21 @@ var filterBtns = $('.filter-button-group').find('button');
 
                             /* SHOW (Producto) */
 
-//Carrito
+function change_image(image){
+
+    var container = document.getElementById("main-image");
+
+    container.src = image.src;
+}
+
+document.addEventListener("DOMContentLoaded", function(event) {
+               
+});
+
+
+
+                            /* CARRITO */
+
 let DB;
 /* let listaPrueba=[{nombre:'xxx',precio:30,cantidad:2}]; */
 window.addEventListener('load', () =>{
@@ -37,7 +51,7 @@ window.addEventListener('load', () =>{
     document.querySelector('#botonAñadirCarrito').addEventListener('click', () =>{
 
         $.ajax({
-            url:$("#path-to-controller").data("href"),
+            url:$("#path-to-controller-aniadir").data("href"),
             type: "POST",
             dataType: "json",
             data: {
@@ -50,10 +64,12 @@ window.addEventListener('load', () =>{
             }, */
 
             success: function (data)
-            {                
+            {        
+                console.log(data);        
                 crear_carritoDB();
                 setTimeout( () => {
-                    aniadirProducto(JSON.parse(data));
+                    producto = {id: data, cantidad: 1}
+                    aniadirProducto(producto);
                 }, 3000);
      
             }
@@ -90,11 +106,12 @@ function crear_carritoDB() {
         let tabla_ProductosCarrito = db.createObjectStore('carrito', { keyPath: 'id'/* ,  autoIncrement: true */ } );
 
         //createindex --> Creamos las columnas de nuestra DB
-        //tabla_ProductosCarrito.createIndex('id', 'id', { unique: true } );
+        /* tabla_ProductosCarrito.createIndex('id', 'id', { unique: true } );
         tabla_ProductosCarrito.createIndex('nombre', 'nombre', { unique: false } );
         tabla_ProductosCarrito.createIndex('precio', 'precio', { unique: false } );
         tabla_ProductosCarrito.createIndex('descuento', 'descuento', { unique: false } );
-        tabla_ProductosCarrito.createIndex('imagen', 'imagen', { unique: false } );
+        tabla_ProductosCarrito.createIndex('imagen', 'imagen', { unique: false } ); */
+        tabla_ProductosCarrito.createIndex('cantidad', 'cantidad', { unique: false } );
     }
 }
 
@@ -102,7 +119,7 @@ function crear_carritoDB() {
 function aniadirProducto(producto) {
     // Crear un nuevo registro
     let transaction = DB.transaction(['carrito'], 'readwrite');
-
+    console.log(producto);
     transaction.objectStore('carrito').add(producto);
 
     transaction.oncomplete = function(event) {
@@ -185,11 +202,33 @@ function mostrarCarrito(){
     let transaction = DB.transaction(['carrito'], 'readonly');
     let tabla = transaction.objectStore('carrito');
 
-    const myIndex = tabla.index('id');
+    const myIndex = tabla.index('cantidad');
     const getAllKeysRequest = myIndex.getAllKeys();
 
     getAllKeysRequest.onsuccess = () => {
-      console.log("GET ALL KEYS:");
-      console.log(getAllKeysRequest.result);
+        console.log("GET ALL KEYS:");
+        let productosCarrito = getAllKeysRequest.result;
+        console.log(productosCarrito);
+        $.ajax({
+            url:"/user/carrito",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: {
+                productos:productosCarrito, 
+            },
+            async: true,
+
+            /* error: function() {
+                console.log("Error");
+            }, */
+
+            success: function (data)
+            {                
+                
+            }
+        });
+
+
     };
 }
