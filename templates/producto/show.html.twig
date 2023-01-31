@@ -30,7 +30,18 @@
                                 </div>
                             </div>
                             <p class="about">{{ producto.descripcion }}</p>
-                            <div class="sizes mt-5">
+                            <div class="d-flex flex-row mt-3">
+                                <span class="pe-3 text-muted">Cantidad</span>
+                                <input
+                                id="quantityInput"
+                                min="1"
+                                name="quantity"
+                                value="1"
+                                type="number"
+                                class="form-control form-control-sm"
+                                style="width: 50px"/>                            
+                            </div>
+                            <div class="sizes mt-4">
                                 <h6 class="text-uppercase">Size</h6> <label class="radio"> <input type="radio" name="size" value="S" checked> <span>S</span> </label> <label class="radio"> <input type="radio" name="size" value="M"> <span>M</span> </label> <label class="radio"> <input type="radio" name="size" value="L"> <span>L</span> </label> <label class="radio"> <input type="radio" name="size" value="XL"> <span>XL</span> </label> <label class="radio"> <input type="radio" name="size" value="XXL"> <span>XXL</span> </label>
                             </div>
                             <div class="cart mt-4 align-items-center"> <button id="botonAñadirCarrito" class="btn btn-danger text-uppercase mr-2 px-4">Añadir a la cesta</button> <i class="fa fa-heart text-muted"></i> <i class="fa fa-share-alt text-muted"></i> </div>

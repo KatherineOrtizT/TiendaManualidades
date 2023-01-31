@@ -26,19 +26,19 @@
                         <th scope="row">
                           <div class="d-flex align-items-center">
                             <img
-                              src="{{ asset('/images/' ~  producto.imagen) }}"
+                              src="{{ asset('/images/' ~  producto['producto'].imagen) }}"
                               id="imagen_producto"
                               class="img-fluid rounded-3"
                               style="width: 120px"
                               alt="Book"
                             />
                             <div class="flex-column ms-4">
-                              <p class="mb-2" id="nombre_producto">{{producto.nombre}}</p>
+                              <p class="mb-2" id="nombre_producto">{{producto['producto'].nombre}}</p>
                             </div>
                           </div>
                         </th>
                         <td class="align-middle">
-                          <p class="mb-0" id="id_producto" style="font-weight: 500">{{ producto.id }}</p>
+                          <p class="mb-0" id="id_producto" style="font-weight: 500">{{ producto['producto'].id }}</p>
                         </td>
                         <td class="align-middle">
                           <div class="d-flex flex-row">
@@ -46,9 +46,9 @@
 
                             <input
                               id="form1"
-                              min="0"
+                              min="1"
                               name="quantity"
-                              value="1"
+                              value="{{ producto['cantidad'] }}"
                               type="number"
                               class="form-control form-control-sm"
                               style="width: 50px"
@@ -58,14 +58,14 @@
                           </div>
                         </td>
                         <td class="align-middle">
-                          <p class="mb-0" id="precio_producto" style="font-weight: 500">{{ producto.precio }}</p>
+                          <p class="mb-0" id="precio_producto" style="font-weight: 500">{{ producto['producto'].precio }}</p>
                         </td>
                         <td class="align-middle">
-                          <a href="{# {{ path('app_user_devolver', {'compra':compra.id}) }} #}">
+                          <a href="{{ path('app_producto_eliminar_carrito', {'id':producto['producto'].id}) }}">
                             <button
                                 type="button"
                                 class="btn mx-2 position-relative">
-                                    <i class="fal fa-trash-alt"></i>
+                                    <i class="fa fa-trash-alt"></i>
                             </button>
                           </a>
                         </td>
