@@ -3,10 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Compras;
+use App\Entity\Pedidos;
+use App\Entity\Producto;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\ComprasRepository;
+use App\Repository\PedidosRepository;
+use App\Repository\ProductoRepository;
+use Doctrine\DBAL\Schema\Identifier;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Id;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,12 +56,65 @@ class UserController extends AbstractController
         ]);
     }
 
-
-    #[Route('/{id}/compras', name: 'app_user_compras', methods: ['GET'])]
-    public function listarCompras(Request $request, Compras $compras): Response
+    #[Route('/carrito', name: 'app_user_carrito', methods: ['POST', 'GET'])]
+    public function mostrarCarritoAction(Request $request, ProductoRepository $productoRepository): Response
     {
-        return $this->render('user/show.html.twig', [
-            'compras' => $compras
-        ]);
+        $idProductosCarrito = $request->request->get('productos',null);
+        $productosCarrito= array();
+        if($idProductosCarrito){
+            foreach(json_decode($idProductosCarrito) as $idProducto){
+                $productosCarrito[] = $productoRepository->find($idProducto);
+            }
+           
+            return $this->render('producto/carrito.html.twig', [
+                'productos' => $productosCarrito,
+            ]);
+
+        }
+        
+        return $this->render('producto/carrito.html.twig', []);   
     }
+
+    #[Route('/personal', name: 'app_user_personal', methods: ['GET'])]
+    public function ir_areaPersonal(): Response
+    {
+        $user= $this->getUser();
+        return $this->render('user/show.html.twig', ['user'=>$user]);
+    }
+
+    #[Route('/comprar', name: 'app_user_comprar', methods: ['GET'])]
+    public function finalizarCompra(Request $request, PedidosRepository $pedidosRepository, ComprasRepository $comprasRepository): Response
+    {
+        $pedido = new Pedidos();
+        $fecha = new \DateTime('@'.strtotime('now'));
+        $pedido->setDireccion("direccion default");
+        $pedido->setFecha($fecha);
+        $usuario = $this->getUser();
+        $pedido->setIdUsuario($usuario);
+        $pedidosRepository->save($pedido, true);
+
+        $session= $request->getSession();
+        foreach($session->get('carrito') as $product){
+            $producto = $this->em->getRepository(Producto::class)->findOneBy(['id' => $product['producto']->getId()]);
+            $compra = new Compras();
+            $compra->setIdPedido($pedido);
+            $compra->setIdProducto($producto);
+            $comprasRepository->save($compra, true);
+        }
+
+        $request->getSession()->remove('carrito');
+
+        return $this->redirectToRoute('app_homepage_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+    #[Route('/devolver/{compra}', name: 'app_user_devolver', methods: ['GET'])]
+    public function devolverCompra(Compras $compra, ComprasRepository $comprasRepository): Response
+    {
+        //$pedido->removeCompra($compra);
+        $comprasRepository->remove($compra, true);
+
+        return $this->redirectToRoute('app_user_personal', [], Response::HTTP_SEE_OTHER);
+    }
+
 }

@@ -1,6 +1,10 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
     form_themes: ['bootstrap_5_layout.html.twig']
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    auto_reload:               true
+    optimizations:             -1
 
 when@test:
     twig:

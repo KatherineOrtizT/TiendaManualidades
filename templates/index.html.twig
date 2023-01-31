@@ -3,6 +3,7 @@
 {% block title %}Acuarelas Fantasía{% endblock %}
 
 {% block body %}
+
     {{ include('comunes/_header.html.twig') }}
    
     <!-- header -->
@@ -53,7 +54,7 @@
                 <a href="{{ path('app_producto_new') }}">Create new</a>
                 #}
 
-                <div class="col-md-6 col-lg-4 col-xl-3 p-2 best">
+                <div class="col-md-6 col-lg-4 col-xl-3 p-2">
                     <div class="collection-img position-relative">
                       <a href="{{ path('app_producto_show', {'id': producto.id}) }}">
                         <img src="{{ asset('/images/' ~  producto.imagen) }}" class="w-100" />

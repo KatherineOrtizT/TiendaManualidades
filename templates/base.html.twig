@@ -25,13 +25,14 @@
         {% endblock %}
 
         {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
+            {{ encore_entry_script_tags('app') }}      
+            <!-- bootstrap js -->
+            <script src="/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
+            <script src="/bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
             <!-- jquery -->
             <script src="/js/jquery-3.6.0.js"></script>
             <!-- isotope js -->
             <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
-            <!-- bootstrap js -->
-            <script src="/bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
             <!-- custom js -->
             <script src="/js/app_script.js"></script>
         {% endblock %}
