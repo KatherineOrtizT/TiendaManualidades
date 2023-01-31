@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Compras;
 use App\Entity\Pedidos;
+use App\Entity\Producto;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\ComprasRepository;
@@ -17,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 #[Route('/user')]
 class UserController extends AbstractController
@@ -86,44 +88,34 @@ class UserController extends AbstractController
     {
         $pedido = new Pedidos();
         $fecha = new \DateTime('@'.strtotime('now'));
+        $pedido->setDireccion("direccion default");
         $pedido->setFecha($fecha);
-        $idUsuario = ($this->getUser()->get_current_user)->getId();
-        $pedido->setIdUsuario($idUsuario);
+        $usuario = $this->getUser();
+        $pedido->setIdUsuario($usuario);
         $pedidosRepository->save($pedido, true);
 
         $session= $request->getSession();
-        foreach($session->get('carrito') as $producto){
+        foreach($session->get('carrito') as $product){
+            $producto = $this->em->getRepository(Producto::class)->findOneBy(['id' => $product->getId()]);
             $compra = new Compras();
-            $compra->setIdPedido($pedido->getId());
-            $compra->setIdProducto($producto->getId());
+            $compra->setIdPedido($pedido);
+            $compra->setIdProducto($producto);
             $comprasRepository->save($compra, true);
         }
+
+        $request->getSession()->remove('carrito');
 
         return $this->redirectToRoute('app_homepage_index', [], Response::HTTP_SEE_OTHER);
     }
 
 
-    /* #[Route('/{id}/pedidos', name: 'app_user_pedidos', methods: ['GET'])]
-    public function listarPedidos(Request $request, Pedidos $pedidos): Response
+    #[Route('/devolver/{compra}', name: 'app_user_devolver', methods: ['GET'])]
+    public function devolverCompra(Compras $compra, ComprasRepository $comprasRepository): Response
     {
-        return $this->render('user/show.html.twig', [
-            'pedidos' => $pedidos
-        ]);
-    } */
+        //$pedido->removeCompra($compra);
+        $comprasRepository->remove($compra, true);
 
-
-   /*  #[Route('/{id_pedido}/compras', name: 'app_user_compras', methods: ['GET'])]
-    public function listarComprasPorPedido(int $id_pedido, Request $request, ComprasRepository $comprasRepository): Response
-    {
-        /* $pedido = $pedidosRepository->findOneById($id_pedido);
-        if($pedido === null){
-            throw $this->createNotFoundException();
-        }
-
-        $compras = $comprasRepository->findBy(array('idPedido' => $id_pedido));
-        return $this->render('user/show.html.twig', [
-            'compras' => $compras
-        ]);
-    } */
+        return $this->redirectToRoute('app_user_personal', [], Response::HTTP_SEE_OTHER);
+    }
 
 }

@@ -6,11 +6,11 @@
     {{ include('comunes/_header.html.twig') }}
     <h1>Usuario</h1>
 
-    <table class="table">
+    {# <table class="table">
         <tbody>
             <tr>
                 <th>Foto</th>
-                <td> {# {{ asset('/images/' ~  user.photo) }} #}
+                <td>
                     <img
                         src="{{ asset('/images/' ~  user.photo)|default(asset('/images/default_Image.png')) }}"
                         class="rounded-circle"
@@ -34,22 +34,15 @@
                 <td>{{ user.id }}</td>
             </tr>
         </tbody>
-    </table>
-
-
-    <a href="{{ path('app_homepage_index') }}">back to Homepage</a>
+    </table> #}
 
    
-
+    <h1>Listado de compras</h1>
     <section class="h-100">
       <div class="container py-5">
  
         {% for pedido in user.pedidos %}
-
-            <p>ID: {{ pedido.id }}</p>
-            <p>Fecha: {{ pedido.fecha }}</p>
-
-        
+ 
         <div class="row d-flex justify-content-center my-4">
             <div class="col-md-8">
                 <div class="card mb-4">
@@ -57,7 +50,10 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                <th scope="col" class="h5">Carrito Compra</th>
+                                <th scope="col" class="h5">
+                                    <p>Nº de pedido: {{ pedido.id }}</p>
+                                    <p>Fecha: {{ pedido.fecha|date('d-m-Y') }}</p>
+                                </th>
                                 <th scope="col">ID</th>
                                 <th scope="col">Unidades</th>
                                 <th scope="col">Precio</th>
@@ -80,7 +76,7 @@
                                         </div>
                                     </th>
                                     <td class="align-middle">
-                                        <p class="mb-0" style="font-weight: 500">#6765</p>
+                                        <p class="mb-0" style="font-weight: 500">{{ compra.idProducto.id }}</p>
                                     </td>
                                     <td class="align-middle">
                                         <div class="d-flex flex-row">
@@ -99,6 +95,11 @@
                                     </td>
                                     <td class="align-middle">
                                         <p class="mb-0" style="font-weight: 500">{{compra.idProducto.precio}}</p>
+                                    </td>
+                                    <td class="align-middle">
+                                        <div class="d-grid gap-2 my-2">
+                                            <a href="{{ path('app_user_devolver', {'compra':compra.id}) }}" class="btn pink-btn">Devolver</a>
+                                        </div>
                                     </td>
                                 </tr>
                             {% else %}
