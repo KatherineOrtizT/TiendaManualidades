@@ -115,6 +115,7 @@ class ProductoController extends AbstractController
     public function añadirProductoAction(Request $request, Producto $producto): Response
     {
         $session= $request->getSession();
+        //$session->remove('carrito');
         //$session->clear();
         $carrito = $session->get('carrito', []);
         $carrito[]=$producto;
@@ -127,10 +128,6 @@ class ProductoController extends AbstractController
 
         
         if($request->request->get('idProducto')){
-            /* $response = new Response();
-            $response->setContent(json_encode((array)$producto));
-            $response->headers->set('Content-Type', 'application/json');
-            return $response; */
             $arr = json_encode($producto->getId());
             return new JsonResponse($arr);
         }
