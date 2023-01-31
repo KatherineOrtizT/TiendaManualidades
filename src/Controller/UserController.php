@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 #[Route('/user')]
 class UserController extends AbstractController
@@ -96,7 +95,7 @@ class UserController extends AbstractController
 
         $session= $request->getSession();
         foreach($session->get('carrito') as $product){
-            $producto = $this->em->getRepository(Producto::class)->findOneBy(['id' => $product->getId()]);
+            $producto = $this->em->getRepository(Producto::class)->findOneBy(['id' => $product['producto']->getId()]);
             $compra = new Compras();
             $compra->setIdPedido($pedido);
             $compra->setIdProducto($producto);
