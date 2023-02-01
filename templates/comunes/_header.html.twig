@@ -23,22 +23,23 @@
           </button>
 
           <!-- Button CART page -->
-          <a id="enlace" href="{{ path('app_user_carrito') }}">
+         
             <button
               type="button"
               id="boton_carrito"
               {# onclick="mostrarCarrito()" #}
-              class="btn mx-2 position-relative"
-            >
-              <i class="fa fa-shopping-cart"></i>
+              class="btn mx-2 position-relative text-black"
+            > <a id="enlace" href="{{ path('app_user_carrito') }}" class="text-reset">
+              <i class="fa fa-shopping-cart"></i></a>
             </button>
-          </a>
+           
           <!-- Button trigger modal LOGIN -->
          {% if  is_granted('ROLE_USER') %} 
-           <button type="button" class="btn pink-btn px-3 position-relative text-muted">
+           <button type="button" class="btn pink-btn px-3 position-relative text-black">
             <a href="{{ path('app_logout') }}" class="text-reset text-decoration-none">Log out</a>
-            <i class="fa fa-user"></i>
+            <i class="fas fa-sign-out-alt"></i>
           </button>
+          <a href="{{ path('app_user_personal') }}"><i class="fa fa-user"></i></a>
           {% else %}
            <button
             type="button"
@@ -52,11 +53,8 @@
             >
             <i class="fa fa-user"></i>
           </button>
-
-          <button type="button" class="btn pink-btn px-3 position-relative text-muted">
+          <button type="button" class="btn pink-btn px-3 position-relative text-black">
             <a href="{{ path('userRegistration') }}" class="text-reset text-decoration-none">Regístrate</a>
-
-
             <i class="fa fa-user"></i>
           </button>
           {% endif %}
@@ -73,7 +71,7 @@
         </button>
 
         <div class="collapse navbar-collapse order-lg-1" id="navMenu">
-          <ul class="navbar-nav mx-auto text-center">
+          <ul class="navbar-nav mx-auto text-center">           
             <li class="nav-item px-2 py-2">
               <a class="nav-link text-dark" href="{{ path('app_producto_catalogo') }}">Catálogo Productos</a>
             </li>
@@ -84,11 +82,26 @@
             <li class="nav-item px-2 py-2">
               <a class="nav-link text-dark" href="#">Contacto</a>
             </li>
+             {% if  is_granted('ROLE_ADMIN') %} 
+              <li class="nav-item px-2 py-2">
+                  <a class="nav-link text-dark" href="{{ path('app_producto_new') }}">Administrar</a>
+              </li>
+               {# <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Admin
+                </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">Crear</a>
+                      <a class="dropdown-item" href="#">editar</a>
+                      <a class="dropdown-item" href="#">Admin </a>
+                  </div>
+              </div> #}
+            {% endif %}
           </ul>
         </div>
       </div>
 
-      <a href="{{ path('app_user_personal') }}">Área Usuario</a>
+      
     </nav>
     <!-- end of navbar -->
 
@@ -203,9 +216,7 @@
         <div class="modal-content">
           <div class="modal-body">
             <div class="card-body p-5">
-
-              {# <form class="mb-3 mt-md-2">
-
+              <form class="mb-3 mt-md-2">
                 <h2 class="fw-bold mb-4">Crear Cuenta Usuario</h2>
                 <div class="mb-3">
                   <label for="nombre" class="form-label">Nombre</label>
