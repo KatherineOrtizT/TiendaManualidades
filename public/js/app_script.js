@@ -25,41 +25,64 @@ var filterBtns = $('.filter-button-group').find('button');
 
                             /* SHOW (Producto) */
 
-//Carrito
-let DB;
+function change_image(image){
 
+    var container = document.getElementById("main-image");
+
+    container.src = image.src;
+}
+
+document.addEventListener("DOMContentLoaded", function(event) {
+               
+});
+
+
+
+                            /* CARRITO */
+
+let DB;
+/* let listaPrueba=[{nombre:'xxx',precio:30,cantidad:2}]; */
 window.addEventListener('load', () =>{
 
     window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
     window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
     window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
+    
+    if(window.location.href.indexOf("producto") != -1){
+        document.querySelector('#botonAñadirCarrito').addEventListener('click', () =>{
 
-    document.querySelector('#botonAñadirCarrito').addEventListener('click', () =>{
+            $.ajax({
+                url:$("#path-to-controller-aniadir").data("href"),
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "idProducto": "some_var_value"
+                },
+                async: true,
 
-        $.ajax({
-            url:$("#path-to-controller").data("href"),
-            type: "POST",
-            dataType: "json",
-            data: {
-                "idProducto": "some_var_value"
-            },
-            async: true,
+                /* error: function() {
+                    console.log("Error");
+                }, */
 
-            /* error: function() {
-                console.log("Error");
-            }, */
+                success: function (data)
+                {        
+                    console.log(data);        
+                    crear_carritoDB();
+                    setTimeout( () => {
+                        producto = {id: data, cantidad: 1}
+                        aniadirProducto(producto);
+                    }, 3000);
+        
+                }
+            });
 
-            success: function (data)
-            {                
-                crear_carritoDB();
-                setTimeout( () => {
-                    aniadirProducto(JSON.parse(data));
-                }, 3000);
-     
-            }
         });
+    }
+    /* if(window.location.href.indexOf("user/carrito") != -1){
+        console.log("Entra MOSTRAR CARRITO");
+        mostrarCarrito();
+    } */
 
-    });
 
 });
 
@@ -81,14 +104,15 @@ function crear_carritoDB() {
         let db = e.target.result;
 
         //Creamos una tabla en nuestra DB
-        let tabla_ProductosCarrito = db.createObjectStore('carrito', { keyPath: 'idCarro',  autoIncrement: true } );
+        let tabla_ProductosCarrito = db.createObjectStore('carrito', { keyPath: 'id'} );
 
         //createindex --> Creamos las columnas de nuestra DB
-        tabla_ProductosCarrito.createIndex('id', 'id', { unique: true } );
+        /* tabla_ProductosCarrito.createIndex('id', 'id', { unique: true } );
         tabla_ProductosCarrito.createIndex('nombre', 'nombre', { unique: false } );
         tabla_ProductosCarrito.createIndex('precio', 'precio', { unique: false } );
         tabla_ProductosCarrito.createIndex('descuento', 'descuento', { unique: false } );
-        tabla_ProductosCarrito.createIndex('imagen', 'imagen', { unique: false } );
+        tabla_ProductosCarrito.createIndex('imagen', 'imagen', { unique: false } ); */
+        tabla_ProductosCarrito.createIndex('cantidad', 'cantidad', { unique: false } );
     }
 }
 
@@ -96,7 +120,7 @@ function crear_carritoDB() {
 function aniadirProducto(producto) {
     // Crear un nuevo registro
     let transaction = DB.transaction(['carrito'], 'readwrite');
-
+    console.log(producto);
     transaction.objectStore('carrito').add(producto);
 
     transaction.oncomplete = function(event) {
@@ -133,7 +157,7 @@ function eliminarProducto(id_producto) {
         }else{
             console.log('Entries displayed.'); //MIRAR         
         }
-      };
+    };
 }
 
 //Se ejecutará cuando ya se haya formalizado la compra y se borre todo el carrito.
@@ -148,5 +172,64 @@ function borrarDB(){
     console.log("Database deleted successfully");
 
     console.log(event.result); // should be undefined
+    };
+}
+
+/* function mostrarCarrito(){
+    let transaction = DB.transaction(['carrito'], 'readonly');
+
+    let tabla = transaction.objectStore('carrito');
+
+    tabla.count();
+
+    tabla.openCursor().onsuccess = function(event) {
+        let cursor = event.target.result;
+        if(cursor) {
+            document.querySelector('#imagen_producto').innerHTML="{{ asset('/images/"+cursor.value.imagen+"') }}";
+            document.querySelector('#nombre_producto').innerHTML=cursor.value.nombre;
+            document.querySelector('#id_producto').innerHTML=cursor.value.id;
+            document.querySelector('#precio_producto').innerHTML=cursor.value.precio;
+
+            cursor.continue();  
+
+        }else{
+            console.log('Entries displayed.'); //MIRAR         
+        }
+    };   
+} */
+
+function mostrarCarrito(){
+    console.log("Ejecuta FUNCIÓN");
+    let transaction = DB.transaction(['carrito'], 'readonly');
+    let tabla = transaction.objectStore('carrito');
+
+    const myIndex = tabla.index('cantidad');
+    const getAllKeysRequest = myIndex.getAllKeys();
+
+    getAllKeysRequest.onsuccess = () => {
+        console.log("GET ALL KEYS:");
+        let productosCarrito = getAllKeysRequest.result;
+        console.log(productosCarrito);
+        $.ajax({
+            url:"/user/carrito",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: {
+                productos:productosCarrito, 
+            },
+            async: true,
+
+            /* error: function() {
+                console.log("Error");
+            }, */
+
+            success: function (data)
+            {                
+                
+            }
+        });
+
+
     };
 }
