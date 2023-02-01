@@ -11,12 +11,22 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\ORM\EntityManagerInterface;
 
 
 #[Route('/producto')]
 class ProductoController extends AbstractController
 {
 
+    private $em;
+
+    /**
+     * @param $em
+     */
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
     /* #[Route('/', name: 'app_producto_index', methods: ['GET'])]
     public function index(ProductoRepository $productoRepository): Response
     {
@@ -114,11 +124,12 @@ class ProductoController extends AbstractController
     #[Route('/{id}/aniadirCarrito', name: 'app_producto_carrito', methods: ['POST', 'GET'])]
     public function añadirProductoAction(Request $request, Producto $producto): Response
     {
+        $cantidad = $request->request->get('cantidad',null);
         $session= $request->getSession();
         //$session->remove('carrito');
         //$session->clear();
         $carrito = $session->get('carrito', []);
-        $carrito[]=$producto;
+        $carrito[]=['producto'=>$producto, 'cantidad'=>$cantidad];
         $session->set('carrito', $carrito);
 
         /* $carrito = $session->get('carrito', []);
@@ -127,10 +138,33 @@ class ProductoController extends AbstractController
         )); */
 
         
-        if($request->request->get('idProducto')){
+        if($request->request->get('cantidad')){
             $arr = json_encode($producto->getId());
             return new JsonResponse($arr);
         }
     
     }
+
+
+    #[Route('/{id}/eliminarCarrito', name: 'app_producto_eliminar_carrito', methods: ['POST', 'GET'])]
+    public function eliminarProductoAction(int $id, Request $request, Producto $producto): Response
+    {
+        $session= $request->getSession();
+        $carrito = $session->get('carrito');
+        foreach($carrito as $index => $elemento){
+            $producto = $this->em->getRepository(Producto::class)->findOneBy(['id' => $elemento['producto']->getId()]);
+            if($producto->getId() == $id){
+                unset($carrito[$index]);
+            }
+        }
+
+        return $this->redirectToRoute('app_user_carrito', [], Response::HTTP_SEE_OTHER);
+    
+        /* foreach($elemento as $atributo){
+            if($atributo->getId() == $id){
+                unset($carrito[$elemento]);
+            }
+        } */
+    }
+
 }

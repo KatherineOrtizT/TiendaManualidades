@@ -51,12 +51,14 @@ window.addEventListener('load', () =>{
     if(window.location.href.indexOf("producto") != -1){
         document.querySelector('#botonAñadirCarrito').addEventListener('click', () =>{
 
+            let cantidad = document.querySelector('#quantityInput').value;
+
             $.ajax({
                 url:$("#path-to-controller-aniadir").data("href"),
                 type: "POST",
                 dataType: "json",
                 data: {
-                    "idProducto": "some_var_value"
+                    "cantidad": cantidad
                 },
                 async: true,
 
