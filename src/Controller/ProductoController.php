@@ -136,7 +136,7 @@ class ProductoController extends AbstractController
         $session->set('carrito', array(
             array_merge($carrito, [$producto]) 
         )); */
-
+        //return $this->redirectToRoute('app_user_carrito', [], Response::HTTP_SEE_OTHER);
         
         if($request->request->get('cantidad')){
             $arr = json_encode($producto->getId());
@@ -147,13 +147,13 @@ class ProductoController extends AbstractController
 
 
     #[Route('/{id}/eliminarCarrito', name: 'app_producto_eliminar_carrito', methods: ['POST', 'GET'])]
-    public function eliminarProductoAction(int $id, Request $request, Producto $producto): Response
+    public function eliminarProductoAction(Request $request, Producto $producto): Response
     {
         $session= $request->getSession();
         $carrito = $session->get('carrito');
         foreach($carrito as $index => $elemento){
-            $producto = $this->em->getRepository(Producto::class)->findOneBy(['id' => $elemento['producto']->getId()]);
-            if($producto->getId() == $id){
+            $productoArray = $this->em->getRepository(Producto::class)->findOneBy(['id' => $elemento['producto']->getId()]);
+            if($productoArray->getId() == $producto->getId()){
                 unset($carrito[$index]);
             }
         }

@@ -23,22 +23,24 @@
           </button>
 
           <!-- Button CART page -->
-          <a id="enlace" href="{{ path('app_user_carrito') }}">
+          
             <button
               type="button"
               id="boton_carrito"
               {# onclick="mostrarCarrito()" #}
-              class="btn mx-2 position-relative"
-            >
-              <i class="fa fa-shopping-cart"></i>
+              class="btn mx-2 position-relative text-black">
+              <a href="{{ path('app_user_carrito') }}" class="text-reset">
+                <i class="fa fa-shopping-cart"></i>
+              </a>
             </button>
-          </a>
+          
           <!-- Button trigger modal LOGIN -->
          {% if  is_granted('ROLE_USER') %} 
            <button type="button" class="btn pink-btn px-3 position-relative text-muted">
             <a href="{{ path('app_logout') }}" class="text-reset text-decoration-none">Log out</a>
             <i class="fa fa-user"></i>
           </button>
+          <a href="{{ path('app_user_personal') }}">Área Usuario</a>
           {% else %}
            <button
             type="button"
@@ -88,7 +90,7 @@
         </div>
       </div>
 
-      <a href="{{ path('app_user_personal') }}">Área Usuario</a>
+      
     </nav>
     <!-- end of navbar -->
 
