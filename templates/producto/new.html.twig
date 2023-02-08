@@ -3,9 +3,20 @@
 {% block title %}New Producto{% endblock %}
 
 {% block body %}
-    <h1>Create new Producto</h1>
-
-    {{ include('producto/_form.html.twig') }}
-
-    <a href="{{ path('app_homepage_index') }}">back to list</a>
+    {% if  is_granted('ROLE_ADMIN') %} 
+        <div class="row mt-5">
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-5">
+            <h1>Create new Producto</h1>
+            {{ include('producto/_form.html.twig') }}
+            <a href="{{ path('app_homepage_index') }}">back to list</a>
+            </div>   
+            <div class="col-md-3">
+            </div>
+            </div>
+    {% else %}
+              <img src="/images/logo-icon.png" alt="site logo icon"/>
+    {% endif %}
+    
 {% endblock %}

@@ -30,6 +30,7 @@
                                 </div>
                             </div>
                             <p class="about">{{ producto.descripcion }}</p>
+
                             <div class="d-flex flex-row mt-3">
                                 <span class="pe-3 text-muted">Cantidad</span>
                                 <input
@@ -43,6 +44,12 @@
                                 style="width: 50px"/>                            
                             </div>
                             <div class="sizes mt-4">
+
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('app_producto_edit', {'id': producto.id}) }}" class="text-reset text-decoration-none">edit</a>
+                                {{ include('producto/_delete_form.html.twig') }}
+                            {% endif %}
+                            <div class="sizes mt-5">
                                 <h6 class="text-uppercase">Size</h6> <label class="radio"> <input type="radio" name="size" value="S" checked> <span>S</span> </label> <label class="radio"> <input type="radio" name="size" value="M"> <span>M</span> </label> <label class="radio"> <input type="radio" name="size" value="L"> <span>L</span> </label> <label class="radio"> <input type="radio" name="size" value="XL"> <span>XL</span> </label> <label class="radio"> <input type="radio" name="size" value="XXL"> <span>XXL</span> </label>
                             </div>
                             <div class="cart mt-4 align-items-center"> <button id="botonAñadirCarrito" class="btn btn-danger text-uppercase mr-2 px-4">Añadir a la cesta</button> <i class="fa fa-heart text-muted"></i> <i class="fa fa-share-alt text-muted"></i> </div>
@@ -96,12 +103,6 @@
      <div id="path-to-controller-aniadir" data-href="{{ path('app_producto_carrito', {'id': producto.id}) }}"> </div>
 
     {# <button id="botonAñadirCarrito">Añadir a la Cesta</button> #}
-
-    <a href="{{ path('app_homepage_index') }}">back to list</a>
-
-    <a href="{{ path('app_producto_edit', {'id': producto.id}) }}">edit</a>
-
-    {{ include('producto/_delete_form.html.twig') }}
 
     <h1>Busquedas Relacionadas</h1>
 

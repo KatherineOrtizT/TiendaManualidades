@@ -42,25 +42,24 @@
             <button type="button" class="btn m-2 text-dark" data-filter=".new">
               Nuevos
             </button>
-            <a href="{{ path('app_producto_new') }}">Create new</a>
+            {% if  is_granted('ROLE_ADMIN') %} 
+              <button type="button" class="btn m-2 text-dark" data-filter=".new">
+              <a href="{{ path('app_producto_new') }}" class="text-reset text-decoration-none">
+              Create New</a>
+              </button>
+            {% endif %}
           </div>
 
           <div class="collection-list mt-4 row gx-0 gy-3">
 
             {% for producto in productos %}
-                {# 
-                <a href="{{ path('app_producto_show', {'id': producto.id}) }}">Ver</a>
-                <a href="{{ path('app_producto_edit', {'id': producto.id}) }}">Editar</a> 
-                <a href="{{ path('app_producto_new') }}">Create new</a>
-                #}
-
                 <div class="col-md-6 col-lg-4 col-xl-3 p-2">
                     <div class="collection-img position-relative">
                       <a href="{{ path('app_producto_show', {'id': producto.id}) }}">
                         <img src="{{ asset('/images/' ~  producto.imagen) }}" class="w-100" />
                       </a>                    
                     </div>
-                    <div class="text-center">
+                    <div class="text-center text-black">
                         <div class="rating mt-3">
                         <span class="text-primary"><i class="fas fa-star"></i></span>
                         <span class="text-primary"><i class="fas fa-star"></i></span>
@@ -70,6 +69,10 @@
                         </div>
                         <p class="text-capitalize my-1">{{ producto.nombre }}</p>
                         <span class="fw-bold">€ {{ producto.precio }}</span>
+                          {% if  is_granted('ROLE_ADMIN') %} 
+                            {{ include('producto/_delete_form.html.twig') }} 
+                            <a href="{{ path('app_producto_edit', {'id': producto.id})}}"  class="text-reset text-decoration-none">Editar</a>
+                          {% endif %}
                     </div>
                 </div>
             {% else %}
