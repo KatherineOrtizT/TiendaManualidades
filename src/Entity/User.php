@@ -45,6 +45,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $Apellidos = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Pregunta::class, orphanRemoval: true)]
+    private Collection $preguntas;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Respuesta::class, orphanRemoval: true)]
+    private Collection $respuestas;
+
     public function __construct($nombre=null,$apellidos=null,$id=null,$email=null,$password=null)
     {
         $this->Nombre = $nombre;
@@ -53,6 +59,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->email = $email;
         $this->password = $password;
         $this->pedidos = new ArrayCollection();
+        $this->preguntas = new ArrayCollection();
+        $this->respuestas = new ArrayCollection();
     }
 
 
@@ -189,6 +197,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setApellidos(string $Apellidos): self
     {
         $this->Apellidos = $Apellidos;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Pregunta>
+     */
+    public function getPreguntas(): Collection
+    {
+        return $this->preguntas;
+    }
+
+    public function addPregunta(Pregunta $pregunta): self
+    {
+        if (!$this->preguntas->contains($pregunta)) {
+            $this->preguntas->add($pregunta);
+            $pregunta->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePregunta(Pregunta $pregunta): self
+    {
+        if ($this->preguntas->removeElement($pregunta)) {
+            // set the owning side to null (unless already changed)
+            if ($pregunta->getUser() === $this) {
+                $pregunta->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Respuesta>
+     */
+    public function getRespuestas(): Collection
+    {
+        return $this->respuestas;
+    }
+
+    public function addRespuesta(Respuesta $respuesta): self
+    {
+        if (!$this->respuestas->contains($respuesta)) {
+            $this->respuestas->add($respuesta);
+            $respuesta->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRespuesta(Respuesta $respuesta): self
+    {
+        if ($this->respuestas->removeElement($respuesta)) {
+            // set the owning side to null (unless already changed)
+            if ($respuesta->getUser() === $this) {
+                $respuesta->setUser(null);
+            }
+        }
 
         return $this;
     }
