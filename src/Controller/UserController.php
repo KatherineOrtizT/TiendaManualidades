@@ -49,7 +49,7 @@ class UserController extends AbstractController
             $user->setRoles(['ROLE_USER']);
             $this->em->persist($user);
             $this->em->flush();
-            return $this->redirectToRoute('userRegistration');
+            return $this->redirectToRoute('app_homepage_index');
         }
         return $this->render('user/index.html.twig', [
             'registration_form' => $registration_form->createView()
