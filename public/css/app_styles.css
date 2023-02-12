@@ -1,4 +1,24 @@
-/*-- GLOBAL -- */
+/***** INDICE *****/
+/*--------------*/
+/*
+  1. Global (estilos para todas las paginas)
+  2. Header
+  3. Footer
+  4. Login/ Register
+  5. Homepage
+  6. Pagina Producto
+  7. Catalogo Productos
+  8. Pagina Admin
+  9. Pagina User Registrado 
+  10. About Us
+  11. Contact
+  12. Carrito
+  13. Pagina Pago
+  --------------
+*/
+
+/***** 1.GLOBAL *****/
+/*-----------------*/
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Playfair+Display:ital,wght@1,600&display=swap");
 
 :root {
@@ -6,14 +26,18 @@
   --sm-font: "Montserrat", sans-serif;
   --pink: #d686c5;
 }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: var(--sm-font);
 }
 
-/* button */
-.bg-primary {
-  background-color: var(--pink) !important;
-}
+/* buttons */
 
 .pink-btn {
   background-color: var(--pink) !important;
@@ -21,9 +45,10 @@ body {
   border-color: var(--pink) !important;
   border-radius: 25px;
 }
+
 .outline-btn {
-  border-color: black;
-  border-radius: 25px;
+  border-color: black !important;
+  border-radius: 25px !important;
 }
 
 .btn:not(.nav-btns button) {
@@ -38,23 +63,22 @@ body {
   color: #fff;
   border-color: var(--pink);
 }
-.pink-btn {
-  background-color: var(--pink) !important;
-  color: #fff !important;
-  border-color: var(--pink) !important;
-  border-radius: 25px;
-}
-.outline-btn {
-  border-color: black !important;
-  border-radius: 25px !important;
-}
 
-/* text color */
+/* colors */
 .text-primary {
   color: var(--pink) !important;
 }
 
-/* -- NAVBAR -- */
+.bg-primary {
+  background-color: var(--pink) !important;
+}
+
+#pink {
+  color: var(--pink) !important;
+}
+
+/***** 2. HEADER *****/
+/*------------------*/
 .navbar {
   -webkit-box-shadow: 0 3px 9px 3px rgba(0, 0, 0, 0.1);
   box-shadow: 0 3px 9px 3px rgba(0, 0, 0, 0.1);
@@ -72,14 +96,16 @@ body {
 .nav-item {
   border-bottom: 0.5px solid rgba(0, 0, 0, 0.05);
 }
-.login-btn {
-  background-color: var(--pink);
-  color: #fff;
-  border-color: var(--pink);
-  border-radius: 25px;
+
+/* media queries */
+@media (min-width: 992px) {
+  .nav-item {
+    border-bottom: none;
+  }
 }
 
-/* -- FOOTER -- */
+/***** 3. FOOTER *****/
+/*------------------*/
 footer .brand {
   font-family: var(--lg-font);
   letter-spacing: 2px;
@@ -93,16 +119,17 @@ footer a:hover {
   color: var(--pink) !important;
 }
 
-/* media queries */
-@media (min-width: 992px) {
-  .nav-item {
-    border-bottom: none;
-  }
+/***** 4. LOGIN *****/
+/*-----------------*/
+.login-btn {
+  background-color: var(--pink);
+  color: #fff;
+  border-color: var(--pink);
+  border-radius: 25px;
 }
 
-/* -- HOMEPAGE -- */
-
-/* header */
+/***** 5. HOMEPAGE *****/
+/*--------------------*/
 #header {
   background: url(../images/banner-img-1.jpg) top/cover no-repeat;
 }
@@ -187,71 +214,18 @@ footer a:hover {
   border-color: #000;
 }
 
-/* -- SHOW (Product Detail Page) -- */
-
-.card {
-  border: none;
-}
-/* .product{background-color: #eee} */
-.brand {
-  font-size: 13px;
-}
-.act-price {
-  color: rgb(66, 75, 80);
-  font-weight: 700;
-}
-.dis-price {
-  text-decoration: line-through;
-}
-.about {
-  font-size: 14px;
-}
-.color {
-  margin-bottom: 10px;
-}
-label.radio {
-  cursor: pointer;
-}
-label.radio input {
-  position: absolute;
-  top: 0;
-  left: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-label.radio span {
-  padding: 2px 9px;
-  border: 2px solid var(--pink);
-  display: inline-block;
-  color: var(--pink);
-  border-radius: 3px;
-  text-transform: uppercase;
-}
-label.radio input:checked + span {
-  border-color: var(--pink);
-  background-color: var(--pink);
-  color: #fff;
-}
-.btn-danger {
-  background-color: var(--pink) !important;
-  border-color: var(--pink) !important;
-}
-.btn-danger:hover {
-  background-color: var(--pink) !important;
-  border-color: var(--pink) !important;
-}
-.btn-danger:focus {
-  box-shadow: none;
-}
-.cart i {
-  margin-right: 10px;
-}
-.similar-product img {
-  height: 400px;
+/***** 6. PAGINA PRODUCTO *****/
+/*---------------------------*/
+.row {
+  justify-content: space-around;
 }
 
-/*Admin Page*/
-/*** Layout ***/
+/***** 7. CATALOGO PRODUCTOS *****/
+/*---------------------------*/
+
+/***** 8. PAGINA ADMIN *****/
+/*------------------*/
+/* layout */
 .sidebar {
   position: fixed;
   top: 0;
@@ -292,7 +266,7 @@ label.radio input:checked + span {
   }
 }
 
-/*** Navbar ***/
+/* sidebar*/
 .sidebar .navbar-admin .navbar-admin-nav .nav-admin-link {
   padding: 7px 20px;
   color: black;
