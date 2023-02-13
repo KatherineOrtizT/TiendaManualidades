@@ -6,6 +6,7 @@ use JsonSerializable;
 use App\Repository\ProductoRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductoRepository::class)]
@@ -16,10 +17,10 @@ class Producto implements JsonSerializable
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 60)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $nombre = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $descripcion = null;
 
     #[ORM\Column]
@@ -43,9 +44,13 @@ class Producto implements JsonSerializable
     #[ORM\OneToMany(mappedBy: 'idProducto', targetEntity: Compras::class)]
     private Collection $compras;
 
+    #[ORM\OneToMany(mappedBy: 'producto', targetEntity: Pregunta::class, orphanRemoval: true)]
+    private Collection $preguntas;
+
     public function __construct()
     {
         $this->compras = new ArrayCollection();
+        $this->preguntas = new ArrayCollection();
     }
 
     public function jsonSerialize()
@@ -188,6 +193,36 @@ class Producto implements JsonSerializable
             // set the owning side to null (unless already changed)
             if ($compra->getIdProducto() === $this) {
                 $compra->setIdProducto(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Pregunta>
+     */
+    public function getPreguntas(): Collection
+    {
+        return $this->preguntas;
+    }
+
+    public function addPregunta(Pregunta $pregunta): self
+    {
+        if (!$this->preguntas->contains($pregunta)) {
+            $this->preguntas->add($pregunta);
+            $pregunta->setProducto($this);
+        }
+
+        return $this;
+    }
+
+    public function removePregunta(Pregunta $pregunta): self
+    {
+        if ($this->preguntas->removeElement($pregunta)) {
+            // set the owning side to null (unless already changed)
+            if ($pregunta->getProducto() === $this) {
+                $pregunta->setProducto(null);
             }
         }
 

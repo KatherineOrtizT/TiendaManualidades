@@ -27,6 +27,7 @@ security:
                 path: app_logout
                 target: app_homepage_index
                 invalidate_session: true
+            access_denied_handler: App\Security\AccessDeniedHandler
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -37,6 +38,13 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        - { path: ^/producto/new, roles: ROLE_ADMIN }
+        - { path: ^/producto/\d+/edit, roles: ROLE_ADMIN }
+        #- { path: ^/producto/\d+, roles: ROLE_ADMIN }
+        
+        - { path: ^/user/personal, roles: ROLE_USER }
+        - { path: ^/user/devolver/\d+, roles: ROLE_USER }
+        - { path: ^/user/comprar, roles: ROLE_ADMIN }        
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
