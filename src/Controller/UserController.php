@@ -78,6 +78,7 @@ class UserController extends AbstractController
     #[Route('/personal', name: 'app_user_personal', methods: ['GET'])]
     public function ir_areaPersonal(): Response
     {
+        
         $user= $this->getUser();
         return $this->render('user/show.html.twig', ['user'=>$user]);
     }

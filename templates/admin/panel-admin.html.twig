@@ -1,0 +1,198 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% if  is_granted('ROLE_ADMIN') %} 
+        <div class="container-xxl position-relative bg-white d-flex p-0">
+      <!-- Sidebar Start -->
+      <div class="sidebar pe-4 pb-3">
+        <nav class="navbar-admin bg-light navbar-light">
+          <a href="index.html" class="navbar-brand mx-4 mb-3">
+            <h3 class="text-primary">USER ADMIN</h3>
+          </a>
+          <div class="d-flex align-items-center ms-4 mb-4">
+            <div class="position-relative">
+              <img
+                class="rounded-circle"
+                src="/images/user.jpg"
+                alt=""
+                style="width: 40px; height: 40px"
+              />
+              <div
+                class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"
+              ></div>
+            </div>
+            <div class="ms-3">
+              <h6 class="mb-0">Diana Munteanu</h6>
+              <span>Admin</span>
+            </div>
+          </div>
+          <div class="navbar-admin-nav w-100">
+            <a href="index.html" class="nav-i-admintem nav-admin-link active"
+              ><i class="fa fa-tachometer-alt me-2"></i>Panel Admin</a
+            >
+
+            <a href="#" class="nav-admin-item nav-admin-link"
+              ><i class="fa fa-user me-2"></i>Perfil</a
+            >
+            <a href="#" class="nav-admin-item nav-admin-link"
+              ><i class="fa fa-book-open me-2"></i>Catalogo</a
+            >
+            <a href="#" class="nav-admin-item nav-admin-link"
+              ><i class="fa fa-plus-circle me-2"></i>Crear Producto</a
+            >
+            <a href="#" class="nav-admin-item nav-admin-link"
+              ><i class="fa fa-edit me-2"></i>Editar Producto</a
+            >
+            <a class="btn btn-primary m-4" href="#">LOG OUT</a>
+          </div>
+        </nav>
+      </div>
+      <!-- Sidebar End -->
+
+      <!-- Content Start -->
+      <div class="content mt-5">
+        <!-- Sale & Revenue Start -->
+        <div class="container-fluid pt-4 px-4">
+          <div class="row g-4">
+            <div class="col-sm-6 col-xl-3">
+              <div
+                class="bg-light rounded d-flex align-items-center justify-content-between p-4"
+              >
+                <i class="fa fa-chart-line fa-3x text-primary"></i>
+                <div class="ms-3">
+                  <p class="mb-2">Ventas Hoy</p>
+                  <h6 class="mb-0">54</h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+              <div
+                class="bg-light rounded d-flex align-items-center justify-content-between p-4"
+              >
+                <i class="fa fa-chart-bar fa-3x text-primary"></i>
+                <div class="ms-3">
+                  <p class="mb-2">Total Ventas</p>
+                  <h6 class="mb-0">9855</h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+              <div
+                class="bg-light rounded d-flex align-items-center justify-content-between p-4"
+              >
+                <i class="fa fa-chart-area fa-3x text-primary"></i>
+                <div class="ms-3">
+                  <p class="mb-2">Ingresos Hoy</p>
+                  <h6 class="mb-0">€795</h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+              <div
+                class="bg-light rounded d-flex align-items-center justify-content-between p-4"
+              >
+                <i class="fa fa-chart-pie fa-3x text-primary"></i>
+                <div class="ms-3">
+                  <p class="mb-2">Total Ingresos</p>
+                  <h6 class="mb-0">€95000</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Sale & Revenue End -->
+
+        <!-- Recent Sales Start -->
+        <div class="container-fluid pt-4 px-4 mb-5">
+          <div class="bg-light text-center rounded p-4">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+              <h6 class="mb-0">Ultimas Ventas</h6>
+            </div>
+            <div class="table-responsive">
+              <table
+                class="table text-start align-middle table-bordered table-hover mb-0"
+              >
+                <thead>
+                  <tr class="text-dark">
+                    <th scope="col">
+                      <input class="form-check-input" type="checkbox" />
+                    </th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Numero</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Importe</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Ver más</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input class="form-check-input" type="checkbox" /></td>
+                    <td>01 Jan 2023</td>
+                    <td>INV-0123</td>
+                    <td>Jhon Doe</td>
+                    <td>€123</td>
+                    <td>Pagado</td>
+                    <td>
+                      <a class="btn btn-sm btn-primary" href="">Ver compra</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input class="form-check-input" type="checkbox" /></td>
+                    <td>01 Jan 2023</td>
+                    <td>INV-0123</td>
+                    <td>Jhon Doe</td>
+                    <td>€123</td>
+                    <td>Pagado</td>
+                    <td>
+                      <a class="btn btn-sm btn-primary" href="">Ver compra</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input class="form-check-input" type="checkbox" /></td>
+                    <td>01 Jan 2023</td>
+                    <td>INV-0123</td>
+                    <td>Jhon Doe</td>
+                    <td>€123</td>
+                    <td>Pagado</td>
+                    <td>
+                      <a class="btn btn-sm btn-primary" href="">Ver compra</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input class="form-check-input" type="checkbox" /></td>
+                    <td>01 Jan 2023</td>
+                    <td>INV-0123</td>
+                    <td>Jhon Doe</td>
+                    <td>€123</td>
+                    <td>Devuelto</td>
+                    <td>
+                      <a class="btn btn-sm btn-primary" href="">Ver compra</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input class="form-check-input" type="checkbox" /></td>
+                    <td>01 Jan 2023</td>
+                    <td>INV-0123</td>
+                    <td>Jhon Doe</td>
+                    <td>€123</td>
+                    <td>Pagado</td>
+                    <td>
+                      <a class="btn btn-sm btn-primary" href="">Ver compra</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- Recent Sales End -->
+      </div>
+      <!-- Content End -->
+    </div>
+
+    {% else %}
+              <img src="/images/403.gif" alt="site logo icon"/>
+    {% endif %}
+    
+{% endblock %}
