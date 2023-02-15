@@ -20,4 +20,13 @@ class HomepageController extends AbstractController
         ]);
     }
 
+    /* #[Route('/error403', name: 'app_error403', methods: ['GET'])]
+    public function error403(): Response
+    {
+        /*{{ render(controller('App\\Controller\\HomePageController::app_error403')}}
+        return $this->render('/error403.html.twig', []);
+    } */
+
+
+
 }

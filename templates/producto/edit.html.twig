@@ -3,7 +3,7 @@
 {% block title %}Edit Producto{% endblock %}
 
 {% block body %}
-        {% if  is_granted('ROLE_ADMIN') %} 
+        {# {% if  is_granted('ROLE_ADMIN') %}  #}
             <h1>Edit Producto</h1>
 
             {{ include('producto/_form.html.twig', {'button_label': 'Update'}) }}
@@ -11,7 +11,9 @@
             <a href="{{ path('app_homepage_index') }}">back to list</a>
 
             {{ include('producto/_delete_form.html.twig') }}
+
         {% else %}
               <img src="/images/403.gif" alt="site logo icon"/>
         {% endif %}
+
 {% endblock %}

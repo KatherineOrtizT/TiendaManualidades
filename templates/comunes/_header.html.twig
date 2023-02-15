@@ -22,7 +22,6 @@
           </button>
 
           <!-- Button CART page -->
-         
             <button
               type="button"
               id="boton_carrito"
@@ -31,14 +30,17 @@
             > <a id="enlace" href="{{ path('app_user_carrito') }}" class="text-reset">
               <i class="fa fa-shopping-cart"></i></a>
             </button>
-           
+
           <!-- Button trigger modal LOGIN -->
          {% if  is_granted('ROLE_USER') %} 
            <button type="button" class="btn pink-btn px-3 position-relative text-black">
             <a href="{{ path('app_logout') }}" class="text-reset text-decoration-none">Log out</a>
             <i class="fas fa-sign-out-alt"></i>
           </button>
-          <a href="{{ path('app_user_personal') }}"><i class="fa fa-user"></i></a>
+
+          <!-- Button PROFILE page -->
+          <a class="text-dark ms-3" href="{{ path('app_user_personal') }}"><i class="fa fa-user"></i></a>
+
           {% else %}
            <button
             type="button"

@@ -30,6 +30,21 @@
                                 </div>
                             </div>
                             <p class="about">{{ producto.descripcion }}</p>
+
+                            <div class="d-flex flex-row mt-3">
+                                <span class="pe-3 text-muted">Cantidad</span>
+                                <input
+                                id="quantityInput"
+                                min="1"
+                                max="20"
+                                name="quantity"
+                                value="1"
+                                type="number"
+                                class="form-control form-control-sm"
+                                style="width: 50px"/>                            
+                            </div>
+                            <div class="sizes mt-4">
+
                             {% if is_granted('ROLE_ADMIN') %}
                                 <a href="{{ path('app_producto_edit', {'id': producto.id}) }}" class="text-reset text-decoration-none">edit</a>
                                 {{ include('producto/_delete_form.html.twig') }}
