@@ -1,4 +1,3 @@
-{% extends 'base.html.twig' %}
 {% block body %}
 <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top mb-5">
@@ -86,17 +85,27 @@
               <li class="nav-item px-2 py-2">
                   <a class="nav-link text-dark" href="{{ path('app_producto_new') }}">Administrar</a>
               </li>
-               {# <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Admin
-                </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Crear</a>
-                      <a class="dropdown-item" href="#">editar</a>
-                      <a class="dropdown-item" href="#">Admin </a>
-                  </div>
-              </div> #}
             {% endif %}
+             <li class="nav-item px-2 py-2">
+              <div class="dropdown nav-link ">
+                <a
+                  class="dropdown-toggle text-black text-decoration-none"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Idioma
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">English</a></li>
+                  <li><a class="dropdown-item" href="#">Español</a></li>
+                </ul>
+              </div>
+            </li>
+
+
+
           </ul>
         </div>
       </div>
