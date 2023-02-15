@@ -1,118 +1,334 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Producto{% endblock %}
+{% block title %}Producto
+{% endblock %}
 
 {% block body %}
-    {{ include('comunes/_header.html.twig') }}
-    <h1>Producto</h1>
+	{{ include('comunes/_header.html.twig') }}
+	<h1>Producto</h1>
 
 
-<div class="container mt-5 mb-5 mt-5">
-    <div class="row d-flex justify-content-center mt-5">
-        <div class="col-md-10">
-            <div class="card">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="images p-3">
-                            <div class="text-center p-4"> <img id="main-image" src="{{ asset('/images/' ~  producto.imagen) }}" width="250" /> </div>
-                            <div class="thumbnail text-center"> <img onclick="change_image(this)" src="{{ asset('/images/lapices.png') }}" width="70"> <img onclick="change_image(this)" src="{{ asset('/images/' ~  producto.imagen) }}" width="70"> </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="product p-4">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="d-flex align-items-center"> <i class="fa fa-long-arrow-left"></i> <span class="ml-1">Back</span> </div> <i class="fa fa-shopping-cart text-muted"></i>
-                            </div>
-                            <div class="mt-4 mb-3"> <span class="text-uppercase text-muted brand">Marca</span>
-                                <h5 class="text-uppercase">{{ producto.nombre }}</h5>
-                                <div class="price d-flex flex-row align-items-center"> <span class="act-price">{{ producto.precio }}</span>
-                                    <div class="ml-2"> <small class="dis-price">59</small> <span>{{ producto.descuento }} OFF</span> </div>
-                                </div>
-                            </div>
-                            <p class="about">{{ producto.descripcion }}</p>
+	<div class="container my-5 pb-5">
+		<div class="row d-flex justify-content-center mt-5">
+			<div class="col-md-10">
+				<div class="card">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="images p-3">
+								<div class="text-center p-4">
+									<img id="main-image" src="{{ asset('/images/' ~ producto.imagen) }}" width="400"/>
+								</div>
+								<div class="thumbnail text-center">
+									<img onclick="change_image(this)" src="{{ asset('/images/lapices.png') }}" width="90">
+									<img onclick="change_image(this)" src="{{ asset('/images/' ~ producto.imagen) }}" width="90">
+									<img onclick="change_image(this)" src="{{ asset('/images/acuarelas_02.png') }}" width="90">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="product p-4">
+								<div class="d-flex justify-content-between align-items-center">
+									<div class="d-flex align-items-center">
+										<i class="fa fa-long-arrow-left"></i>
+										<span class="ml-1">Back</span>
+									</div>
+									<i class="fa fa-shopping-cart text-muted"></i>
+								</div>
+								<div class="mt-4 mb-3">
+									<span class="text-uppercase text-muted brand">Marca</span>
+									<h5 class="text-uppercase">{{ producto.nombre }}</h5>
+									<div class="price d-flex flex-row align-items-center">
+										<span class="act-price">{{ producto.precio }}</span>
+										<div class="ml-2">
+											<small class="dis-price">59</small>
+											<span>{{ producto.descuento }}
+												OFF</span>
+										</div>
+									</div>
+								</div>
+								<p class="about">{{ producto.descripcion }}</p>
 
-                            <div class="d-flex flex-row mt-3">
-                                <span class="pe-3 text-muted">Cantidad</span>
-                                <input
-                                id="quantityInput"
-                                min="1"
-                                max="20"
-                                name="quantity"
-                                value="1"
-                                type="number"
-                                class="form-control form-control-sm"
-                                style="width: 50px"/>                            
-                            </div>
-                            <div class="sizes mt-4">
+								<div class="d-flex flex-row mt-3">
+									<span class="pe-3 text-muted">Cantidad</span>
+									<input id="quantityInput" min="1" max="20" name="quantity" value="1" type="number" class="form-control form-control-sm" style="width: 50px"/>
+								</div>
+								<div class="sizes mt-4">
 
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <a href="{{ path('app_producto_edit', {'id': producto.id}) }}" class="text-reset text-decoration-none">edit</a>
-                                {{ include('producto/_delete_form.html.twig') }}
-                            {% endif %}
-                            <div class="sizes mt-5">
-                                <h6 class="text-uppercase">Size</h6> 
-                                <label class="radio"> <input type="radio" name="size" value="S" checked> <span>S</span> </label>
-                                <label class="radio"> <input type="radio" name="size" value="M"> <span>M</span> </label> 
-                                <label class="radio"> <input type="radio" name="size" value="L"> <span>L</span> </label> 
-                                <label class="radio"> <input type="radio" name="size" value="XL"> <span>XL</span> </label> 
-                                <label class="radio"> <input type="radio" name="size" value="XXL"> <span>XXL</span> </label>
-                            </div>
-                            <div class="cart mt-4 align-items-center"> 
-                                <button id="botonAñadirCarrito" class="btn btn-danger text-uppercase mr-2 px-4">Añadir a la cesta</button> 
-                                <i class="fa fa-heart text-muted"></i> <i class="fa fa-share-alt text-muted"></i> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+									{% if is_granted('ROLE_ADMIN') %}
+										<a href="{{ path('app_producto_edit', {'id': producto.id}) }}" class="text-reset text-decoration-none">edit</a>
+										{{ include('producto/_delete_form.html.twig') }}
+									{% endif %}
+									<div class="sizes mt-5">
+										<h6 class="text-uppercase">Size</h6>
+										<label class="radio">
+											<input type="radio" name="size" value="S" checked>
+											<span>S</span>
+										</label>
+										<label class="radio">
+											<input type="radio" name="size" value="M">
+											<span>M</span>
+										</label>
+										<label class="radio">
+											<input type="radio" name="size" value="L">
+											<span>L</span>
+										</label>
+										<label class="radio">
+											<input type="radio" name="size" value="XL">
+											<span>XL</span>
+										</label>
+										<label class="radio">
+											<input type="radio" name="size" value="XXL">
+											<span>XXL</span>
+										</label>
+									</div>
+									<div class="cart mt-4 align-items-center">
+										<button id="botonAñadirCarrito" class="btn btn-danger text-uppercase mr-2 px-4">Añadir a la cesta</button>
+										<i class="fa fa-heart text-muted"></i>
+										<i class="fa fa-share-alt text-muted"></i>
+									</div>
+									<div id="path-to-controller-aniadir" data-href="{{ path('app_producto_carrito', {'id': producto.id}) }}"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-{# https://bbbootstrap.com/snippets/bootstrap-ecommerce-single-product-page-size-attribute-59223596 #}
-
-    {# <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ producto.id }}</td>
-            </tr>
-            <tr>
-                <th>Nombre</th>
-                <td>{{ producto.nombre }}</td>
-            </tr>
-            <tr>
-                <th>Descripcion</th>
-                <td>{{ producto.descripcion }}</td>
-            </tr>
-            <tr>
-                <th>Precio</th>
-                <td>{{ producto.precio }}</td>
-            </tr>
-            <tr>
-                <th>Descuento</th>
-                <td>{{ producto.descuento }}</td>
-            </tr>
-            <tr>
-                <th>Categoria</th>
-                <td>{{ producto.categoria }}</td>
-            </tr>
-            <tr>
-                <th>Material</th>
-                <td>{{ producto.material }}</td>
-            </tr>
-            <tr>
-                <th>Color</th>
-                <td>{{ producto.color }}</td>
-            </tr>
-        </tbody>
-    </table> #}
-
-     <div id="path-to-controller-aniadir" data-href="{{ path('app_producto_carrito', {'id': producto.id}) }}"> </div>
-
-    {# <button id="botonAñadirCarrito">Añadir a la Cesta</button> #}
-
-    <h1>Busquedas Relacionadas</h1>
+		{# https://bbbootstrap.com/snippets/bootstrap-ecommerce-single-product-page-size-attribute-59223596 #}
 
 
-{% endblock %}
+		<!-- Busquedas Relacionadas -->
+		<section class="py-5">
+			<div class="container">
+				<div class="row  p-2 pb-3">
+					<h2>Busquedas relacionadas</h2>
+				</div>
+				<div class="collection-list mt-4 row gx-0 gy-3">
+					<div class="col-md-6 col-lg-4 col-xl-3 p-2 best">
+						<div class="collection-img position-relative">
+							<img src="/images/producto1.png" class="w-100"/>
+						</div>
+						<div class="text-center">
+							<div class="rating mt-3">
+								<span class="text-primary" id="pink">
+									<i class="fas fa-star"></i>
+								</span>
+								<span class="text-primary" id="pink">
+									<i class="fas fa-star"></i>
+								</span>
+								<span class="text-primary" id="pink">
+									<i class="fas fa-star"></i>
+								</span>
+								<span class="text-primary" id="pink">
+									<i class="fas fa-star"></i>
+								</span>
+								<span class="text-primary" id="pink">
+									<i class="fas fa-star"></i>
+								</span>
+							</div>
+							<p class="text-capitalize my-1">Cricut</p>
+							<span class="fw-bold">€ 75.95</span>
+						</div>
+					</div>
+
+					<div class="col-md-6 col-lg-4 col-xl-3 p-2 feat">
+						<div class="collection-img position-relative">
+							<img src="/images/producto2.png" class="w-100"/>
+						</div>
+						<div class="text-center">
+							<div class="rating mt-3">
+								<span class="text-primary" id="pink">
+									<i class="fas fa-star"></i>
+								</span>
+								<span class="text-primary" id="pink">
+									<i class="fas fa-star"></i>
+								</span>
+								<span class="text-primary" id="pink">
+									<i class="fas fa-star"></i>
+								</span>
+								<span class="text-primary" id="pink">
+									<i class="fas fa-star"></i>
+								</span>
+								<span class="text-primary" id="pink">
+									<i class="fas fa-star"></i>
+								</span>
+							</div>
+							<p class="text-capitalize my-1">Kit para hacer velas</p>
+							<span class="fw-bold">€ 25.50</span>
+						</div>
+					</div>
+
+					<div class="col-md-6 col-lg-4 col-xl-3 p-2 new">
+						<div class="collection-img position-relative">
+							<img src="/images/producto3.png" class="w-100"/>
+
+						</div>
+						<div class="text-center">
+							<div class="rating mt-3">
+								<span class="text-primary" id="pink">
+									<i class="fas fa-star"></i>
+								</span>
+								<span class="text-primary" id="pink">
+									<i class="fas fa-star"></i>
+								</span>
+								<span class="text-primary" id="pink">
+									<i class="fas fa-star"></i>
+								</span>
+								<span class="text-primary" id="pink">
+									<i class="fas fa-star"></i>
+								</span>
+								<span class="text-primary" id="pink">
+									<i class="fas fa-star"></i>
+								</span>
+							</div>
+							<p class="text-capitalize my-1">Perlas de mosaico</p>
+							<span class="fw-bold">€ 10.95</span>
+						</div>
+					</div>
+
+					<div class="col-md-6 col-lg-4 col-xl-3 p-2 best">
+						<div class="collection-img position-relative">
+							<img src="/images/producto4.png" class="w-100"/>
+						</div>
+						<div class="text-center">
+							<div class="rating mt-3">
+								<span class="text-primary" id="pink">
+									<i class="fas fa-star"></i>
+								</span>
+								<span class="text-primary" id="pink">
+									<i class="fas fa-star"></i>
+								</span>
+								<span class="text-primary" id="pink">
+									<i class="fas fa-star"></i>
+								</span>
+								<span class="text-primary" id="pink">
+									<i class="fas fa-star"></i>
+								</span>
+								<span class="text-primary" id="pink">
+									<i class="fas fa-star"></i>
+								</span>
+							</div>
+							<p class="text-capitalize my-1">cerámica</p>
+							<span class="fw-bold">€ 25.50</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Preguntas -->
+
+			<div class="container my-5 py-5">
+				<div class="mb-5">
+					<h2>Preguntas de los usuarios</h2>
+				</div>
+				<div class="row d-flex justify-content-center">
+					<div class="col-md-12 ">
+						<div id="contenedor-preguntas" class="card">
+
+              {# Imprime todas las PREGUNTAS del Producto #}
+							{% for pregunta in producto.preguntas %}
+								<div class="card-body border-bottom">
+									<div class="d-flex flex-start align-items-center">
+										<img class="rounded-circle shadow-1-strong me-3" src="{{ asset('/images/' ~ pregunta.user.photo) }}" alt="avatar" width="60" onerror='this.onerror = null; this.src="/images/default_Profile.svg"' height="60"/>
+										<div>
+											<h6 class="fw-bold mb-1">{{ pregunta.user.Nombre }}</h6>
+											<p class="text-muted small mb-0">{{ pregunta.fecha|date('Y-m-d H:i') }}</p>
+										</div>
+									</div>
+
+									<p class="mt-3 mb-4 pb-2">{{ pregunta.texto }}</p>
+
+                  {# Enlace Responder en cada pregunta #}
+									<div class="small d-flex justify-content-start">
+										<a href="#!" class="boton_responder d-flex align-items-center me-3">
+											<i class="fas fa-share me-2"></i>
+											<p id="{{ pregunta.id }}" class="mb-0">Responder</p>
+										</a>
+										<button type="button" class="border-0 btn mx-2 position-relative">
+											<i class="fas fa-trash-alt"></i>
+										</button>
+										<button type="button" class="border-0 btn mx-2 position-relative">
+											<i class="far fa-edit"></i>
+										</button>
+									</div>
+								</div>
+
+								{# Text area Respuesta - Hidden #}
+								<div id="textAreaPublicar_respuesta{{ pregunta.id }}" class="footer py-3 border-0" style="background-color: #f8f9fa; display:none">
+									<div class="d-flex flex-start w-100 ps-5">
+										<img id="img-profile" class="rounded-circle shadow-1-strong me-3" alt="avatar" width="40" height="40" 
+										{% if app.user is null %} 
+											src="{{ asset('/images//default_Profile.svg')}}" 
+										{% else %} 
+											src="{{ asset('/images/' ~ app.user.photo)}}" 
+											onerror='this.onerror = null; this.src="/images/default_Profile.svg"' 
+										{% endif %}
+										/>
+										<div class="form-outline w-100">
+											<label class="form-label" for="textAreaPregunta{{ pregunta.id }}">Escribe tu respuesta:
+											</label>
+											<textarea class="form-control" id="textAreaRespuesta{{ pregunta.id }}" rows="3" style="background: #fff;"></textarea>
+										</div>
+									</div>
+									{# Botón Publicar Respuesta en cada pregunta #}
+									{% if app.user %}
+										<div class="ms-5 my-2 pt-1">
+											<button type="button" id="{{ pregunta.id }}" class="boton_publicarRespuesta ms-5 btn btn-sm">Responder</button>
+										</div>
+										<div id="path-to-controller-publicarRespuesta{{ pregunta.id }}" data-href="{{ path('app_user_publicarR', {'pregunta': pregunta.id}) }}"></div>
+									{% else %}
+										<div class="ms-5 my-2 pt-1">
+											<button type="button" class="ms-5 btn btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">Responder</button>
+										</div>
+									{% endif %}
+								</div>
+
+								{# Imprime todas las RESPUESTAS de Pregunta #}
+								{% for respuesta in pregunta.respuestas %}
+									<div class="card-body border-bottom">
+										<div class="d-flex flex-start align-items-center ps-5">
+											<img class="rounded-circle shadow-1-strong me-3" src="{{ asset('/images/' ~ respuesta.user.photo) }}" alt="avatar" width="60" height="60"/>
+											<div>
+												<h6 class="fw-bold mb-1">{{ respuesta.user.Nombre }}</h6>
+												<p class="text-muted small mb-0">{{ respuesta.fecha|date('Y-m-d H:i') }}</p>
+											</div>
+										</div>
+                    <p class="mt-3 mb-4 ms-5 py-2 ps-5">{{ respuesta.texto }}</p>
+									</div>
+								{% else %}
+									<p id="noAnwsers_message" class="text-center">No hay respuestas. Sé el primero en responder</p>
+								{% endfor %}
+
+							{% else %}
+								<p id="noQuestions_message" class="text-center">No hay preguntas. Sé el primero en hacer una</p>
+							{% endfor %}
+
+							{# Text area Pregunta #}
+							<div id="textAreaPublicar" class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
+								<div class="d-flex flex-start w-100">
+									<img id="img-profile" class="rounded-circle shadow-1-strong me-3" alt="avatar" width="40" height="40" {% if app.user is null %} src="{{ asset('/images//default_Profile.svg')}}" {% else %} src="{{ asset('/images/' ~ app.user.photo)}}" onerror='this.onerror = null; this.src="/images/default_Profile.svg"' {% endif %}/>
+									<div class="form-outline w-100">
+										<label class="form-label" for="textAreaPregunta">Escribe tu pregunta:
+										</label>
+										<textarea class="form-control" id="textAreaPregunta" rows="4" style="background: #fff;"></textarea>
+									</div>
+								</div>
+								{# Botón Publicar pregunta #}
+								{% if app.user %}
+									<div class="ms-5 my-2 pt-1">
+										<button type="button" id="publicarPregunta" class="btn btn-sm">Publicar pregunta</button>
+									</div>
+									<div id="path-to-controller-publicarPregunta" data-href="{{ path('app_user_publicarP', {'producto': producto.id}) }}"></div>
+								{% else %}
+									<div class="ms-5 my-2 pt-1">
+										<button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">Publicar pregunta</button>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		{% endblock %}

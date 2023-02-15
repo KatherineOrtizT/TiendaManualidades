@@ -65,11 +65,13 @@ class ProductoController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_producto_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_producto_show', methods: ['GET', 'POST'])]
     public function show(Producto $producto): Response
     {
+        $preguntas = $producto->getPreguntas();
         return $this->render('producto/show.html.twig', [
             'producto' => $producto,
+            'preguntas' => $preguntas,
         ]);
     }
 

@@ -4,12 +4,16 @@ namespace App\Controller;
 
 use App\Entity\Compras;
 use App\Entity\Pedidos;
+use App\Entity\Pregunta;
 use App\Entity\Producto;
+use App\Entity\Respuesta;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\ComprasRepository;
 use App\Repository\PedidosRepository;
+use App\Repository\PreguntaRepository;
 use App\Repository\ProductoRepository;
+use App\Repository\RespuestaRepository;
 use Doctrine\DBAL\Schema\Identifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Id;
@@ -18,6 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 #[Route('/user')]
 class UserController extends AbstractController
@@ -115,6 +120,55 @@ class UserController extends AbstractController
         $comprasRepository->remove($compra, true);
 
         return $this->redirectToRoute('app_user_personal', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+    #[Route('/publicarP/{producto}', name: 'app_user_publicarP', methods: ['POST', 'GET'])]
+    public function publicarPregunta(Request $request, Producto $producto, PreguntaRepository $preguntaRepository): Response
+    {
+        $pregunta = new Pregunta();
+
+        $texto = $request->request->get('textoPregunta', null);
+        $fecha = new \DateTime('@'.strtotime('now'));
+        $pregunta->setUser($this->getUser());
+        $pregunta->setTexto($texto);
+        $pregunta->setFecha($fecha);
+        $pregunta->setProducto($producto);
+
+        $preguntaRepository->save($pregunta, true);
+
+        $preguntaJSON = $pregunta->jsonSerialize();
+        
+        return new JsonResponse($preguntaJSON);
+
+        /* if($request->request->get('cantidad')){
+            $arr = json_encode($producto->getId());
+            return new JsonResponse($arr);
+        } */
+    }
+
+    #[Route('/publicarR/{pregunta}', name: 'app_user_publicarR', methods: ['POST', 'GET'])]
+    public function publicarRespuesta(Request $request, Pregunta $pregunta, RespuestaRepository $respuestaRepository): Response
+    {
+        $respuesta = new Respuesta;
+
+        $texto = $request->request->get('textoRespuesta', null);
+        $fecha = new \DateTime('@'.strtotime('now'));
+        $respuesta->setUser($this->getUser());
+        $respuesta->setTexto($texto);
+        $respuesta->setFecha($fecha);
+        $respuesta->setPregunta($pregunta);
+
+        $respuestaRepository->save($respuesta, true);
+
+        $respuestaJSON = $pregunta->jsonSerialize();
+        
+        return new JsonResponse($respuestaJSON);
+
+        /* if($request->request->get('cantidad')){
+            $arr = json_encode($producto->getId());
+            return new JsonResponse($arr);
+        } */
     }
 
 }
