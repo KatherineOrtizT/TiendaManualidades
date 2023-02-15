@@ -161,6 +161,36 @@ class UserController extends AbstractController
 
         $respuestaRepository->save($respuesta, true);
 
+        $respuestaJSON = $respuesta->jsonSerialize();
+        
+        return new JsonResponse($respuestaJSON);
+
+        /* if($request->request->get('cantidad')){
+            $arr = json_encode($producto->getId());
+            return new JsonResponse($arr);
+        } */
+    }
+
+    #[Route('/borrarP/{pregunta}', name: 'app_user_borrarP', methods: ['POST', 'GET'])]
+    public function borrarPregunta(Request $request, Pregunta $pregunta, PreguntaRepository $preguntaRepository): Response
+    {
+        $preguntaRepository->remove($pregunta, true);
+
+        $preguntaJSON = $pregunta->jsonSerialize();
+        
+        return new JsonResponse($preguntaJSON);
+
+        /* if($request->request->get('cantidad')){
+            $arr = json_encode($producto->getId());
+            return new JsonResponse($arr);
+        } */
+    }
+
+    #[Route('/editarP/{pregunta}', name: 'app_user_editarP', methods: ['POST', 'GET'])]
+    public function editarPregunta(Request $request, Pregunta $pregunta, RespuestaRepository $respuestaRepository): Response
+    {
+        
+
         $respuestaJSON = $pregunta->jsonSerialize();
         
         return new JsonResponse($respuestaJSON);
@@ -170,5 +200,37 @@ class UserController extends AbstractController
             return new JsonResponse($arr);
         } */
     }
+
+    #[Route('/borrarR/{respuesta}', name: 'app_user_borrarR', methods: ['POST', 'GET'])]
+    public function borrarRespuesta(Request $request, Respuesta $respuesta, RespuestaRepository $respuestaRepository): Response
+    {
+        $respuestaRepository->remove($respuesta, true);
+
+        $respuestaJSON = $respuesta->jsonSerialize();
+        
+        return new JsonResponse($respuestaJSON);
+
+        /* if($request->request->get('cantidad')){
+            $arr = json_encode($producto->getId());
+            return new JsonResponse($arr);
+        } */
+    }
+
+    #[Route('/editarR/{respuesta}', name: 'app_user_editarR', methods: ['POST', 'GET'])]
+    public function editarRespuesta(Request $request, Respuesta $respuesta, RespuestaRepository $respuestaRepository): Response
+    {
+        
+        
+
+        $respuestaJSON = $respuesta->jsonSerialize();
+        
+        return new JsonResponse($respuestaJSON);
+
+        /* if($request->request->get('cantidad')){
+            $arr = json_encode($producto->getId());
+            return new JsonResponse($arr);
+        } */
+    }
+
 
 }

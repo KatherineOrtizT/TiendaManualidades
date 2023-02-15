@@ -226,8 +226,9 @@
 					<div class="col-md-12 ">
 						<div id="contenedor-preguntas" class="card">
 
-              {# Imprime todas las PREGUNTAS del Producto #}
+              				{# Imprime todas las PREGUNTAS del Producto #}
 							{% for pregunta in producto.preguntas %}
+								{# PREGUNTA con todas sus respuestas #}
 								<div class="card-body border-bottom">
 									<div class="d-flex flex-start align-items-center">
 										<img class="rounded-circle shadow-1-strong me-3" src="{{ asset('/images/' ~ pregunta.user.photo) }}" alt="avatar" width="60" onerror='this.onerror = null; this.src="/images/default_Profile.svg"' height="60"/>
@@ -239,66 +240,82 @@
 
 									<p class="mt-3 mb-4 pb-2">{{ pregunta.texto }}</p>
 
-                  {# Enlace Responder en cada pregunta #}
+									{# Enlace Responder en cada pregunta y BOTONES editar y borrar #}
 									<div class="small d-flex justify-content-start">
 										<a href="#!" class="boton_responder d-flex align-items-center me-3">
 											<i class="fas fa-share me-2"></i>
 											<p id="{{ pregunta.id }}" class="mb-0">Responder</p>
 										</a>
-										<button type="button" class="border-0 btn mx-2 position-relative">
-											<i class="fas fa-trash-alt"></i>
-										</button>
-										<button type="button" class="border-0 btn mx-2 position-relative">
-											<i class="far fa-edit"></i>
-										</button>
-									</div>
-								</div>
-
-								{# Text area Respuesta - Hidden #}
-								<div id="textAreaPublicar_respuesta{{ pregunta.id }}" class="footer py-3 border-0" style="background-color: #f8f9fa; display:none">
-									<div class="d-flex flex-start w-100 ps-5">
-										<img id="img-profile" class="rounded-circle shadow-1-strong me-3" alt="avatar" width="40" height="40" 
-										{% if app.user is null %} 
-											src="{{ asset('/images//default_Profile.svg')}}" 
-										{% else %} 
-											src="{{ asset('/images/' ~ app.user.photo)}}" 
-											onerror='this.onerror = null; this.src="/images/default_Profile.svg"' 
+										{% if (app.user) and (is_granted('ROLE_ADMIN') or (app.user.Nombre == pregunta.user.Nombre)) %} 
+											<button type="button" class="border-0 btn mx-2 position-relative">
+												<i class="fas fa-trash-alt"></i>
+											</button>
+											<button type="button" class="border-0 btn mx-2 position-relative">
+												<i class="far fa-edit"></i>
+											</button>
 										{% endif %}
-										/>
-										<div class="form-outline w-100">
-											<label class="form-label" for="textAreaPregunta{{ pregunta.id }}">Escribe tu respuesta:
-											</label>
-											<textarea class="form-control" id="textAreaRespuesta{{ pregunta.id }}" rows="3" style="background: #fff;"></textarea>
-										</div>
 									</div>
-									{# Botón Publicar Respuesta en cada pregunta #}
-									{% if app.user %}
-										<div class="ms-5 my-2 pt-1">
-											<button type="button" id="{{ pregunta.id }}" class="boton_publicarRespuesta ms-5 btn btn-sm">Responder</button>
-										</div>
-										<div id="path-to-controller-publicarRespuesta{{ pregunta.id }}" data-href="{{ path('app_user_publicarR', {'pregunta': pregunta.id}) }}"></div>
-									{% else %}
-										<div class="ms-5 my-2 pt-1">
-											<button type="button" class="ms-5 btn btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">Responder</button>
-										</div>
-									{% endif %}
-								</div>
+								
 
-								{# Imprime todas las RESPUESTAS de Pregunta #}
-								{% for respuesta in pregunta.respuestas %}
-									<div class="card-body border-bottom">
-										<div class="d-flex flex-start align-items-center ps-5">
-											<img class="rounded-circle shadow-1-strong me-3" src="{{ asset('/images/' ~ respuesta.user.photo) }}" alt="avatar" width="60" height="60"/>
-											<div>
-												<h6 class="fw-bold mb-1">{{ respuesta.user.Nombre }}</h6>
-												<p class="text-muted small mb-0">{{ respuesta.fecha|date('Y-m-d H:i') }}</p>
+									{# Text area Respuesta - Hidden #}
+									<div id="textAreaPublicar_respuesta{{ pregunta.id }}" class="footer py-3 border-0" style="background-color: #f8f9fa; display:none">
+										<div class="d-flex flex-start w-100 ps-5">
+											<img id="img-profile" class="rounded-circle shadow-1-strong me-3" alt="avatar" width="40" height="40" 
+											{% if app.user is null %} 
+												src="{{ asset('/images//default_Profile.svg')}}" 
+											{% else %} 
+												src="{{ asset('/images/' ~ app.user.photo)}}" 
+												onerror='this.onerror = null; this.src="/images/default_Profile.svg"' 
+											{% endif %}
+											/>
+											<div class="form-outline w-100">
+												<label class="form-label" for="textAreaPregunta{{ pregunta.id }}">Escribe tu respuesta:
+												</label>
+												<textarea class="form-control" id="textAreaRespuesta{{ pregunta.id }}" rows="3" style="background: #fff;"></textarea>
 											</div>
 										</div>
-                    <p class="mt-3 mb-4 ms-5 py-2 ps-5">{{ respuesta.texto }}</p>
+										{# Botón Publicar Respuesta en cada pregunta #}
+										{% if app.user %}
+											<div class="ms-5 my-2 pt-1">
+												<button type="button" id="{{ pregunta.id }}" class="boton_publicarRespuesta ms-5 btn btn-sm">Responder</button>
+											</div>
+											<div id="path-to-controller-publicarRespuesta{{ pregunta.id }}" data-href="{{ path('app_user_publicarR', {'pregunta': pregunta.id}) }}"></div>
+										{% else %}
+											<div class="ms-5 my-2 pt-1">
+												<button type="button" class="ms-5 btn btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">Responder</button>
+											</div>
+										{% endif %}
 									</div>
-								{% else %}
-									<p id="noAnwsers_message" class="text-center">No hay respuestas. Sé el primero en responder</p>
-								{% endfor %}
+
+									{# Imprime todas las RESPUESTAS de Pregunta #}
+									{% for respuesta in pregunta.respuestas %}
+										{# RESPUESTA #}
+										<div class="card-body border-bottom">
+											<div class="d-flex flex-start align-items-center ps-5">
+												<img class="rounded-circle shadow-1-strong me-3" src="{{ asset('/images/' ~ respuesta.user.photo) }}" alt="avatar" width="60" height="60"/>
+												<div>
+													<h6 class="fw-bold mb-1">{{ respuesta.user.Nombre }}</h6>
+													<p class="text-muted small mb-0">{{ respuesta.fecha|date('Y-m-d H:i') }}</p>
+												</div>
+											</div>
+											<p class="mt-3 mb-4 ms-5 py-2 ps-5">{{ respuesta.texto }}</p>
+
+											{# BOTONES editar y borrar respuesta #}
+											<div class="small d-flex justify-content-start">
+												{% if (app.user) and (is_granted('ROLE_ADMIN') or (app.user.Nombre == pregunta.user.Nombre)) %} 
+													<button type="button" class="border-0 btn mx-2 position-relative">
+														<i class="fas fa-trash-alt"></i>
+													</button>
+													<button type="button" class="border-0 btn mx-2 position-relative">
+														<i class="far fa-edit"></i>
+													</button>
+												{% endif %}
+											</div>
+										</div>
+									{% else %}
+										<p id="noAnwsers_message" class="text-center">No hay respuestas. Sé el primero en responder</p>
+									{% endfor %}
+								</div>
 
 							{% else %}
 								<p id="noQuestions_message" class="text-center">No hay preguntas. Sé el primero en hacer una</p>

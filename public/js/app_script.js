@@ -146,7 +146,8 @@ $(document).ready(function(){
                         icono311.classList.add("fas", "fa-share", "me-2");
                         let parrafo312 = document.createElement("p");
                         parrafo312.classList.add("mb-0");
-                        let texto_parrafo312 = document.createTextNode("Responde");
+                        parrafo312.id = data.id;
+                        let texto_parrafo312 = document.createTextNode("Responder");
                         parrafo312.appendChild(texto_parrafo312);
                         enlaceResponder31.appendChild(icono311);
                         enlaceResponder31.appendChild(parrafo312);
@@ -203,7 +204,7 @@ $(document).ready(function(){
 
             /* LLAMADA AJAX A PUBLICAR RESPUESTA (Introduce respuesta en BBDD) */  
             $.ajax({
-                url:$("#path-to-controller-publicarRespuesta").data("href"),
+                url:$("#path-to-controller-publicarRespuesta"+event.target.id).data("href"),
                 type: "POST",
                 dataType: "json",
                 data: {
@@ -217,6 +218,7 @@ $(document).ready(function(){
 
                 success: function (data)
                 {        
+                    console.log(data);
                     //Creamos toda la estructura DOM para una nueva respuesta
                     let div = document.createElement('div');
                     div.classList.add("card-body", "border-bottom");
