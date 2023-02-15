@@ -275,36 +275,6 @@
     </section>
     <!-- end of newsletter -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-    {# <section id="contenedorGrid_productos" class="container py-5 bg-info">
-        <div class="row row-cols-4">
-        {% for producto in productos %}
-            <div class="flexProducto d-flex flex-column">
-                <img src="{{ asset('/images/' ~  producto.imagen) }}" alt="imagen"/>
-                <p>{{ producto.nombre }}</p>
-                <p>{{ producto.precio }} €</p>
-                <div>
-                    <a href="{{ path('app_producto_show', {'id': producto.id}) }}">Ver</a>
-                    <a href="{{ path('app_producto_edit', {'id': producto.id}) }}">Editar</a>
-                </div>
-            </div>
-        {% else %}
-            <p>no records found</p>
-        {% endfor %}
-        </div>
-    </section> #}
-
     {{ include('comunes/_footer.html.twig') }}
 
 {% endblock %}

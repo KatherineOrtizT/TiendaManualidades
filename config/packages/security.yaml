@@ -40,7 +40,7 @@ security:
     access_control:
         - { path: ^/producto/new, roles: ROLE_ADMIN }
         - { path: ^/producto/\d+/edit, roles: ROLE_ADMIN }
-        #- { path: ^/producto/\d+, roles: ROLE_ADMIN }
+        - { path: ^/producto/\d+/delete, roles: ROLE_ADMIN }
         
         - { path: ^/user/personal, roles: ROLE_USER }
         - { path: ^/user/devolver/\d+, roles: ROLE_USER }

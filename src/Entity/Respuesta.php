@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
+use JsonSerializable;
 use App\Repository\RespuestaRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RespuestaRepository::class)]
-class Respuesta
+class Respuesta implements JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -17,7 +18,7 @@ class Respuesta
     #[ORM\Column(type: Types::TEXT)]
     private ?string $texto = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $fecha = null;
 
     #[ORM\ManyToOne(inversedBy: 'respuestas')]
@@ -27,6 +28,17 @@ class Respuesta
     #[ORM\ManyToOne(inversedBy: 'respuestas')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    public function jsonSerialize()
+    {
+        return array(
+            'id' => $this->id,
+            'user'=> $this->user->getNombre(),
+            'photo' => $this->user->getPhoto(),
+            'texto' => $this->texto,
+            'fecha' => $this->fecha,
+        );
+    }
 
     public function getId(): ?int
     {

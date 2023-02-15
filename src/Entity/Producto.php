@@ -47,6 +47,12 @@ class Producto implements JsonSerializable
     #[ORM\OneToMany(mappedBy: 'producto', targetEntity: Pregunta::class, orphanRemoval: true)]
     private Collection $preguntas;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $stock = null;
+
+    #[ORM\Column]
+    private ?bool $estado = null;
+
     public function __construct()
     {
         $this->compras = new ArrayCollection();
@@ -225,6 +231,30 @@ class Producto implements JsonSerializable
                 $pregunta->setProducto(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStock(): ?int
+    {
+        return $this->stock;
+    }
+
+    public function setStock(?int $stock): self
+    {
+        $this->stock = $stock;
+
+        return $this;
+    }
+
+    public function isEstado(): ?bool
+    {
+        return $this->estado;
+    }
+
+    public function setEstado(bool $estado): self
+    {
+        $this->estado = $estado;
 
         return $this;
     }
