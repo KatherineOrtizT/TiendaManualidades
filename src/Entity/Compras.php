@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ComprasRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ComprasRepository::class)]
@@ -23,6 +24,12 @@ class Compras
 
     #[ORM\OneToOne(mappedBy: 'idCompra', cascade: ['persist', 'remove'])]
     private ?Comentarios $comentarios = null;
+
+    #[ORM\Column]
+    private ?int $unidades = null;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 4, scale: 2)]
+    private ?string $precio_compra = null;
 
     public function getId(): ?int
     {
@@ -66,6 +73,30 @@ class Compras
         }
 
         $this->comentarios = $comentarios;
+
+        return $this;
+    }
+
+    public function getUnidades(): ?int
+    {
+        return $this->unidades;
+    }
+
+    public function setUnidades(int $unidades): self
+    {
+        $this->unidades = $unidades;
+
+        return $this;
+    }
+
+    public function getPrecioCompra(): ?string
+    {
+        return $this->precio_compra;
+    }
+
+    public function setPrecioCompra(string $precio_compra): self
+    {
+        $this->precio_compra = $precio_compra;
 
         return $this;
     }

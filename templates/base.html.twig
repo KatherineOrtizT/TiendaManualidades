@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
             <!-- fontawesome icons -->
@@ -24,11 +24,13 @@
         {% endblock %}
 
         {% block javascripts %}
+
             {{ encore_entry_script_tags('app') }}    
             <!-- jquery -->
             <script src="/js/jquery-3.6.0.js"></script>  
             <!-- bootstrap js -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
             <!-- isotope js -->
             <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
             <!-- custom js -->
