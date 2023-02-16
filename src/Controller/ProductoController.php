@@ -66,11 +66,13 @@ class ProductoController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_producto_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_producto_show', methods: ['GET', 'POST'])]
     public function show(Producto $producto): Response
     {
+        $preguntas = $producto->getPreguntas();
         return $this->render('producto/show.html.twig', [
             'producto' => $producto,
+            'preguntas' => $preguntas,
         ]);
     }
 
@@ -92,7 +94,7 @@ class ProductoController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_producto_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_producto_delete', methods: ['POST'])]
     public function delete(Request $request, Producto $producto, ProductoRepository $productoRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$producto->getId(), $request->request->get('_token'))) {
@@ -105,7 +107,7 @@ class ProductoController extends AbstractController
     #[Route('/search', name: 'app_producto_search', methods: ['POST', 'GET'])]
     public function buscarProductos(Request $request, ProductoRepository $productoRepository): Response
     {
-        $busqueda = $request->request->get('busqueda',null);
+        $busqueda = $request->query->get('busqueda',null);
         $resultadoBusqueda = $productoRepository->search($busqueda);
 
         return $this->render('producto/lista_productos.html.twig', [

@@ -40,19 +40,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
                             /* CARRITO */
 
-let DB;
-/* let listaPrueba=[{nombre:'xxx',precio:30,cantidad:2}]; */
-window.addEventListener('load', () =>{
 
-    window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-    window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
-    window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
+$(document).ready(function(){
     
     if(window.location.href.indexOf("producto") != -1){
+        console.log("Entra ruta producto");
+
+
+                            /* Añadir a CARRITO */
+
         document.querySelector('#botonAñadirCarrito').addEventListener('click', () =>{
 
             let cantidad = document.querySelector('#quantityInput').value;
 
+            /* LLAMADA A AÑADIR PRODUCTO A CARRITO (Como variable SESSION) */
             $.ajax({
                 url:$("#path-to-controller-aniadir").data("href"),
                 type: "POST",
@@ -62,176 +63,206 @@ window.addEventListener('load', () =>{
                 },
                 async: true,
 
-                /* error: function() {
+                error: function() {
                     console.log("Error");
-                }, */
+                },
 
                 success: function (data)
                 {        
                     console.log(data);        
-                    crear_carritoDB();
-                    setTimeout( () => {
-                        producto = {id: data, cantidad: 1}
-                        aniadirProducto(producto);
-                    }, 3000);
+                }
+            });
+
+        });
+    
+                            /* Añadir PREGUNTA */
+
+    document.querySelector("#publicarPregunta").addEventListener('click', () => {
+        console.log("PULSADO P");
+        console.log($("#path-to-controller-publicarPregunta").data("href"));
+
+        let textoPregunta = $('#textAreaPregunta').val();
+
+        /* LLAMADA AJAX A PUBLICAR PREGUNTA (Introduce pregunta en BBDD) */ 
+        $.ajax({
+            url:$("#path-to-controller-publicarPregunta").data("href"),
+            type: "POST",
+            dataType: "json",
+            data: {
+                "textoPregunta": textoPregunta
+            },
+            async: true,
+
+            error: function() {
+                console.log("Error");
+            },
+
+            success: function (data)
+            {        
+
+                //Creamos toda la estructura DOM para una nueva pregunta
+                let div = document.createElement('div');
+                div.classList.add("card-body", "border-bottom");
+                document.getElementById('contenedor-preguntas').insertBefore(div, document.getElementById('textAreaPublicar'));
+
+                let div1 = document.createElement("div");
+                div1.classList.add("d-flex", "flex-start", "align-items-center");
+                div.appendChild(div1);
+                    let imgUser11 = document.createElement('img');
+                        imgUser11.classList.add("rounded-circle", "shadow-1-strong", "me-3");
+                        imgUser11.setAttribute('src', '/images/'+data.img);
+                        imgUser11.setAttribute('onerror', 'this.onerror = null; this.src="/images/default_Profile.svg"');
+                        imgUser11.setAttribute('width', '60');
+                        imgUser11.setAttribute('height', '60');
+                        div1.appendChild(imgUser11);
+                    let div12 = document.createElement("div");
+                        div1.appendChild(div12);
+                    let tituloNombre121 = document.createElement("fw-bold", "mb-1");
+                        tituloNombre121.classList.add("d-flex", "flex-start", "align-items-center");
+                        let texto_tituloNombre121 = document.createTextNode(data.user);
+                        tituloNombre121.appendChild(texto_tituloNombre121);
+                        div12.appendChild(tituloNombre121);
+                    let parrafo122 = document.createElement("div");
+                        parrafo122.classList.add("text-muted", "small", "mb-0");
+                        let texto_parrafo122 = document.createTextNode(data.fecha.date.toLocaleString('en-GB', { timeZone: 'UTC' }));
+                        parrafo122.appendChild(texto_parrafo122);
+                        div12.appendChild(parrafo122);
+
+                
+                let parrafo2 = document.createElement("div");
+                    parrafo2.classList.add("mt-3", "mb-4", "pb-2");
+                    let texto_parrafo2 = document.createTextNode(data.texto);
+                    parrafo2.appendChild(texto_parrafo2);
+                    div.appendChild(parrafo2);
+
+                let div3 = document.createElement("div");
+                div3.classList.add("small", "d-flex", "justify-content-start");
+                div.appendChild(div3);
+                    let enlaceResponder31 = document.createElement("a");
+                    enlaceResponder31.classList.add("d-flex", "align-items-center", "me-3");
+                    enlaceResponder31.id = "pink";
+                    div3.appendChild(enlaceResponder31);
+                        let icono311 = document.createElement("i");
+                        icono311.classList.add("fas", "fa-share", "me-2");
+                        let parrafo312 = document.createElement("p");
+                        parrafo312.classList.add("mb-0");
+                        let texto_parrafo312 = document.createTextNode("Responde");
+                        parrafo312.appendChild(texto_parrafo312);
+                        enlaceResponder31.appendChild(icono311);
+                        enlaceResponder31.appendChild(parrafo312);
+
+                //Borramos el mensaje que avisa de que no hay preguntas si está
+                let mensajeNoPreguntas = document.getElementById("noQuestions_message");
+                if(mensajeNoPreguntas){
+                    mensajeNoPreguntas.style.display = "none";
+                }
+                
+            }
+        });
+    });
+
+                            /* Añadir RESPUESTA */
+
+        let pregunta;
+        let selectorDivRespuesta;
+        
+        $('.boton_responder').click(event => {
+            event.preventDefault();
+            console.log("ENTRA Bóton Responder");
+            console.log(event.target);
+            console.log(event.target.id);
+            selectorDivRespuesta = $('#textAreaPublicar_respuesta'+event.target.id);
+            console.log(selectorDivRespuesta);
+            console.log($('#textAreaPublicar_respuesta'+event.target.id));
+            pregunta = event.target.closest('.card-body');
+            $('#textAreaPublicar_respuesta'+event.target.id).show();
+
+            /* EventListener & IF para esconder el text area de respuesta cuando se pulsa fuera de dicho elemento */
+            $(document).mouseup(function(e) {
+                let container = $(selectorDivRespuesta);
+
+                // si el "target" del click no es el contenedor o su descendiente se esconde
+                if (!container.is(e.target) && container.has(e.target).length === 0) 
+                {
+                    container.hide();
+                }
+            });
+        });
+
+        
+        $('.boton_publicarRespuesta').click( (event) => {
+            console.log("PULSADO R");
+            console.log(event.target.id);
+            let selectorAreaRespuesta = $('#textAreaRespuesta'+event.target.id);
+            console.log(selectorAreaRespuesta);
+            let textoRespuesta = selectorAreaRespuesta.val();
+            console.log(textoRespuesta);
+            $(selectorDivRespuesta).hide();
+
+            console.log($("#path-to-controller-publicarRespuesta"+event.target.id).data("href"));
+
+            /* LLAMADA AJAX A PUBLICAR RESPUESTA (Introduce respuesta en BBDD) */  
+            $.ajax({
+                url:$("#path-to-controller-publicarRespuesta").data("href"),
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "textoRespuesta": textoRespuesta
+                },
+                async: true,
+
+                error: function() {
+                    console.log("Error");
+                },
+
+                success: function (data)
+                {        
+                    //Creamos toda la estructura DOM para una nueva respuesta
+                    let div = document.createElement('div');
+                    div.classList.add("card-body", "border-bottom");
+                    document.getElementById('contenedor-preguntas').insertBefore(div, pregunta.nextElementSibling);
+
+                    let div1 = document.createElement("div");
+                    div1.classList.add("d-flex", "flex-start", "align-items-center", "ps-5");
+                    div.appendChild(div1);
+                        let imgUser11 = document.createElement('img');
+                            imgUser11.classList.add("rounded-circle", "shadow-1-strong", "me-3");
+                            imgUser11.setAttribute('src', '/images/'+data.img);
+                            imgUser11.setAttribute('onerror', 'this.onerror = null; this.src="/images/default_Profile.svg"');
+                            imgUser11.setAttribute('width', '60');
+                            imgUser11.setAttribute('height', '60');
+                            div1.appendChild(imgUser11);
+                        let div12 = document.createElement("div");
+                            div1.appendChild(div12);
+                        let tituloNombre121 = document.createElement("fw-bold", "mb-1");
+                            tituloNombre121.classList.add("d-flex", "flex-start", "align-items-center");
+                            let texto_tituloNombre121 = document.createTextNode(data.user);
+                            tituloNombre121.appendChild(texto_tituloNombre121);
+                            div12.appendChild(tituloNombre121);
+                        let parrafo122 = document.createElement("div");
+                            parrafo122.classList.add("text-muted", "small", "mb-0");
+                            let texto_parrafo122 = document.createTextNode(data.fecha.date.toLocaleString('en-GB', { timeZone: 'UTC' }));
+                            parrafo122.appendChild(texto_parrafo122);
+                            div12.appendChild(parrafo122);
+
+                    
+                    let parrafo2 = document.createElement("div");
+                        parrafo2.classList.add("mt-3", "mb-4", "pb-2", "ps-5");
+                        let texto_parrafo2 = document.createTextNode(data.texto);
+                        parrafo2.appendChild(texto_parrafo2);
+                        div.appendChild(parrafo2);
+
+
+                    //Borramos el mensaje que avisa de que no hay preguntas si está
+                    let mensajeNoRespuestas = document.getElementById("noAnwsers_message");
+                    if(mensajeNoRespuestas){
+                        mensajeNoRespuestas.style.display = "none";
+                    }
         
                 }
             });
 
         });
     }
-    /* if(window.location.href.indexOf("user/carrito") != -1){
-        console.log("Entra MOSTRAR CARRITO");
-        mostrarCarrito();
-    } */
-
-
+      
 });
-
-function crear_carritoDB() {
-    // crear base de datos con la versión 1
-    let carritoDB = window.indexedDB.open('carrito', 1);
-
-    carritoDB.onerror = function() {
-        console.log('Hubo un error');
-    }
-    
-    carritoDB.onsuccess = function() {
-        //Guardamos en DB el objeto resultante de crear nuestra base de datos exitosamente. Actualiza nuestra variable "DB" declarada anteriormente y nos sirve para luego abrir transacciones y añadir productos.
-        DB = carritoDB.result;
-
-    }
-
-    carritoDB.onupgradeneeded = function(e) {
-        let db = e.target.result;
-
-        //Creamos una tabla en nuestra DB
-        let tabla_ProductosCarrito = db.createObjectStore('carrito', { keyPath: 'id'} );
-
-        //createindex --> Creamos las columnas de nuestra DB
-        /* tabla_ProductosCarrito.createIndex('id', 'id', { unique: true } );
-        tabla_ProductosCarrito.createIndex('nombre', 'nombre', { unique: false } );
-        tabla_ProductosCarrito.createIndex('precio', 'precio', { unique: false } );
-        tabla_ProductosCarrito.createIndex('descuento', 'descuento', { unique: false } );
-        tabla_ProductosCarrito.createIndex('imagen', 'imagen', { unique: false } ); */
-        tabla_ProductosCarrito.createIndex('cantidad', 'cantidad', { unique: false } );
-    }
-}
-
-
-function aniadirProducto(producto) {
-    // Crear un nuevo registro
-    let transaction = DB.transaction(['carrito'], 'readwrite');
-    console.log(producto);
-    transaction.objectStore('carrito').add(producto);
-
-    transaction.oncomplete = function(event) {
-        /**** AQUÍ METER --> script para cambiar símbolito encima del carrito +1  ****/
-        console.log('Transacción Completada');
-    };
-    
-    transaction.onerror = function(event) {
-        /****   AQUÍ METER --> Mostrar un alert o mensaje de que no se pudo añadir el producto  ****/
-        console.log('Hubo un error en la transacción')
-    };
-}
-
-
-function eliminarProducto(id_producto) {
-    let transaction = DB.transaction(['carrito'], 'readwrite');
-
-    let tabla = transaction.objectStore('carrito');
-
-    tabla.openCursor().onsuccess = function(event) {
-        let cursor = event.target.result;
-        if(cursor) {
-            if(cursor.value.id === id_producto) {
-                let request = cursor.delete();
-                request.onsuccess = function() {
-                    /*METER CÓDIGO PARA BORRAR ELEMENTO HTML DEL PRODUCTO. Algo así:
-                        const list = document.getElementById("myList");
-                        const element= document.getElementById($id_producto);
-                        list.removeChild(element);  
-                    */
-                };
-            } 
-            cursor.continue();        
-        }else{
-            console.log('Entries displayed.'); //MIRAR         
-        }
-    };
-}
-
-//Se ejecutará cuando ya se haya formalizado la compra y se borre todo el carrito.
-function borrarDB(){
-    const DBDeleteRequest = window.indexedDB.deleteDatabase('carrito');
-
-    DBDeleteRequest.onerror = (event) => {
-    console.error("Error deleting database.");
-    };
-
-    DBDeleteRequest.onsuccess = (event) => {
-    console.log("Database deleted successfully");
-
-    console.log(event.result); // should be undefined
-    };
-}
-
-/* function mostrarCarrito(){
-    let transaction = DB.transaction(['carrito'], 'readonly');
-
-    let tabla = transaction.objectStore('carrito');
-
-    tabla.count();
-
-    tabla.openCursor().onsuccess = function(event) {
-        let cursor = event.target.result;
-        if(cursor) {
-            document.querySelector('#imagen_producto').innerHTML="{{ asset('/images/"+cursor.value.imagen+"') }}";
-            document.querySelector('#nombre_producto').innerHTML=cursor.value.nombre;
-            document.querySelector('#id_producto').innerHTML=cursor.value.id;
-            document.querySelector('#precio_producto').innerHTML=cursor.value.precio;
-
-            cursor.continue();  
-
-        }else{
-            console.log('Entries displayed.'); //MIRAR         
-        }
-    };   
-} */
-
-function mostrarCarrito(){
-    console.log("Ejecuta FUNCIÓN");
-    let transaction = DB.transaction(['carrito'], 'readonly');
-    let tabla = transaction.objectStore('carrito');
-
-    const myIndex = tabla.index('cantidad');
-    const getAllKeysRequest = myIndex.getAllKeys();
-
-    getAllKeysRequest.onsuccess = () => {
-        console.log("GET ALL KEYS:");
-        let productosCarrito = getAllKeysRequest.result;
-        console.log(productosCarrito);
-        $.ajax({
-            url:"/user/carrito",
-            type: "POST",
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            data: {
-                productos:productosCarrito, 
-            },
-            async: true,
-
-            /* error: function() {
-                console.log("Error");
-            }, */
-
-            success: function (data)
-            {                
-                
-            }
-        });
-
-
-    };
-}

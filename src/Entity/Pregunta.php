@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use JsonSerializable;
 use App\Repository\PreguntaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -9,7 +10,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PreguntaRepository::class)]
-class Pregunta
+class Pregunta implements JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,7 +20,7 @@ class Pregunta
     #[ORM\Column(type: Types::TEXT)]
     private ?string $texto = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $fecha = null;
 
     #[ORM\ManyToOne(inversedBy: 'preguntas')]
@@ -36,6 +37,17 @@ class Pregunta
     public function __construct()
     {
         $this->respuestas = new ArrayCollection();
+    }
+
+    public function jsonSerialize()
+    {
+        return array(
+            'id' => $this->id,
+            'user'=> $this->user->getNombre(),
+            'img' => $this->user->getPhoto(),
+            'texto' => $this->texto,
+            'fecha' => $this->fecha,
+        );
     }
 
     public function getId(): ?int
@@ -120,4 +132,5 @@ class Pregunta
 
         return $this;
     }
+
 }
