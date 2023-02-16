@@ -26,21 +26,21 @@
               <span>Admin</span>
             </div>
           </div>
-          <div class="navbar-admin-nav w-100">
-            <a href="index.html" class="nav-i-admintem nav-admin-link active"
+          <div class="navbar-nav w-100">
+            <a href="href="{{ path('app_homepage_index') }}"" class="nav-item nav-link active"
               ><i class="fa fa-tachometer-alt me-2"></i>Panel Admin</a
             >
 
-            <a href="#" class="nav-admin-item nav-admin-link"
+            <a href="#" class="nav-item nav-link"
               ><i class="fa fa-user me-2"></i>Perfil</a
             >
-            <a href="#" class="nav-admin-item nav-admin-link"
+            <a href="#" class="nav-item nav-link"
               ><i class="fa fa-book-open me-2"></i>Catalogo</a
             >
-            <a href="#" class="nav-admin-item nav-admin-link"
+            <a href="{{ path('app_producto_new') }}" class="nav-item nav-link"
               ><i class="fa fa-plus-circle me-2"></i>Crear Producto</a
             >
-            <a href="#" class="nav-admin-item nav-admin-link"
+            <a href="#" class="nav-item nav-link"
               ><i class="fa fa-edit me-2"></i>Editar Producto</a
             >
             <a class="btn btn-primary m-4" href="#">LOG OUT</a>
