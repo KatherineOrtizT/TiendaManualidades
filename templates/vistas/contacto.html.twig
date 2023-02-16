@@ -4,7 +4,7 @@
 
 {{ include('comunes/_header.html.twig') }}
 
-   <div class="container-xxl py-5 mt-5">
+   <div class="container-xxl py-5 mt-5 mb-5">
       <div class="container">
         <div class="row g-5 mb-4">
           <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
@@ -65,7 +65,7 @@
                   </div>
                 </div>
                 <div class="col-12">
-                  <button class="btn pink-btn" type="submit">
+                  <button class="btn pink-btn mt-2" type="submit">
                     Enviar mensaje
                   </button>
                 </div>
@@ -92,4 +92,5 @@
         </div>
       </div>
     </div>
+    {{ include('comunes/_footer.html.twig') }}
 {% endblock %}
