@@ -49,7 +49,7 @@ $(document).ready(function(){
 
                             /* Añadir a CARRITO */
 
-        document.querySelector('#botonAñadirCarrito').addEventListener('click', () =>{
+        $('#botonAñadirCarrito').click( () => {
 
             let cantidad = document.querySelector('#quantityInput').value;
 
@@ -77,90 +77,93 @@ $(document).ready(function(){
     
                             /* Añadir PREGUNTA */
 
-    document.querySelector("#publicarPregunta").addEventListener('click', () => {
-        console.log("PULSADO P");
-        console.log($("#path-to-controller-publicarPregunta").data("href"));
+        $("#publicarPregunta").click( () => {
+            console.log("PULSADO P");
+            console.log($("#path-to-controller-publicarPregunta").data("href"));
 
-        let textoPregunta = $('#textAreaPregunta').val();
+            let textoPregunta = $('#textAreaPregunta').val();
 
-        /* LLAMADA AJAX A PUBLICAR PREGUNTA (Introduce pregunta en BBDD) */ 
-        $.ajax({
-            url:$("#path-to-controller-publicarPregunta").data("href"),
-            type: "POST",
-            dataType: "json",
-            data: {
-                "textoPregunta": textoPregunta
-            },
-            async: true,
+            /* LLAMADA AJAX A PUBLICAR PREGUNTA (Introduce pregunta en BBDD) */ 
+            $.ajax({
+                url:$("#path-to-controller-publicarPregunta").data("href"),
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "textoPregunta": textoPregunta
+                },
+                async: true,
 
-            error: function() {
-                console.log("Error");
-            },
+                error: function() {
+                    console.log("Error");
+                },
 
-            success: function (data)
-            {        
+                success: function (data)
+                {        
 
-                //Creamos toda la estructura DOM para una nueva pregunta
-                let div = document.createElement('div');
-                div.classList.add("card-body", "border-bottom");
-                document.getElementById('contenedor-preguntas').insertBefore(div, document.getElementById('textAreaPublicar'));
+                    //Creamos toda la estructura DOM para una nueva pregunta
+                    let div = document.createElement('div');
+                    div.classList.add("card-body", "border-bottom");
+                    document.getElementById('contenedor-preguntas').insertBefore(div, document.getElementById('textAreaPublicar'));
 
-                let div1 = document.createElement("div");
-                div1.classList.add("d-flex", "flex-start", "align-items-center");
-                div.appendChild(div1);
-                    let imgUser11 = document.createElement('img');
-                        imgUser11.classList.add("rounded-circle", "shadow-1-strong", "me-3");
-                        imgUser11.setAttribute('src', '/images/'+data.img);
-                        imgUser11.setAttribute('onerror', 'this.onerror = null; this.src="/images/default_Profile.svg"');
-                        imgUser11.setAttribute('width', '60');
-                        imgUser11.setAttribute('height', '60');
-                        div1.appendChild(imgUser11);
-                    let div12 = document.createElement("div");
-                        div1.appendChild(div12);
-                    let tituloNombre121 = document.createElement("fw-bold", "mb-1");
-                        tituloNombre121.classList.add("d-flex", "flex-start", "align-items-center");
-                        let texto_tituloNombre121 = document.createTextNode(data.user);
-                        tituloNombre121.appendChild(texto_tituloNombre121);
-                        div12.appendChild(tituloNombre121);
-                    let parrafo122 = document.createElement("div");
-                        parrafo122.classList.add("text-muted", "small", "mb-0");
-                        let texto_parrafo122 = document.createTextNode(data.fecha.date.toLocaleString('en-GB', { timeZone: 'UTC' }));
-                        parrafo122.appendChild(texto_parrafo122);
-                        div12.appendChild(parrafo122);
+                    let div1 = document.createElement("div");
+                    div1.classList.add("d-flex", "flex-start", "align-items-center");
+                    div.appendChild(div1);
+                        let imgUser11 = document.createElement('img');
+                            imgUser11.classList.add("rounded-circle", "shadow-1-strong", "me-3");
+                            imgUser11.setAttribute('src', '/images/'+data.photo);
+                            imgUser11.setAttribute('onerror', 'this.onerror = null; this.src="/images/default_Profile.svg"');
+                            imgUser11.setAttribute('width', '60');
+                            imgUser11.setAttribute('height', '60');
+                            div1.appendChild(imgUser11);
+                        let div12 = document.createElement("div");
+                            div1.appendChild(div12);
+                        let tituloNombre121 = document.createElement("fw-bold", "mb-1");
+                            tituloNombre121.classList.add("d-flex", "flex-start", "align-items-center");
+                            let texto_tituloNombre121 = document.createTextNode(data.user);
+                            tituloNombre121.appendChild(texto_tituloNombre121);
+                            div12.appendChild(tituloNombre121);
+                        let parrafo122 = document.createElement("div");
+                            parrafo122.classList.add("text-muted", "small", "mb-0");
+                            let texto_parrafo122 = document.createTextNode(data.fecha.date.toLocaleString('en-GB', { timeZone: 'UTC' }));
+                            parrafo122.appendChild(texto_parrafo122);
+                            div12.appendChild(parrafo122);
 
-                
-                let parrafo2 = document.createElement("div");
-                    parrafo2.classList.add("mt-3", "mb-4", "pb-2");
-                    let texto_parrafo2 = document.createTextNode(data.texto);
-                    parrafo2.appendChild(texto_parrafo2);
-                    div.appendChild(parrafo2);
+                    
+                    let parrafo2 = document.createElement("div");
+                        parrafo2.classList.add("mt-3", "mb-4", "pb-2");
+                        let texto_parrafo2 = document.createTextNode(data.texto);
+                        parrafo2.appendChild(texto_parrafo2);
+                        div.appendChild(parrafo2);
 
-                let div3 = document.createElement("div");
-                div3.classList.add("small", "d-flex", "justify-content-start");
-                div.appendChild(div3);
-                    let enlaceResponder31 = document.createElement("a");
-                    enlaceResponder31.classList.add("d-flex", "align-items-center", "me-3");
-                    enlaceResponder31.id = "pink";
-                    div3.appendChild(enlaceResponder31);
-                        let icono311 = document.createElement("i");
-                        icono311.classList.add("fas", "fa-share", "me-2");
-                        let parrafo312 = document.createElement("p");
-                        parrafo312.classList.add("mb-0");
-                        parrafo312.id = data.id;
-                        let texto_parrafo312 = document.createTextNode("Responder");
-                        parrafo312.appendChild(texto_parrafo312);
-                        enlaceResponder31.appendChild(icono311);
-                        enlaceResponder31.appendChild(parrafo312);
+                    let div3 = document.createElement("div");
+                    div3.classList.add("small", "d-flex", "justify-content-start");
+                    div.appendChild(div3);
+                        let enlaceResponder31 = document.createElement("a");
+                        enlaceResponder31.classList.add("d-flex", "align-items-center", "me-3");
+                        enlaceResponder31.id = "pink";
+                        div3.appendChild(enlaceResponder31);
+                            let icono311 = document.createElement("i");
+                            icono311.classList.add("fas", "fa-share", "me-2");
+                            let parrafo312 = document.createElement("p");
+                            parrafo312.classList.add("mb-0");
+                            parrafo312.id = data.id;
+                            let texto_parrafo312 = document.createTextNode("Responder");
+                            parrafo312.appendChild(texto_parrafo312);
+                            enlaceResponder31.appendChild(icono311);
+                            enlaceResponder31.appendChild(parrafo312);
 
-                //Borramos el mensaje que avisa de que no hay preguntas si está
-                let mensajeNoPreguntas = document.getElementById("noQuestions_message");
-                if(mensajeNoPreguntas){
-                    mensajeNoPreguntas.style.display = "none";
+                    //Borramos el mensaje que avisa de que no hay preguntas si está
+                    let mensajeNoPreguntas = document.getElementById("noQuestions_message");
+                    if(mensajeNoPreguntas){
+                        mensajeNoPreguntas.style.display = "none";
+                    }
+
+                    //Borramos el textArea del mensaje publicado para que quede limpio
+                    $('#textAreaPregunta').val('');
+                    
                 }
-                
-            }
+            });
         });
-    });
 
                             /* Añadir RESPUESTA */
 
@@ -229,7 +232,7 @@ $(document).ready(function(){
                     div.appendChild(div1);
                         let imgUser11 = document.createElement('img');
                             imgUser11.classList.add("rounded-circle", "shadow-1-strong", "me-3");
-                            imgUser11.setAttribute('src', '/images/'+data.img);
+                            imgUser11.setAttribute('src', '/images/'+data.photo);
                             imgUser11.setAttribute('onerror', 'this.onerror = null; this.src="/images/default_Profile.svg"');
                             imgUser11.setAttribute('width', '60');
                             imgUser11.setAttribute('height', '60');
@@ -260,11 +263,185 @@ $(document).ready(function(){
                     if(mensajeNoRespuestas){
                         mensajeNoRespuestas.style.display = "none";
                     }
+
+                    //Borramos el textArea del mensaje publicado para que quede limpio
+                    selectorAreaRespuesta.val('');
         
                 }
             });
 
         });
+
+
+                            /* Editar PREGUNTA */
+
+        $('.boton_EditarP').click( (event) => {
+            /* console.log("PULSADO R");
+            console.log(event.target);
+            console.log($("#inputPregunta"+event.target.getAttribute('data-id'))); */
+            let id_Pregunta = event.target.getAttribute('data-id');            
+            let input_PreguntaEditar = $("#inputPregunta"+id_Pregunta);
+            
+            input_PreguntaEditar.css("background-color","#f0f7fd");
+            input_PreguntaEditar.focus();
+            input_PreguntaEditar.prop('readonly', false);
+
+            $(`.boton_editarPregunta[data-id=${id_Pregunta}]`).show();
+
+            $('.boton_editarPregunta').click( (event) => {
+
+                let textoPregunta = input_PreguntaEditar.val();
+                console.log(textoPregunta);
+
+                /* LLAMADA AJAX A EDITAR PREGUNTA (Introduce nuevo texto de pregunta en BBDD) */  
+                $.ajax({
+                    url:$("#path-to-controller-editarPregunta"+id_Pregunta).data("href"),
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        "textoPregunta": textoPregunta
+                    },
+                    async: true,
+    
+                    error: function() {
+                        console.log("Error");
+                    },
+    
+                    success: function (data)
+                    {        
+                        console.log(data);
+                        //Volvemos a hacer el input 'readonly' y quitamos background y botón
+                        input_PreguntaEditar.css("background-color","white");
+                        input_PreguntaEditar.prop('readonly', true);
+                        $(`.boton_editarPregunta[data-id=${id_Pregunta}]`).hide();
+            
+                    }
+                });
+    
+    
+            });
+
+        });
+
+    
+
+                            /* Borrar PREGUNTA */
+
+        $('.boton_BorrarP').click( (event) => {
+            let id_Pregunta = event.target.getAttribute('data-id'); 
+            console.log(id_Pregunta);
+            let contenedorPregunta = event.target.closest('.card-body');
+
+            /* LLAMADA AJAX A BORRAR PREGUNTA (Borra pregunta en BBDD) */  
+            $.ajax({
+                url:$("#path-to-controller-borrarPregunta"+id_Pregunta).data("href"),
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "idPregunta": id_Pregunta
+                },
+                async: true,
+
+                error: function() {
+                    console.log("Error");
+                },
+
+                success: function (data)
+                {        
+                    console.log(data);
+                    //Borramos toda la estructura DOM de la pregunta
+                    contenedorPregunta.remove();
+        
+                }
+            });
+
+        });
+
+
+
+
+
+                            /* Editar RESPUESTA */
+
+        $('.boton_EditarR').click( (event) => {
+            let id_Respuesta = event.target.getAttribute('data-id');            
+            let input_RespuestaEditar = $("#inputRespuesta"+id_Respuesta);
+            
+            input_RespuestaEditar.css("background-color","#f0f7fd");
+            input_RespuestaEditar.focus();
+            input_RespuestaEditar.prop('readonly', false);
+
+            $(`.boton_editarRespuesta[data-id=${id_Respuesta}]`).show();
+
+            $('.boton_editarRespuesta').click( (event) => {
+
+                let textoRespuesta = input_RespuestaEditar.val();
+                console.log(textoRespuesta);
+
+                /* LLAMADA AJAX A EDITAR RESPUESTA (Introduce nuevo texto de respuesta en BBDD) */  
+                $.ajax({
+                    url:$("#path-to-controller-editarRespuesta"+id_Respuesta).data("href"),
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        "textoRespuesta": textoRespuesta
+                    },
+                    async: true,
+
+                    error: function() {
+                        console.log("Error");
+                    },
+
+                    success: function (data)
+                    {        
+                        console.log(data);
+                        //Volvemos a hacer el input 'readonly' y quitamos background y botón
+                        input_RespuestaEditar.css("background-color","white");
+                        input_RespuestaEditar.prop('readonly', true);
+                        $(`.boton_editarRespuesta[data-id=${id_Respuesta}]`).hide();
+            
+                    }
+                });
+            });
+        });
+
+
+
+
+                            /* Borrar RESPUESTA */
+        
+        $('.boton_BorrarR').click( (event) => {
+            let id_Respuesta = event.target.getAttribute('data-id'); 
+            console.log(id_Respuesta);
+            let contenedorRespuesta = event.target.closest('.card-body');
+            console.log(contenedorRespuesta);
+
+            /* LLAMADA AJAX A BORRAR PREGUNTA (Borra pregunta en BBDD) */  
+            $.ajax({
+                url:$("#path-to-controller-borrarRespuesta"+id_Respuesta).data("href"),
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "idRespuesta": id_Respuesta
+                },
+                async: true,
+
+                error: function() {
+                    console.log("Error");
+                },
+
+                success: function (data)
+                {        
+                    console.log(data);
+                    //Borramos toda la estructura DOM de la pregunta
+                    contenedorRespuesta.remove();
+        
+                }
+            });
+
+        });
+
+
     }
       
 });
