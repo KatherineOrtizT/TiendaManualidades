@@ -36,6 +36,10 @@ body {
   font-family: var(--sm-font);
 }
 
+.title {
+  font-family: var(--lg-font);
+}
+
 /* buttons */
 
 .pink-btn {
@@ -282,7 +286,6 @@ footer a:hover {
   border-color: var(--pink);
 }
 
-
 /* -- SHOW (Product Detail Page) -- */
 
 .sidebar .navbar-admin .navbar-admin-nav .nav-admin-link i {
@@ -320,10 +323,6 @@ footer a:hover {
     url(../images/about.png) center center no-repeat;
   background-size: cover;
   height: 15rem;
-  font-family: var(--lg-font);
-}
-
-.title {
   font-family: var(--lg-font);
 }
 
