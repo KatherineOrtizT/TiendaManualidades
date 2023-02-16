@@ -44,7 +44,11 @@ security:
         
         - { path: ^/user/personal, roles: ROLE_USER }
         - { path: ^/user/devolver/\d+, roles: ROLE_USER }
-        - { path: ^/user/comprar, roles: ROLE_ADMIN }        
+        - { path: ^/user/comprar, roles: ROLE_ADMIN }
+        - { path: ^/user/borrarP/\d+, roles: [ROLE_USER, ROLE_ADMIN] } 
+        - { path: ^/user/borrarR/\d+, roles: [ROLE_USER, ROLE_ADMIN] } 
+        - { path: ^/user/editarP/\d+, roles: [ROLE_USER, ROLE_ADMIN] }    
+        - { path: ^/user/editarR/\d+, roles: [ROLE_USER, ROLE_ADMIN] }   
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 

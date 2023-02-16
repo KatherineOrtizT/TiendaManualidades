@@ -171,6 +171,9 @@ class UserController extends AbstractController
     #[Route('/borrarP/{pregunta}', name: 'app_user_borrarP', methods: ['POST', 'GET'])]
     public function borrarPregunta(Request $request, Pregunta $pregunta, PreguntaRepository $preguntaRepository): Response
     {
+        /* if(($pregunta->getUser() != $this->getUser()) || !(in_array('ROLE_ADMIN', $this->getUser()->getRoles()))){
+            return $this->render('errores/error403.html.twig', []);
+        } */
         $preguntaRepository->remove($pregunta, true);
         
         return new JsonResponse();
@@ -180,6 +183,9 @@ class UserController extends AbstractController
     #[Route('/editarP/{pregunta}', name: 'app_user_editarP', methods: ['POST', 'GET'])]
     public function editarPregunta(Request $request, Pregunta $pregunta, PreguntaRepository $preguntaRepository): Response
     {
+        /* if(($pregunta->getUser() != $this->getUser()) || !(in_array('ROLE_ADMIN', $this->getUser()->getRoles()))){
+            return $this->render('errores/error403.html.twig', []);
+        } */
         $texto = $request->request->get('textoPregunta', null);
         $pregunta->setTexto($texto);
 
@@ -192,6 +198,9 @@ class UserController extends AbstractController
     #[Route('/borrarR/{respuesta}', name: 'app_user_borrarR', methods: ['POST', 'GET'])]
     public function borrarRespuesta(Request $request, Respuesta $respuesta, RespuestaRepository $respuestaRepository): Response
     {
+        /* if(($respuesta->getUser() != $this->getUser()) || !(in_array('ROLE_ADMIN', $this->getUser()->getRoles()))){
+            return $this->render('errores/error403.html.twig', []);
+        } */
         $respuestaRepository->remove($respuesta, true);
         
         return new JsonResponse();
@@ -201,6 +210,9 @@ class UserController extends AbstractController
     #[Route('/editarR/{respuesta}', name: 'app_user_editarR', methods: ['POST', 'GET'])]
     public function editarRespuesta(Request $request, Respuesta $respuesta, RespuestaRepository $respuestaRepository): Response
     {   
+        /* if(($respuesta->getUser() != $this->getUser()) || !(in_array('ROLE_ADMIN', $this->getUser()->getRoles()))){
+            return $this->render('errores/error403.html.twig', []);
+        } */
         $texto = $request->request->get('textoRespuesta', null);
         $respuesta->setTexto($texto);
 

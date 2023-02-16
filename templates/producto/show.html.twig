@@ -246,18 +246,16 @@
 											<i class="fas fa-share me-2"></i>
 											<p id="{{ pregunta.id }}" class="mb-0">Responder</p>
 										</a>
-										{% if (app.user) and (is_granted('ROLE_ADMIN') or (app.user.Nombre == pregunta.user.Nombre)) %} 
+										{% if (app.user) and (is_granted('ROLE_ADMIN') or (app.user.id == pregunta.user.id)) %} 
 											<button type="button" class="boton_BorrarP border-0 btn mx-2 position-relative">
 												<i  data-id="{{ pregunta.id }}" class="fas fa-trash-alt"></i>
 											</button>
-											<div id="path-to-controller-borrarPregunta{{ pregunta.id }}" data-href="{{ path('app_user_borrarP', {'pregunta': pregunta.id}) }}"></div>
-											<button type="button" class="boton_EditarP mr-auto border-0 btn mx-2 position-relative">
+											<button type="button" class="boton_EditarP border-0 btn mx-2 position-relative">
 												<i  data-id="{{ pregunta.id }}" class="far fa-edit"></i>
 											</button>
 											<button type="button" data-id="{{ pregunta.id }}" class="boton_editarPregunta align-self-end ms-5 btn btn-sm" style="display:none">Editar</button>
-											<button type="button" data-id="{{ pregunta.id }}" class="boton_borrarPregunta align-self-end ms-5 btn btn-sm" style="display:none">Borrar</button>
 											<div id="path-to-controller-editarPregunta{{ pregunta.id }}" data-href="{{ path('app_user_editarP', {'pregunta': pregunta.id}) }}"></div>
-											{# <div id="path-to-controller-borrarPregunta{{ pregunta.id }}" data-href="{{ path('app_user_borrarP', {'pregunta': pregunta.id}) }}"></div> #}
+											<div id="path-to-controller-borrarPregunta{{ pregunta.id }}" data-href="{{ path('app_user_borrarP', {'pregunta': pregunta.id}) }}"></div>
 										{% endif %}
 									</div>
 								
@@ -274,7 +272,7 @@
 											{% endif %}
 											/>
 											<div class="form-outline w-100">
-												<label class="form-label" for="textAreaPregunta{{ pregunta.id }}">Escribe tu respuesta:
+												<label class="form-label" for="textAreaRespuesta{{ pregunta.id }}">Escribe tu respuesta:
 												</label>
 												<textarea class="form-control" id="textAreaRespuesta{{ pregunta.id }}" rows="3" style="background: #fff;"></textarea>
 											</div>
@@ -307,16 +305,14 @@
 
 											{# BOTONES editar y borrar respuesta #}
 											<div class="small d-flex justify-content-start">
-												{% if (app.user) and (is_granted('ROLE_ADMIN') or (app.user.Nombre == pregunta.user.Nombre)) %} 
+												{% if (app.user) and (is_granted('ROLE_ADMIN') or (app.user.id == pregunta.user.id)) %} 
 													<button type="button" class="boton_BorrarR border-0 btn mx-2 position-relative">
 														<i data-id="{{ respuesta.id }}" class="fas fa-trash-alt"></i>
 													</button>
-													<div id="path-to-controller-borrarRespuesta{{ respuesta.id }}" data-href="{{ path('app_user_borrarR', {'respuesta': respuesta.id}) }}"></div>
 													<button type="button" class="boton_EditarR border-0 btn mx-2 position-relative">
 														<i data-id="{{ respuesta.id }}" class="far fa-edit"></i>
 													</button>
 													<button type="button" data-id="{{ respuesta.id }}" class="boton_editarRespuesta align-self-end ms-5 btn btn-sm" style="display:none">Editar</button>
-													{# <button type="button" data-id="{{ respuesta.id }}" class="boton_borrarRespuesta align-self-end ms-5 btn btn-sm" style="display:none">Borrar</button> #}
 													<div id="path-to-controller-editarRespuesta{{ respuesta.id }}" data-href="{{ path('app_user_editarR', {'respuesta': respuesta.id}) }}"></div>
 													<div id="path-to-controller-borrarRespuesta{{ respuesta.id }}" data-href="{{ path('app_user_borrarR', {'respuesta': respuesta.id}) }}"></div>
 												{% endif %}
