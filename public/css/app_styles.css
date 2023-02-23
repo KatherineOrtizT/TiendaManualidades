@@ -77,6 +77,10 @@ body {
   color: var(--pink) !important;
 }
 
+a {
+  color: var(--pink) !important;
+}
+
 /***** 2. HEADER *****/
 /*------------------*/
 .navbar {

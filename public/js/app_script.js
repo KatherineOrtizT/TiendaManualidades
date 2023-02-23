@@ -323,10 +323,10 @@ $(document).ready(function(){
 
                     
                     let input2 = document.createElement("input");
-                    input2.classList.add("inputRespuesta input-noOutline border-0 mt-3 mb-4 pb-2");
+                    input2.classList.add("inputRespuesta", "input-noOutline", "border-0", "mt-3", "mb-4", "ms-5", "py-2", "ps-5");
                     input2.id = "inputRespuesta"+data.id;
                     input2.setAttribute('value', data.texto);
-                    input2.prop('readonly', true);
+                    input2.readOnly = true;
                     div.appendChild(input2);
 
 

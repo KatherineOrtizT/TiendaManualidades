@@ -9,6 +9,8 @@ use App\Entity\Producto;
 use App\Entity\Respuesta;
 use App\Entity\User;
 use App\Form\UserType;
+use App\Service\FileUploader;
+use Symfony\Component\Form\FormError;
 use App\Repository\ComprasRepository;
 use App\Repository\PedidosRepository;
 use App\Repository\PreguntaRepository;
@@ -38,7 +40,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/registration', name: 'userRegistration')]
-    public function userRegistration(Request $request, UserPasswordHasherInterface $passwordHasher): Response
+    public function userRegistration(Request $request, UserPasswordHasherInterface $passwordHasher, FileUploader $fileUploader): Response
     {
         $user= new User();
         $registration_form=$this->createForm(UserType::class, $user);
@@ -50,6 +52,18 @@ class UserController extends AbstractController
                 $user,
                 $plaintextPassword
             );
+
+            $imageFile = $registration_form->get('photo')->getData();
+
+            /*'imagen' field is not required. The image file must be processed only when 
+            a file is uploaded, not every time is edited*/
+            if ($imageFile) {
+                $imageFile = $fileUploader->upload($imageFile);
+
+                // updates the 'imagen' property of Producto entity to store the imagen name (not the file)
+                $user->setPhoto($imageFile);
+            }
+
             $user->setPassword($hashedPassword);
             $user->setRoles(['ROLE_USER']);
             $this->em->persist($user);

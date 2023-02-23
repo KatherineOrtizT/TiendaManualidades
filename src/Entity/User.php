@@ -3,12 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use App\Validator\UniqueEmail;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-//use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -18,10 +19,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    /* #[Assert\Email(
-        message: 'The email {{ value }} is not a valid email.',
-    )] */
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\Email(message: 'El email {{ value }} no es un formato de email válido.')]
+    /* #[UniqueEmail(message:"El email ya está en uso")] */
     private ?string $email = null;
 
     #[ORM\Column]
@@ -31,18 +31,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\Regex(pattern:"/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/", message:"La contraseña no es válida. Debe contener al menos 8 caracteres, un número, una letra mayúscula y una letra minúscula")]
     private ?string $password = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Regex(pattern:"/^[\w]+\.(jpg|jpeg|png|webp)$/i", message:"Foto no válida")]
     private ?string $photo = null;
 
     #[ORM\OneToMany(mappedBy: 'idUsuario', targetEntity: Pedidos::class, orphanRemoval: true)]
     private Collection $pedidos;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"El campo Nombre no puede estar vacío")]
     private ?string $Nombre = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"El campo Apellidos no puede estar vacío")]
     private ?string $Apellidos = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Pregunta::class, orphanRemoval: true)]
