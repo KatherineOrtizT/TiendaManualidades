@@ -76,6 +76,10 @@ body {
   color: var(--pink) !important;
 }
 
+a {
+  color: var(--pink) !important;
+}
+
 /***** 2. HEADER *****/
 /*------------------*/
 .navbar {
@@ -312,6 +316,17 @@ footer a:hover {
   }
 }
 
+
+.input-noOutline{
+  width: 100%;
+  height: 65px;
+}
+
+.input-noOutline:focus{
+  box-shadow: none !important;
+  outline: none;
+}
+
 /***** 10. ABOUT US *****/
 /*-----------------*/
 .about-header {
@@ -331,3 +346,4 @@ footer a:hover {
   padding-top: 3rem;
   padding-bottom: 2rem;
 }
+

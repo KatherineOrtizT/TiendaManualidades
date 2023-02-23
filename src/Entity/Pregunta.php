@@ -44,7 +44,7 @@ class Pregunta implements JsonSerializable
         return array(
             'id' => $this->id,
             'user'=> $this->user->getNombre(),
-            'img' => $this->user->getPhoto(),
+            'photo' => $this->user->getPhoto(),
             'texto' => $this->texto,
             'fecha' => $this->fecha,
         );

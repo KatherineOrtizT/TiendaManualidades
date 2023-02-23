@@ -38,7 +38,7 @@ class ProductoType extends AbstractType
                     new File([
                         'maxSize' => '1024k',
                         'mimeTypes' => [
-                            'image/jpge',
+                            'image/jpeg',
                             'image/jpg',
                             'image/png',
                             'image/webp',
