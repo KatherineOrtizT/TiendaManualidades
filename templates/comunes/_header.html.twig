@@ -145,6 +145,7 @@
         <form
           action="{{ path ('app_producto_search') }}"
           method="get"
+          name='formBuscar'
           class="modal-content modal-body border-0 p-0"
         >
           <div class="input-group mb-2">
@@ -157,7 +158,7 @@
             />
             <button
               type="submit" 
-              id='buscar'
+              name='buscar'
               class="btn input-group-text bg-success text-light"
             >
               <i class="fa fa-fw fa-search text-white"></i>
