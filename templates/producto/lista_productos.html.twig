@@ -23,6 +23,7 @@
             </tr>
         </thead>
         <tbody>
+
         {% for producto in productos %}
             <tr>
                 <td>{{ producto.id }}</td>
@@ -40,7 +41,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="9">No se han encontrado resultados</td>
             </tr>
         {% endfor %}
         </tbody>

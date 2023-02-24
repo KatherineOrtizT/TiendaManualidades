@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use App\Validator\UniqueEmail;
+use App\Validator as CustomAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,7 +21,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\Email(message: 'El email {{ value }} no es un formato de email válido.')]
-    /* #[UniqueEmail(message:"El email ya está en uso")] */
+    #[CustomAssert\UniqueEmail()]
     private ?string $email = null;
 
     #[ORM\Column]

@@ -10,6 +10,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductoRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Producto implements JsonSerializable
 {
     #[ORM\Id]
@@ -53,26 +54,34 @@ class Producto implements JsonSerializable
     #[ORM\Column]
     private ?bool $estado = null;
 
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $fechaCreacion = null;
+
+    #[ORM\PrePersist]
+    public function prePersist(): void
+    {
+        $this->fechaCreacion = new \DateTimeImmutable('now');
+    }
+
+
     public function __construct()
     {
         $this->compras = new ArrayCollection();
         $this->preguntas = new ArrayCollection();
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize() :mixed
     {
         return array(
             'id'=> $this->id,
             'nombre' => $this->nombre,
-            //'descripcion'=> $this->descripcion,
             'precio' => $this->precio,
             'descuento'=> $this->descuento,
-            /* 'categoria' => $this->categoria,
-            'material'=> $this->material,
-            'color'=> $this->color, */
             'imagen' => $this->imagen,
         );
     }
+
+
 
     public function getId(): ?int
     {
@@ -252,9 +261,21 @@ class Producto implements JsonSerializable
         return $this->estado;
     }
 
-    public function setEstado(bool $estado): self
+    public function setEstado(bool $estado = true): self
     {
         $this->estado = $estado;
+
+        return $this;
+    }
+
+    public function getFechaCreacion(): ?\DateTimeInterface
+    {
+        return $this->fechaCreacion;
+    }
+
+    public function setFechaCreacion(?\DateTimeInterface $fechaCreacion): self
+    {
+        $this->fechaCreacion = $fechaCreacion;
 
         return $this;
     }

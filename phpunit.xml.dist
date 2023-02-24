@@ -15,6 +15,9 @@
         <server name="SHELL_VERBOSITY" value="-1" />
         <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
         <server name="SYMFONY_PHPUNIT_VERSION" value="9.5" />
+        <!-- AÑADIDO PARA TESTING -->
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />
+        <server name="APP_DEBUG" value="false" />
     </php>
 
     <testsuites>
@@ -39,4 +42,11 @@
         <extension class="Symfony\Component\Panther\ServerExtension" />
     </extensions>
     -->
+
+    <!-- Adding extension for doctrine-test-bundle: allows the testing 
+        ddbb to stay the same after each test -->
+    <extensions>
+        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
+    </extensions>
+
 </phpunit>
