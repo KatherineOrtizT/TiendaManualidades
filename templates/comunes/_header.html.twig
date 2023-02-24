@@ -11,7 +11,8 @@
           <span class="fw-lighter ms-2 text-dark">AF</span>
         </a>
 
-        <div class="order-lg-2 nav-btns">
+      <div class="order-lg-2 nav-btns">
+
           <!-- Button trigger modal SEARCH -->
           <button
             type="button"
@@ -79,31 +80,48 @@
             </li>
 
             <li class="nav-item px-2 py-2">
-              <a class="nav-link text-dark" href="#">Sobre Nosotros</a>
+              <a class="nav-link text-dark" href="{{path('app_SobreNosotros_panel')}}">Sobre Nosotros</a>
             </li>
             <li class="nav-item px-2 py-2">
-              <a class="nav-link text-dark" href="#">Contacto</a>
+              <a class="nav-link text-dark" href="{{path('app_contacto_panel')}}">Contacto</a>
             </li>
              {% if  is_granted('ROLE_ADMIN') %} 
               <li class="nav-item px-2 py-2">
-                  <a class="nav-link text-dark" href="{{ path('app_producto_new') }}">Administrar</a>
+                  <a class="nav-link text-dark" href="{{ path('app_admin_panel') }}">Administrar</a>
               </li>
+
                {# <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Admin
+                    Idioma
                 </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Crear</a>
-                      <a class="dropdown-item" href="#">editar</a>
-                      <a class="dropdown-item" href="#">Admin </a>
+                      <a class="dropdown-item" href="#">Español</a>
+                      <a class="dropdown-item" href="#">Ingles</a>
+                      <a class="dropdown-item" href="#">chino </a>
                   </div>
-              </div> #}
+              </div>  #}
+
             {% endif %}
+             
           </ul>
         </div>
+          
+              <div class="dropdown order-lg-3 ms-3">
+                <a
+                  class="dropdown-toggle text-dark text-decoration-none"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                <i class="fa fa-globe"></i> ES/EN
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">English</a></li>
+                  <li><a class="dropdown-item" href="#">Español</a></li>
+                </ul>
+              </div>
       </div>
-
-      
     </nav>
     <!-- end of navbar -->
 

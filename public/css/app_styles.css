@@ -11,9 +11,8 @@
   8. Pagina Admin
   9. Pagina User Registrado 
   10. About Us
-  11. Contact
-  12. Carrito
-  13. Pagina Pago
+  11. Carrito
+  12. Pagina Pago
   --------------
 */
 
@@ -228,7 +227,7 @@ footer a:hover {
 /*---------------------------*/
 
 /***** 8. PAGINA ADMIN *****/
-/*------------------*/
+/*------------------------*/
 /* layout */
 .sidebar {
   position: fixed;
@@ -317,6 +316,7 @@ footer a:hover {
   }
 }
 
+
 .input-noOutline{
   width: 100%;
   height: 65px;
@@ -326,3 +326,24 @@ footer a:hover {
   box-shadow: none !important;
   outline: none;
 }
+
+/***** 10. ABOUT US *****/
+/*-----------------*/
+.about-header {
+  margin-bottom: 6rem;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(../images/about.png) center center no-repeat;
+  background-size: cover;
+  height: 15rem;
+  font-family: var(--lg-font);
+}
+
+.title {
+  font-family: var(--lg-font);
+}
+
+#about-us-container-2 {
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+}
+
