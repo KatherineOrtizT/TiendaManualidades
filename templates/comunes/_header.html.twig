@@ -56,7 +56,7 @@
             <i class="fa fa-user"></i>
           </button>
           <button type="button" class="btn pink-btn px-3 position-relative text-black">
-            <a href="{{ path('userRegistration') }}" class="text-reset text-decoration-none">Regístrate</a>
+            <a href="{{ path('userRegistration') }}" class="text-reset text-decoration-none"> {{ 'Regístrate'|trans }}</a>
             <i class="fa fa-user"></i>
           </button>
           {% endif %}
@@ -75,18 +75,18 @@
         <div class="collapse navbar-collapse order-lg-1" id="navMenu">
           <ul class="navbar-nav mx-auto text-center">           
             <li class="nav-item px-2 py-2">
-              <a class="nav-link text-dark" href="{{ path('app_producto_catalogo') }}">Catálogo Productos</a>
+              <a class="nav-link text-dark" href="{{ path('app_producto_catalogo') }}">{{ 'Catálogo Productos'|trans }}</a>
             </li>
 
             <li class="nav-item px-2 py-2">
-              <a class="nav-link text-dark" href="{{path('app_SobreNosotros_panel')}}">Sobre Nosotros</a>
+              <a class="nav-link text-dark" href="{{path('app_SobreNosotros_panel')}}">{{ 'Sobre Nosotros'|trans }}</a>
             </li>
             <li class="nav-item px-2 py-2">
-              <a class="nav-link text-dark" href="{{path('app_contacto_panel')}}">Contacto</a>
+              <a class="nav-link text-dark" href="{{path('app_contacto_panel')}}">{{ 'Contacto'|trans }}</a>
             </li>
              {% if  is_granted('ROLE_ADMIN') %} 
               <li class="nav-item px-2 py-2">
-                  <a class="nav-link text-dark" href="{{ path('app_admin_panel') }}">Administrar</a>
+                  <a class="nav-link text-dark" href="{{ path('app_admin_panel') }}">{{ 'Administrar'|trans }}</a>
               </li>
 
                {# <div class="dropdown">
@@ -116,8 +116,8 @@
                 <i class="fa fa-globe"></i> ES/EN
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">English</a></li>
-                  <li><a class="dropdown-item" href="#">Español</a></li>
+                  <li><a class="dropdown-item" href="{{ path('app_homepage', {'_locale': 'en'}) }}">English</a></li>
+                  <li><a class="dropdown-item" href="{{ path('app_homepage', {'_locale': 'es'}) }}">Español</a></li>
                 </ul>
               </div>
       </div>

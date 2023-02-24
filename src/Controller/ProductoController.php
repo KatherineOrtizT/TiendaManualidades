@@ -54,7 +54,7 @@ class ProductoController extends AbstractController
                 // updates the 'imagen' property of Producto entity to store the imagen name (not the file)
                 $producto->setImagen($imageFile);
             }
-
+            $producto->setEstado("Disponible");
             $productoRepository->save($producto, true);
 
             return $this->redirectToRoute('app_homepage_index', [], Response::HTTP_SEE_OTHER);

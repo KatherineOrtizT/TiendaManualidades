@@ -9,6 +9,8 @@ use App\Entity\Producto;
 use App\Entity\Respuesta;
 use App\Entity\User;
 use App\Form\UserType;
+use App\Service\FileUploader;
+use Symfony\Component\Form\FormError;
 use App\Repository\ComprasRepository;
 use App\Repository\PedidosRepository;
 use App\Repository\PreguntaRepository;
@@ -54,7 +56,7 @@ class UserController extends AbstractController
         return $this->render('vistas/contacto.html.twig');
     }
     #[Route('/registration', name: 'userRegistration')]
-    public function userRegistration(Request $request, UserPasswordHasherInterface $passwordHasher): Response
+    public function userRegistration(Request $request, UserPasswordHasherInterface $passwordHasher, FileUploader $fileUploader): Response
     {
         $user= new User();
         $registration_form=$this->createForm(UserType::class, $user);
@@ -66,6 +68,18 @@ class UserController extends AbstractController
                 $user,
                 $plaintextPassword
             );
+
+            $imageFile = $registration_form->get('photo')->getData();
+
+            /*'imagen' field is not required. The image file must be processed only when 
+            a file is uploaded, not every time is edited*/
+            if ($imageFile) {
+                $imageFile = $fileUploader->upload($imageFile);
+
+                // updates the 'imagen' property of Producto entity to store the imagen name (not the file)
+                $user->setPhoto($imageFile);
+            }
+
             $user->setPassword($hashedPassword);
             $user->setRoles(['ROLE_USER']);
             $this->em->persist($user);
@@ -178,14 +192,64 @@ class UserController extends AbstractController
 
         $respuestaRepository->save($respuesta, true);
 
-        $respuestaJSON = $pregunta->jsonSerialize();
+        $respuestaJSON = $respuesta->jsonSerialize();
         
         return new JsonResponse($respuestaJSON);
-
-        /* if($request->request->get('cantidad')){
-            $arr = json_encode($producto->getId());
-            return new JsonResponse($arr);
-        } */
     }
+
+
+    #[Route('/borrarP/{pregunta}', name: 'app_user_borrarP', methods: ['POST', 'GET'])]
+    public function borrarPregunta(Request $request, Pregunta $pregunta, PreguntaRepository $preguntaRepository): Response
+    {
+        /* if(($pregunta->getUser() != $this->getUser()) || !(in_array('ROLE_ADMIN', $this->getUser()->getRoles()))){
+            return $this->render('errores/error403.html.twig', []);
+        } */
+        $preguntaRepository->remove($pregunta, true);
+        
+        return new JsonResponse();
+    }
+
+
+    #[Route('/editarP/{pregunta}', name: 'app_user_editarP', methods: ['POST', 'GET'])]
+    public function editarPregunta(Request $request, Pregunta $pregunta, PreguntaRepository $preguntaRepository): Response
+    {
+        /* if(($pregunta->getUser() != $this->getUser()) || !(in_array('ROLE_ADMIN', $this->getUser()->getRoles()))){
+            return $this->render('errores/error403.html.twig', []);
+        } */
+        $texto = $request->request->get('textoPregunta', null);
+        $pregunta->setTexto($texto);
+
+        $preguntaRepository->save($pregunta, true);
+        
+        return new JsonResponse(['nuevoTexto' => $pregunta->getTexto()]);
+    }
+
+
+    #[Route('/borrarR/{respuesta}', name: 'app_user_borrarR', methods: ['POST', 'GET'])]
+    public function borrarRespuesta(Request $request, Respuesta $respuesta, RespuestaRepository $respuestaRepository): Response
+    {
+        /* if(($respuesta->getUser() != $this->getUser()) || !(in_array('ROLE_ADMIN', $this->getUser()->getRoles()))){
+            return $this->render('errores/error403.html.twig', []);
+        } */
+        $respuestaRepository->remove($respuesta, true);
+        
+        return new JsonResponse();
+    }
+
+
+    #[Route('/editarR/{respuesta}', name: 'app_user_editarR', methods: ['POST', 'GET'])]
+    public function editarRespuesta(Request $request, Respuesta $respuesta, RespuestaRepository $respuestaRepository): Response
+    {   
+        /* if(($respuesta->getUser() != $this->getUser()) || !(in_array('ROLE_ADMIN', $this->getUser()->getRoles()))){
+            return $this->render('errores/error403.html.twig', []);
+        } */
+        $texto = $request->request->get('textoRespuesta', null);
+        $respuesta->setTexto($texto);
+
+        $respuestaRepository->save($respuesta, true);
+        
+        return new JsonResponse(['nuevoTexto' => $respuesta->getTexto()]);
+    }
+
 
 }
