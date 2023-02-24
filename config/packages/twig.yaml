@@ -5,7 +5,8 @@ twig:
     strict_variables: "%kernel.debug%"
     auto_reload:               true
     optimizations:             -1
-
+    globals:
+        listado_idiomas: '%app.listado_idiomas%'
 when@test:
     twig:
         strict_variables: true
