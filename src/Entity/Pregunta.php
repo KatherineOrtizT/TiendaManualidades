@@ -39,7 +39,7 @@ class Pregunta implements JsonSerializable
         $this->respuestas = new ArrayCollection();
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize() :mixed
     {
         return array(
             'id' => $this->id,

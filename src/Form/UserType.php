@@ -16,7 +16,6 @@ use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Unique;
 
 class UserType extends AbstractType
 {
@@ -26,9 +25,10 @@ class UserType extends AbstractType
             ->add('email',EmailType::class, [
                 "label" => "Email",
                 "required" => true,
+                /* "error_bubbling" => true, */ //Permite que los errores aparezcan arriba del formulario
                 "constraints" => [
                     new NotBlank(),
-                    new UniqueEmail(),
+                    new UniqueEmail([ "message" => "INCORRECTO"]),
                 ]
             ])
             ->add('password', PasswordType::class, [
@@ -74,7 +74,10 @@ class UserType extends AbstractType
                 "required" => true,
                 "constraints" => [
                     new NotBlank(),
-                    new Length(['min' => 3]),
+                    new Length([
+                        'min' => 3,
+                        'max' => 16,
+                    ]),
                     new Regex([
                         'pattern' => '/^[a-zA-Z]+$/',
                         'match'   => true,
@@ -87,7 +90,10 @@ class UserType extends AbstractType
                 "required" => true,
                 "constraints" => [
                     new NotBlank(),
-                    new Length(['min' => 3]),
+                    new Length([
+                        'min' => 3,
+                        'max' => 16,
+                    ]),
                     new Regex([
                         'pattern' => '/^[a-zA-Z]+$/',
                         'match'   => true,

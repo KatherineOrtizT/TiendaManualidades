@@ -15,6 +15,8 @@ class ProductoControllerTest extends WebTestCase
 
     protected function setUp(): void
     {
+        // This calls KernelTestCase::bootKernel(), and creates a
+        // "client" that is acting as the browser
         $this->client = static::createClient();
         $this->repository = static::getContainer()->get('doctrine')->getRepository(Producto::class);
 
@@ -23,7 +25,25 @@ class ProductoControllerTest extends WebTestCase
         }
     }
 
-    public function testIndex(): void
+
+    public function testSomething(): void
+    {
+        
+        // Request a specific page
+        $crawler = $this->client->request('GET', '/homepage');
+
+        // Validate a successful response and some content
+        /*Las dos siguiente líneas hacen lo mismo y evalúan si la respuesta del 
+        la petición al controlador redirige a esa ruta. Es decir, si el request
+        que vemos unas líneas arriba a /homepage emite una respuesta a la ruta
+        'http://localhost/homepage/'
+        */
+        $this->assertSame('http://localhost/homepage/', $this->client->getResponse()->headers->get('Location'));
+        //$this->assertResponseRedirects('hhttp://localhost/homepage/', 301);
+        $this->assertSelectorTextContains('h2', 'Testimoniales');
+    }
+
+    /* public function testIndex(): void
     {
         $crawler = $this->client->request('GET', $this->path);
 
@@ -32,7 +52,7 @@ class ProductoControllerTest extends WebTestCase
 
         // Use the $crawler to perform additional assertions e.g.
         // self::assertSame('Some text on the page', $crawler->filter('.p')->first());
-    }
+    } */
 
     public function testNew(): void
     {
@@ -53,7 +73,7 @@ class ProductoControllerTest extends WebTestCase
             'producto[color]' => 'Testing',
         ]);
 
-        self::assertResponseRedirects('/producto/');
+        self::assertResponseRedirects('/homepage');
 
         self::assertSame($originalNumObjectsInRepository + 1, count($this->repository->findAll()));
     }
@@ -106,7 +126,7 @@ class ProductoControllerTest extends WebTestCase
             'producto[color]' => 'Something New',
         ]);
 
-        self::assertResponseRedirects('/producto/');
+        self::assertResponseRedirects('/homepage');
 
         $fixture = $this->repository->findAll();
 
@@ -142,6 +162,50 @@ class ProductoControllerTest extends WebTestCase
         $this->client->submitForm('Delete');
 
         self::assertSame($originalNumObjectsInRepository, count($this->repository->findAll()));
-        self::assertResponseRedirects('/producto/');
+        self::assertResponseRedirects('/homepage');
+    }
+
+
+    public function testBuscar01(): void
+    {
+        // Request a specific page
+        $crawler = $this->client->request('GET', sprintf('%ssearch', $this->path, ['busqueda' => 'Kit']));
+        $this->client->catchExceptions(false);
+        // Validate a successful response and some content
+        /*Las dos siguiente líneas hacen lo mismo y evalúan si la respuesta del 
+        la petición al controlador redirige a esa ruta.
+        */
+        //$this->assertSame('http://localhost/producto/catalogo', $this->client->getResponse()->headers->get('Location'));
+        $this->assertResponseRedirects('http://localhost/producto/catalogo', 301);
+        $this->assertResponseStatusCodeSame(200);
+
+        $this->assertEquals(
+            2,
+            $crawler->filter('html td:contains("Kit")')->count()
+        );
+        
+        //$this->assertSelectorTextContains('td', 'No se han encontrado resultados');
+    }
+
+
+    public function testBuscar02(): void
+    {
+        // Request a specific page
+        $crawler = $this->client->request('GET', sprintf('%ssearch', $this->path, ['busqueda' => 'ky']));
+
+        // Validate a successful response and some content
+        /*Las dos siguiente líneas hacen lo mismo y evalúan si la respuesta del 
+        la petición al controlador redirige a esa ruta.
+        */
+        //$this->assertSame('http://localhost/producto/catalogo', $this->client->getResponse()->headers->get('Location'));
+        $this->assertResponseRedirects('hhttp://localhost/producto/catalogo', 301);
+        $this->assertResponseStatusCodeSame(200);
+
+        $this->assertEquals(
+            0,
+            $crawler->filter('html td:contains("ky")')->count()
+        );
+        
+        $this->assertSelectorTextContains('td', 'No se han encontrado resultados');
     }
 }

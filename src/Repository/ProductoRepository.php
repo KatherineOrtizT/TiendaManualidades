@@ -49,39 +49,52 @@ class ProductoRepository extends ServiceEntityRepository
             ->andWhere('p.nombre Like :val')
             ->setParameter('val','%'.$value.'%')
             ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
+            ->setMaxResults(20)
             ->getQuery()
             ->getResult()
         ;
     }
 
+    /**
+     * @return Producto[] Returns an array of Producto objects
+     */
+    public function findProductsByNovelty(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.fechaCreacion >= :fecha_limite')
+            ->setParameter('fecha_limite', new \DateTime('-15 days'))
+            ->orderBy('p.fechaCreacion', 'DESC')
+            ->setMaxResults(8)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Producto[] Returns an array of Producto objects
+     */
+    public function findProductsByDiscount(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.discount', 'DESC')
+            ->setMaxResults(8)
+            ->getQuery()
+            ->getResult();
+    }
 
 
+    /**
+     * @return Producto[] Returns an array of Producto objects
+     */
+    public function findTopSellingProducts(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p, COUNT(c.id) AS HIDDEN sold')
+            ->leftJoin(Compras::class, 'c', 'WITH', 'c.idProducto = p.id')
+            ->groupBy('p.id')
+            ->orderBy('sold', 'DESC')
+            ->setMaxResults(8)
+            ->getQuery()
+            ->getResult();
+    }
 
-    
-
-//    /**
-//     * @return Producto[] Returns an array of Producto objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Producto
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }
