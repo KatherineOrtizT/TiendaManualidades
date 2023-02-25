@@ -1,4 +1,6 @@
 # translations/messages.en.yaml
+
+# *** HOMEPAGE ***
 Hola: Hello
 Bienvenido: Welcome
 Productos Destacados: Featured Products
@@ -22,6 +24,33 @@ Todos: All
 Con descuento: With Discount
 Más vendidos: Best Sellers
 Nuevos: New
+Crear Nuevo producto: Create New
 Es mi tienda de favorita: It's my favorite Store
 ¡Me encantan sus productos!: I love your products!
 Mejor servicio al cliente: best customer service
+
+# *** CONTACTO ***
+Escribe tu mensaje: Write your message
+Si tiene alguna consulta, contáctenos: If you have any questions, please contact us
+Para una respuesta más ágil y rápida de nuestro equipo de atención al cliente, disponemos de este formulario de contacto cuya bandeja de entrada es consultada diariamente.: For a faster and more agile response from our customer service team, we have this contact form whose inbox is consulted daily.
+Nombre: Name
+Email: Email
+Título: Title
+Mensaje: Message
+Enviar Mensaje: Submit Menssage
+
+# *** SOBRE NOSOTROS ***
+Nuestra Historia: Our History
+Crecer haciendo: Grow up doing
+Somos un pequeño equipo dedicado a hacer que nuestros hogares y alrededores sean más bonitos y encantadores. Nos apasiona el trabajo manual y todos los beneficios que puede traer a nuestra vida, algo especialmente importante para los niños. Creemos en hacer, no en comprar.: We are a small team dedicated to making our homes and surroundings more beautiful and charming. We are passionate about manual work and all the benefits it can bring to our lives, something especially important for children. We believe in making, not buying.
+Hecho A Mano: Handmade
+Gran Variedad: Great Variety
+Talleres Gratuitos: Free Workshops
+Ver productos: See our products
+Manualidades: Crafts
+Categorías de productos: Product Categories
+Pintura: Paint
+Tejido de punto: Needlework
+Escultura: Sculpture
+Artesanía: Craftmanship
+Ver más: See more

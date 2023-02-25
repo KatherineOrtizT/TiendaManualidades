@@ -28,7 +28,7 @@ class UserType extends AbstractType
                 /* "error_bubbling" => true, */ //Permite que los errores aparezcan arriba del formulario
                 "constraints" => [
                     new NotBlank(),
-                    new UniqueEmail([ "message" => "INCORRECTO"]),
+                    /* new UniqueEmail([ "message" => "INCORRECTO"]), */
                 ]
             ])
             ->add('password', PasswordType::class, [

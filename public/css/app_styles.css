@@ -63,6 +63,13 @@ body {
   border-color: var(--pink);
 }
 
+.badge{
+  background-color: #d686c5;
+  padding: 0.25em 0.4em;
+  font-size: 75%;
+  font-weight: 700;
+}
+
 /* colors */
 .text-primary {
   color: var(--pink) !important;

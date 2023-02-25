@@ -1,4 +1,6 @@
 # translations/messages.es.yaml
+
+# *** HOMEPAGE ***
 Hola: Hola
 Bienvenido: Bienvenido
 Productos Destacados: Productos Destacados
@@ -21,6 +23,34 @@ Todos: Todos
 Con descuento: Con descuento
 Más vendidos: Más vendidos
 Nuevos: Nuevos
+Crear Nuevo producto: Crear Nuevo producto
 Es mi tienda de favorita: Es mi tienda de favorita
 ¡Me encantan sus productos!: ¡Me encantan sus productos!
 Mejor servicio al cliente: Mejor servicio al cliente
+
+# *** CONTACTO ***
+Escribe tu mensaje: Escribe tu mensaje
+Si tiene alguna consulta, contáctenos: Si tiene alguna consulta, contáctenos
+Para una respuesta más ágil y rápida de nuestro equipo de atención al cliente, disponemos de este formulario de contacto cuya bandeja de entrada es consultada diariamente.: Para una respuesta más ágil y rápida de nuestro equipo de atención al cliente, disponemos de este formulario de contacto cuya bandeja de entrada es consultada diariamente.
+Nombre: Nombre
+Email: Email
+Título: Título
+Mensaje: Mensaje
+Enviar Mensaje: Enviar Mensaje
+
+# *** SOBRE NOSOTROS ***
+Nuestra Historia: Nuestra Historia
+Crecer haciendo: Crecer haciendo
+Somos un pequeño equipo dedicado a hacer que nuestros hogares y alrededores sean más bonitos y encantadores. Nos apasiona el trabajo manual y todos los beneficios que puede traer a nuestra vida, algo especialmente importante para los niños. Creemos en hacer, no en comprar.: Somos un pequeño equipo dedicado a hacer que nuestros hogares y alrededores sean más bonitos y encantadores. Nos apasiona el trabajo manual y todos los beneficios que puede traer a nuestra vida, algo especialmente importante para los niños. Creemos en hacer, no en comprar.
+Hecho A Mano: Hecho A Mano
+Gran Variedad: Gran Variedad
+Talleres Gratuitos: Talleres Gratuitos
+Ver productos: Ver productos
+Manualidades: Manualidades
+Categorías de productos: Categorías de productos
+Pintura: Pintura
+Tejido de punto: Tejido de punto
+Escultura: Escultura
+Artesanía: Artesanía
+Ver más: Ver más
+

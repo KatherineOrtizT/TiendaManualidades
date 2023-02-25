@@ -8,25 +8,36 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/homepage')]
+#[Route('/')]
 class HomepageController extends AbstractController
 {
 
-    #[Route('/', name: 'app_homepage_index', methods: ['GET'])]
+    #[Route('/homepage/{_locale}', name: 'app_homepage_index', methods: ['GET'], requirements: ['_locale' => 'en|es'])]
     public function index(ProductoRepository $productoRepository): Response
     {
+        $productos[] = $productoRepository->findAll_limit8();
+        $productos[] = $productoRepository->findProductsByNovelty();
+        $productos[] = $productoRepository->findProductsByDiscount();
+        $productos[] = $productoRepository->findTopSellingProducts();
+
         return $this->render('/index.html.twig', [
-            'productos' => $productoRepository->findAll(),
+            'productos' => $productos,
         ]);
     }
 
-    /* #[Route('/error403', name: 'app_error403', methods: ['GET'])]
-    public function error403(): Response
-    {
-        /*{{ render(controller('App\\Controller\\HomePageController::app_error403')}}
-        return $this->render('/error403.html.twig', []);
-    } */
 
+    #[Route('/contacto/{_locale}', name: 'app_contacto_panel', methods: ['GET'], requirements: ['_locale' => 'en|es'])]
+    public function contacto()
+    {
+        return $this->render('vistas/contacto.html.twig');
+    }
+
+
+    #[Route('/aboutUs/{_locale}', name: 'app_SobreNosotros_panel', methods: ['GET'], requirements: ['_locale' => 'en|es'])]
+    public function sobreNosotros()
+    {
+        return $this->render('vistas/sobre-nosotras.html.twig');
+    }
 
 
 }
