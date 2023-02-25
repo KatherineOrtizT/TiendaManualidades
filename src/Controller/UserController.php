@@ -44,17 +44,8 @@ class UserController extends AbstractController
     {
         return $this->render('admin/panel-admin.html.twig');
     }
-    #[Route('/', name: 'app_SobreNosotros_panel')]
-    public function sobreNosotros()
-    {
-        return $this->render('vistas/sobre-nosotras.html.twig');
-    }
+    
 
-    #[Route('/contacto', name: 'app_contacto_panel')]
-    public function contacto()
-    {
-        return $this->render('vistas/contacto.html.twig');
-    }
     #[Route('/registration', name: 'userRegistration')]
     public function userRegistration(Request $request, UserPasswordHasherInterface $passwordHasher, FileUploader $fileUploader): Response
     {

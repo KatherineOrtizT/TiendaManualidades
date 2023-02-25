@@ -58,15 +58,39 @@ class ProductoRepository extends ServiceEntityRepository
     /**
      * @return Producto[] Returns an array of Producto objects
      */
+    public function findAll_limit8(): array
+    {
+        $productos = $this->createQueryBuilder('p')
+            ->orderBy('p.id', 'ASC')
+            ->setMaxResults(8)
+            ->getQuery()
+            ->getResult();
+
+        foreach ($productos as $producto) {
+            $producto->category = 'all';
+        }
+
+        return $productos;
+    }
+
+    /**
+     * @return Producto[] Returns an array of Producto objects
+     */
     public function findProductsByNovelty(): array
     {
-        return $this->createQueryBuilder('p')
+        $productos = $this->createQueryBuilder('p')
             ->where('p.fechaCreacion >= :fecha_limite')
             ->setParameter('fecha_limite', new \DateTime('-15 days'))
             ->orderBy('p.fechaCreacion', 'DESC')
             ->setMaxResults(8)
             ->getQuery()
             ->getResult();
+
+        foreach ($productos as $producto) {
+            $producto->category = 'new';
+        }
+
+        return $productos;
     }
 
     /**
@@ -74,11 +98,18 @@ class ProductoRepository extends ServiceEntityRepository
      */
     public function findProductsByDiscount(): array
     {
-        return $this->createQueryBuilder('p')
-            ->orderBy('p.discount', 'DESC')
+        $productos = $this->createQueryBuilder('p')
+            ->andWhere('p.descuento IS NOT NULL')
+            ->orderBy('p.descuento', 'DESC')
             ->setMaxResults(8)
             ->getQuery()
             ->getResult();
+
+        foreach ($productos as $producto) {
+            $producto->category = 'best';
+        }
+
+        return $productos;
     }
 
 
@@ -87,14 +118,22 @@ class ProductoRepository extends ServiceEntityRepository
      */
     public function findTopSellingProducts(): array
     {
-        return $this->createQueryBuilder('p')
-            ->select('p, COUNT(c.id) AS HIDDEN sold')
-            ->leftJoin(Compras::class, 'c', 'WITH', 'c.idProducto = p.id')
+        $productos = $this->createQueryBuilder('p')
+            ->select('p')
+            ->addSelect('COUNT(c.id) AS HIDDEN sold')
+            ->leftJoin('App\Entity\Compras', 'c', 'WITH', 'c.idProducto = p.id')
             ->groupBy('p.id')
+            ->having('sold > 0')
             ->orderBy('sold', 'DESC')
             ->setMaxResults(8)
             ->getQuery()
             ->getResult();
+
+        foreach ($productos as $producto) {
+            $producto->category = 'feat';
+        }
+
+        return $productos;
     }
 
 }

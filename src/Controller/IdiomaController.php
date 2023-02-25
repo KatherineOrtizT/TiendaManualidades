@@ -13,7 +13,19 @@ use App\Repository\ProductoRepository;
 
 class IdiomaController extends AbstractController
 {
-    #[Route('/idioma/{_locale}', name: 'app_homepage')] 
+
+    #[Route('/idioma/{_locale}', name: 'cambiar_idioma')]
+    public function cambiarIdioma(Request $request): Response
+    {
+        $ruta = $request->request->get('ruta');
+        $idioma = $request->getLocale();
+        if ($ruta) {
+            return $this->redirectToRoute($ruta, ['_locale' => $idioma]);
+        }
+        return $this->redirectToRoute('app_homepage_index', ['_locale' => $idioma]);
+    }
+
+    /* #[Route('/idioma/{_locale}', name: 'app_homepage')] 
     public function index(Request $request,ProductoRepository $productoRepository): Response
     {
         
@@ -30,10 +42,10 @@ class IdiomaController extends AbstractController
         }
        
          // Renderiza la vista utilizando el idioma seleccionado y el texto traducido
-          return $this->render('index.html.twig', [
+          /* return $this->render('index.html.twig', [
             'ruta'=>$ruta,
              '_locale' => $locale,
              'productos' => $productoRepository->findAll(),
-         ]);
-    }
+         ]); *
+    } */
 }

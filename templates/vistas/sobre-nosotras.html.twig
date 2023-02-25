@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+{{ include('comunes/_header.html.twig') }}
 
     <!-- Header Start -->
-    <div class="container-fluid about-header py-6">
+    <div class="container-fluid about-header py-5">
       <div class="container text-center pt-5 pb-3">
-        <h1 class="display-4 text-white mb-3">Sobre Nosotros</h1>
+        <h1 class="display-4 text-white mb-3">{{'Sobre Nosotros'|trans }}</h1>
       </div>
     </div>
     <!-- Header End -->
@@ -23,32 +24,31 @@
           </div>
           <div class="col-lg-6">
             <div class="h-100">
-              <p class="text-uppercase mb-2" id="pink">Nuestra Historia</p>
+              <p class="text-uppercase mb-2" id="pink">{{ 'Nuestra Historia'|trans }}</p>
               <h1 class="display-6 mb-4 title">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                {{ 'Crecer haciendo'|trans }}
               </h1>
               <p>
-                Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit.
-                Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit,
-                sed stet lorem sit clita duo justo magna dolore erat amet Clita
-                erat ipsum et lorem et sit, sed stet lorem sit clita duo justo
-                magna dolore erat amet
+                {{ 'Somos un pequeño equipo dedicado a hacer que nuestros hogares y 
+                alrededores sean más bonitos y encantadores. Nos apasiona el trabajo 
+                manual y todos los beneficios que puede traer a nuestra vida, algo 
+                especialmente importante para los niños. Creemos en hacer, no en comprar.'|trans }}
               </p>
               <div class="row g-2 mb-4 mt-2">
                 <div class="col-sm-6">
-                  <i class="fa fa-check me-2" id="pink"></i>Hecho A Mano
+                  <i class="fa fa-check me-2" id="pink"></i>{{ 'Hecho A Mano'|trans }}
                 </div>
                 <div class="col-sm-6">
-                  <i class="fa fa-check me-2" id="pink"></i>Ahorras Dinero
+                  <i class="fa fa-check me-2" id="pink"></i>{{ 'Ahorras Dinero'|trans }}
                 </div>
                 <div class="col-sm-6">
-                  <i class="fa fa-check me-2" id="pink"></i>Gran Variedad
+                  <i class="fa fa-check me-2" id="pink"></i>{{ 'Gran Variedad'|trans }}
                 </div>
                 <div class="col-sm-6">
-                  <i class="fa fa-check me-2" id="pink"></i>Talleres Gratuitos
+                  <i class="fa fa-check me-2" id="pink"></i>{{ 'Talleres Gratuitos'|trans }}
                 </div>
               </div>
-              <a class="btn pink-btn mt-1" href="">Ver productos</a>
+              <a class="btn pink-btn mt-1" href="">{{ 'Ver productos'|trans }}</a>
             </div>
           </div>
         </div>
@@ -60,17 +60,17 @@
     <div class="container my-5" id="about-us-container-2">
       <div class="container my-5">
         <div class="text-center mx-auto mb-5" style="max-width: 500px">
-          <p class="text-uppercase mb-2 mt-5" id="pink">Manualidades</p>
-          <h1 class="display-6 mb-4 title">Categorias de productos</h1>
+          <p class="text-uppercase mb-2 mt-5" id="pink">{{ 'Manualidades'|trans }}</p>
+          <h1 class="display-6 mb-4 title">{{ 'Categorías de productos'|trans }}</h1>
         </div>
         <div class="row g-4">
           <div class="col-lg-3 col-md-6">
             <div class="team-item text-center rounded overflow-hidden">
               <img class="img-fluid" src="/images/2.png" alt="" />
               <div class="team-title">
-                <h5 class="mt-3">Pintura</h5>
+                <h5 class="mt-3">{{ 'Pintura'|trans }}</h5>
                 <a href="#" id="pink"
-                  >Ver mas <i class="fa fa-arrow-right"></i
+                  >{{ 'Ver más'|trans }}<i class="fa fa-arrow-right"></i
                 ></a>
               </div>
             </div>
@@ -80,9 +80,9 @@
               <img class="img-fluid" src="/images/5.png" alt="" />
               <div class="team-text">
                 <div class="team-title">
-                  <h5 class="mt-3">Tejido de punto</h5>
+                  <h5 class="mt-3">{{ 'Costura'|trans }}</h5>
                   <a href="#" id="pink"
-                    >Ver mas<i class="fa fa-arrow-right"></i
+                    >{{ 'Ver más'|trans }}<i class="fa fa-arrow-right"></i
                   ></a>
                 </div>
               </div>
@@ -91,9 +91,9 @@
           <div class="col-lg-3 col-md-6">
             <div class="text-center rounded">
               <img class="img-fluid" src="/images/3.png" alt="" />
-              <h5 class="mt-3">Escultura</h5>
+              <h5 class="mt-3">{{ 'Escultura'|trans }}</h5>
               <a href="#" id="pink"
-                >Ver mas<i class="fa fa-arrow-right"></i
+                >{{ 'Ver más'|trans }}<i class="fa fa-arrow-right"></i
               ></a>
             </div>
           </div>
@@ -102,9 +102,9 @@
               <img class="img-fluid" src="/images/4.png" alt="" />
               <div class="team-text">
                 <div class="team-title">
-                  <h5 class="mt-3">Artesanía</h5>
+                  <h5 class="mt-3">{{ 'Artesanía'|trans }}</h5>
                   <a href="#" id="pink"
-                    >Ver mas <i class="fa fa-arrow-right"></i
+                    >{{ 'Ver más'|trans }}<i class="fa fa-arrow-right"></i
                   ></a>
                 </div>
               </div>
@@ -114,11 +114,6 @@
       </div>
     </div>
     <!-- About Part 2 End -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-      crossorigin="anonymous"
-    ></script>
-  
+    {{ include('comunes/_footer.html.twig') }}  
     
 {% endblock %}
