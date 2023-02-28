@@ -43,4 +43,11 @@
         <extension class="Symfony\Component\Panther\ServerExtension" />
     </extensions>
     -->
+
+    <!-- Adding extension for doctrine-test-bundle: allows the testing 
+        ddbb to stay the same after each test -->
+    <extensions>
+        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
+    </extensions>
+
 </phpunit>

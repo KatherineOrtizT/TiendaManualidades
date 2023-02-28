@@ -8,6 +8,8 @@
           href="{{ path('app_homepage_index') }}"
         >
           <img src="/images/logo-icon.png" alt="site logo icon" />
+          <img src="/images/app/logo-icon.png" alt="site logo icon" />
+          <span class="fw-lighter ms-2 text-dark">AF</span>
         </a>
 
       <div class="order-lg-2 nav-btns">
@@ -26,10 +28,10 @@
             <button
               type="button"
               id="boton_carrito"
-              {# onclick="mostrarCarrito()" #}
               class="btn mx-2 position-relative text-black"
-            > <a id="enlace" href="{{ path('app_user_carrito') }}" class="text-reset">
+            > <a href="{{ path('app_carrito') }}" class="text-reset">
               <i class="fa fa-shopping-cart"></i></a>
+              <span id="num_productos_carrito" class="badge badge-pill position-absolute top-0 end-0"></span>
             </button>
 
           <!-- Button trigger modal LOGIN -->
@@ -88,18 +90,6 @@
               <li class="nav-item px-2 py-2">
                   <a class="nav-link text-dark" href="{{ path('app_admin_panel') }}">{{ 'Administrar'|trans }}</a>
               </li>
-
-               {# <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Idioma
-                </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Español</a>
-                      <a class="dropdown-item" href="#">Ingles</a>
-                      <a class="dropdown-item" href="#">chino </a>
-                  </div>
-              </div>  #}
-
             {% endif %}
              
           </ul>
@@ -116,8 +106,18 @@
                 <i class="fa fa-globe"></i> ES/EN
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="{{ path('app_homepage', {'_locale': 'en'}) }}">English</a></li>
-                  <li><a class="dropdown-item" href="{{ path('app_homepage', {'_locale': 'es'}) }}">Español</a></li>
+                  <li>
+                    <form method="post" action="{{ path('cambiar_idioma', {'_locale': 'en'}) }}">
+                        <input type="hidden" name="ruta" value="{{ app.request.attributes.get('_route') }}">
+                        <button type="submit" class="dropdown-item">English</button>
+                    </form>
+                  </li>
+                  <li>
+                    <form method="post" action="{{ path('cambiar_idioma', {'_locale': 'es'}) }}">
+                        <input type="hidden" name="ruta" value="{{ app.request.attributes.get('_route') }}">
+                        <button type="submit" class="dropdown-item">Español</button>
+                    </form>
+                  </li>
                 </ul>
               </div>
       </div>
@@ -306,26 +306,7 @@
           </div>
         </div>
       </div>
-    </div> #}
+    </div>
     <!-- End Modal REGISTER -->
 
-    <!-- Right elements
-      <form class="d-flex input-group w-auto pe-3" method="post" action="{{ path ('app_producto_search') }}">
-        <input
-          type="search"
-          name="busqueda"
-          class="form-control rounded"
-          placeholder="Search"
-          aria-label="Search"
-          aria-describedby="search-addon"
-        />
-        <span class="input-group-text border-0" id="search-addon">
-          <button style='border-style:none'>
-            <i class="fa fa-search" aria-hidden="true"></i>
-          </button>
-        </span>
-      </form>
-      
-      <div class="d-flex align-items-center">
-      --> 
 {% endblock %}

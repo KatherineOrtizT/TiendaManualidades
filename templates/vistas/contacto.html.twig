@@ -11,12 +11,20 @@
             <p class="text-uppercase mt-4" id="pink">Escribe tu mensaje</p>
             <h1 class="title mb-4">
               Si tiene alguna consulta, contáctenos
+  {{ include('comunes/_header.html.twig') }}
+
+   <div class="container-xxl py-5 mt-5">
+      <div class="container">
+        <div class="row g-5 mb-4">
+          <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+            <p class="fs-5 fw-bold" id="pink">{{ 'Escribe tu mensaje'|trans }}</p>
+            <h1 class="display-5 mb-4">
+              {{ 'Si tiene alguna consulta, contáctenos'|trans }}
             </h1>
             <p class="mb-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
+              {{ 'Para una respuesta más ágil y rápida de nuestro equipo de atención 
+              al cliente, disponemos de este formulario de contacto cuya bandeja
+              de entrada es consultada diariamente.'|trans }}
             </p>
             <form>
               <div class="row g-3">
@@ -28,7 +36,7 @@
                       id="name"
                       placeholder="Your Name"
                     />
-                    <label for="name">Nombre</label>
+                    <label for="name">{{ 'Nombre'|trans }}</label>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -39,7 +47,7 @@
                       id="email"
                       placeholder="Your Email"
                     />
-                    <label for="email">Email</label>
+                    <label for="email">{{ 'Email'|trans }}</label>
                   </div>
                 </div>
                 <div class="col-12">
@@ -50,7 +58,7 @@
                       id="subject"
                       placeholder="Subject"
                     />
-                    <label for="subject">Titulo</label>
+                    <label for="subject">{{ 'Título'|trans }}</label>
                   </div>
                 </div>
                 <div class="col-12">
@@ -61,12 +69,12 @@
                       id="message"
                       style="height: 100px"
                     ></textarea>
-                    <label for="message">Mensaje</label>
+                    <label for="message">{{ 'Mensaje'|trans }}</label>
                   </div>
                 </div>
                 <div class="col-12">
-                  <button class="btn pink-btn mt-2" type="submit">
-                    Enviar mensaje
+                  <button class="btn pink-btn" type="submit">
+                    {{ 'Enviar mensaje'|trans }}
                   </button>
                 </div>
               </div>

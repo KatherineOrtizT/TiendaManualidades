@@ -6,13 +6,13 @@
   3. Footer
   4. Login/ Register
   5. Homepage
-  6. Pagina Producto
-  7. Catalogo Productos
-  8. Pagina Admin
-  9. Pagina User Registrado 
+  6. Página Producto
+  7. Catálogo Productos
+  8. Página Admin
+  9. Página User Registrado 
   10. About Us
   11. Carrito
-  12. Pagina Pago
+  12. Página Pago
   --------------
 */
 
@@ -65,6 +65,13 @@ body {
   background-color: var(--pink);
   color: #fff;
   border-color: var(--pink);
+}
+
+.badge{
+  background-color: #d686c5;
+  padding: 0.25em 0.4em;
+  font-size: 75%;
+  font-weight: 700;
 }
 
 /* colors */
@@ -138,7 +145,7 @@ footer a:hover {
 /***** 5. HOMEPAGE *****/
 /*--------------------*/
 #header {
-  background: url(../images/banner-img-1.jpg) top/cover no-repeat;
+  background: url(../images/app/banner-img-1.jpg) top/cover no-repeat;
 }
 
 /* collection */
@@ -176,7 +183,7 @@ footer a:hover {
 
 /* offers */
 #offers {
-  background: url(../images/offer_img.jpg) center/cover no-repeat;
+  background: url(../images/app/offer_img.jpg) center/cover no-repeat;
 }
 #offers .row {
   min-height: 60vh;
@@ -227,8 +234,32 @@ footer a:hover {
   justify-content: space-around;
 }
 
+.color-discount{
+  color: #9c3385;
+}
+
 /***** 7. CATALOGO PRODUCTOS *****/
 /*---------------------------*/
+/* HIDE RADIO */
+[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* IMAGE STYLES */
+[type="radio"] + img {
+  cursor: pointer;
+  width: 2.5rem;
+  border-radius: 3px;
+}
+
+/* CHECKED STYLES */
+[type="radio"]:checked + img {
+  background-color: #e2e2e2;
+}
+
 
 /***** 8. PAGINA ADMIN *****/
 /*------------------------*/
@@ -335,7 +366,7 @@ footer a:hover {
   margin-top: 3rem;
   margin-bottom: 6rem;
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(../images/about.png) center center no-repeat;
+    url(../images/app/about.png) center center no-repeat;
   background-size: cover;
   height: 20rem;
   font-family: var(--lg-font);

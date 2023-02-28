@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Producto index
+{% endblock %}
+
+{% block body %}
+
+<div class="container-xxl position-relative bg-white d-flex p-0">
+{{ include('comunes/_sidebar-admin.html.twig') }}
+    <div class="content mt-5">
+        <div class="row mt-5">
+            <div class="col-md-12">
+                
+				<!-- Productos -->
+				<section id="collection">
+					<div class="collection-list row gx-0 gy-3"> 
+						{% for producto in productos %}
+						<div class="col-md-6 col-lg-4 col-xl-3 p-2 best"> 
+							<div class="collection-img position-relative"> 
+								<a href="{{ path('app_producto_show', {'id': producto.id}) }}">
+									<img src="{{ asset('/images/' ~ producto.imagen) }}" class="w-100" /> 
+								</a>
+							</div> 
+							<div class="text-center"> 
+								<div class="rating mt-3"> 
+									<span id="pink"><i class="fas fa-star"></i></span>
+									<span id="pink"><i class="fas fa-star"></i></span>
+									<span id="pink"><i class="fas fa-star"></i></span>
+									<span id="pink"><i class="fas fa-star"></i></span>
+									<span id="pink"><i class="fas fa-star"></i></span>
+								</div>
+								<p class="text-capitalize my-1 text-truncate">{{ producto.nombre }}</p>
+								<span class="fw-bold">€ {{ producto.precio }}</span>
+							</div>
+							{% if  is_granted('ROLE_ADMIN') %} 
+								<div class="text-center">
+								{{ include('producto/_delete_form.html.twig') }} 
+								<a href="{{ path('app_producto_edit', {'id': producto.id})}}"  class="text-reset text-decoration-none">Editar</a>
+								</div>
+							{% endif %}
+						</div>
+						{% else %}
+							<p class="text-center">No se han encontrado resultados</p>
+						{% endfor %}
+					</div>
+					<div>
+						<ul class="pagination justify-content-end mt-5">
+							<li class="page-item">
+								<a class="page-link" href="#" aria-label="Previous" id="pink">
+									<span aria-hidden="true">&laquo;</span>
+								</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link text-black disabled" href="#">1</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link text-black" href="#">2</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link text-black" href="#">3</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href="#" aria-label="Next" id="pink">
+									<span aria-hidden="true">&raquo;</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</section>
+            </div>
+    	</div>
+	</div>
+</div>
+
+
+{% endblock %}

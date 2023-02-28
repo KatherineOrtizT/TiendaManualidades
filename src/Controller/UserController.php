@@ -10,51 +10,74 @@ use App\Entity\Respuesta;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Service\FileUploader;
-use Symfony\Component\Form\FormError;
+use App\Service\ComprasManager;
 use App\Repository\ComprasRepository;
 use App\Repository\PedidosRepository;
 use App\Repository\PreguntaRepository;
-use App\Repository\ProductoRepository;
 use App\Repository\RespuestaRepository;
-use Doctrine\DBAL\Schema\Identifier;
+use App\Repository\ProductoRepository;
+use App\Service\Preguntas_RespuestasManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Id;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\SecurityBundle\Security;
 
 #[Route('/user')]
 class UserController extends AbstractController
 {
     private $em;
+    private $security;
 
     /**
      * @param $em
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, Security $security)
     {
         $this->em = $em;
+        $this->security = $security;
     }
+
 
     #[Route('/admin', name: 'app_admin_panel')]
-    public function redireccionarpanel()
+    public function panelAdmin(ComprasRepository $comprasRepository, PedidosRepository $pedidosRepository): Response
     {
-        return $this->render('admin/panel-admin.html.twig');
-    }
-    #[Route('/', name: 'app_SobreNosotros_panel')]
-    public function sobreNosotros()
-    {
-        return $this->render('vistas/sobre-nosotras.html.twig');
+        $n_ventasHoy = $comprasRepository->getVentasHoy();
+        $n_ventasTotal = $comprasRepository->getTotalVentas();
+        $n_ingresosHoy = $comprasRepository->getIngresosHoy();
+        $n_ingresosTotal = $comprasRepository->getTotalIngresos();
+        
+        return $this->render('admin/panel_admin.html.twig', [
+            'n_ventasHoy' => $n_ventasHoy,
+            'n_ventasTotal' => $n_ventasTotal,
+            'n_ingresosHoy' => $n_ingresosHoy,
+            'n_ingresosTotal' => $n_ingresosTotal,
+            'ultimos_pedidos' => $pedidosRepository->ultimosCincoPedidos(),
+        ]);
     }
 
-    #[Route('/contacto', name: 'app_contacto_panel')]
-    public function contacto()
+
+    #[Route('/admin/catalogo', name: 'app_admin_catalogo')]
+    public function catalogoAdmin(ProductoRepository $productoRepository): Response
     {
-        return $this->render('vistas/contacto.html.twig');
+        return $this->render('admin/catalogo_admin.html.twig', [
+            'productos' => $productoRepository->findAll(),
+        ]);
     }
+
+
+    #[Route('/admin/editar', name: 'app_admin_editar')]
+    public function editarAdmin(ProductoRepository $productoRepository): Response
+    {
+        return $this->render('admin/edit_admin.html.twig', [
+            'productos' => $productoRepository->findAll(),
+        ]);
+    }
+    
+
     #[Route('/registration', name: 'userRegistration')]
     public function userRegistration(Request $request, UserPasswordHasherInterface $passwordHasher, FileUploader $fileUploader): Response
     {
@@ -91,54 +114,20 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/carrito', name: 'app_user_carrito', methods: ['POST', 'GET'])]
-    public function mostrarCarritoAction(Request $request, ProductoRepository $productoRepository): Response
-    {
-        $idProductosCarrito = $request->request->get('productos',null);
-        $productosCarrito= array();
-        if($idProductosCarrito){
-            foreach(json_decode($idProductosCarrito) as $idProducto){
-                $productosCarrito[] = $productoRepository->find($idProducto);
-            }
-           
-            return $this->render('producto/carrito.html.twig', [
-                'productos' => $productosCarrito,
-            ]);
-
-        }
-        
-        return $this->render('producto/carrito.html.twig', []);   
-    }
 
     #[Route('/personal', name: 'app_user_personal', methods: ['GET'])]
     public function ir_areaPersonal(): Response
-    {
-        
+    {  
         $user= $this->getUser();
         return $this->render('user/show.html.twig', ['user'=>$user]);
     }
 
+
     #[Route('/comprar', name: 'app_user_comprar', methods: ['GET'])]
-    public function finalizarCompra(Request $request, PedidosRepository $pedidosRepository, ComprasRepository $comprasRepository): Response
+    public function finalizarCompra(ComprasManager $comprasManager): Response
     {
-        $pedido = new Pedidos();
-        $fecha = new \DateTime('@'.strtotime('now'));
-        $pedido->setDireccion("direccion default");
-        $pedido->setFecha($fecha);
-        $usuario = $this->getUser();
-        $pedido->setIdUsuario($usuario);
-        $pedidosRepository->save($pedido, true);
-
-        $session= $request->getSession();
-        foreach($session->get('carrito') as $product){
-            $producto = $this->em->getRepository(Producto::class)->findOneBy(['id' => $product['producto']->getId()]);
-            $compra = new Compras();
-            $compra->setIdPedido($pedido);
-            $compra->setIdProducto($producto);
-            $comprasRepository->save($compra, true);
-        }
-
-        $request->getSession()->remove('carrito');
+        $pedido = $comprasManager->crearNuevoPedido(new Pedidos(), $this->getUser());
+        $comprasManager->registrarCompras_Pedido($pedido);
 
         return $this->redirectToRoute('app_homepage_index', [], Response::HTTP_SEE_OTHER);
     }
@@ -147,7 +136,6 @@ class UserController extends AbstractController
     #[Route('/devolver/{compra}', name: 'app_user_devolver', methods: ['GET'])]
     public function devolverCompra(Compras $compra, ComprasRepository $comprasRepository): Response
     {
-        //$pedido->removeCompra($compra);
         $comprasRepository->remove($compra, true);
 
         return $this->redirectToRoute('app_user_personal', [], Response::HTTP_SEE_OTHER);
@@ -155,55 +143,29 @@ class UserController extends AbstractController
 
 
     #[Route('/publicarP/{producto}', name: 'app_user_publicarP', methods: ['POST', 'GET'])]
-    public function publicarPregunta(Request $request, Producto $producto, PreguntaRepository $preguntaRepository): Response
+    public function publicarPregunta(Request $request, Producto $producto, Preguntas_RespuestasManager $p_rManager): Response
     {
-        $pregunta = new Pregunta();
-
-        $texto = $request->request->get('textoPregunta', null);
-        $fecha = new \DateTime('@'.strtotime('now'));
-        $pregunta->setUser($this->getUser());
-        $pregunta->setTexto($texto);
-        $pregunta->setFecha($fecha);
-        $pregunta->setProducto($producto);
-
-        $preguntaRepository->save($pregunta, true);
-
-        $preguntaJSON = $pregunta->jsonSerialize();
+        $preguntaJSON = $p_rManager->crearNuevaPregunta($request->request->get('textoPregunta', null), $producto, $this->getUser());
         
         return new JsonResponse($preguntaJSON);
-
-        /* if($request->request->get('cantidad')){
-            $arr = json_encode($producto->getId());
-            return new JsonResponse($arr);
-        } */
     }
 
+    
     #[Route('/publicarR/{pregunta}', name: 'app_user_publicarR', methods: ['POST', 'GET'])]
-    public function publicarRespuesta(Request $request, Pregunta $pregunta, RespuestaRepository $respuestaRepository): Response
+    public function publicarRespuesta(Request $request, Pregunta $pregunta, Preguntas_RespuestasManager $p_rManager): Response
     {
-        $respuesta = new Respuesta;
-
-        $texto = $request->request->get('textoRespuesta', null);
-        $fecha = new \DateTime('@'.strtotime('now'));
-        $respuesta->setUser($this->getUser());
-        $respuesta->setTexto($texto);
-        $respuesta->setFecha($fecha);
-        $respuesta->setPregunta($pregunta);
-
-        $respuestaRepository->save($respuesta, true);
-
-        $respuestaJSON = $respuesta->jsonSerialize();
+        $respuestaJSON = $p_rManager->crearNuevaRespuesta($request->request->get('textoRespuesta', null), $pregunta, $this->getUser());
         
         return new JsonResponse($respuestaJSON);
     }
 
 
     #[Route('/borrarP/{pregunta}', name: 'app_user_borrarP', methods: ['POST', 'GET'])]
-    public function borrarPregunta(Request $request, Pregunta $pregunta, PreguntaRepository $preguntaRepository): Response
+    public function borrarPregunta(Pregunta $pregunta, PreguntaRepository $preguntaRepository): Response
     {
-        /* if(($pregunta->getUser() != $this->getUser()) || !(in_array('ROLE_ADMIN', $this->getUser()->getRoles()))){
+        if (!$this->security->isGranted('ROLE_ADMIN') && $pregunta->getUser() !== $this->security->getUser()) {
             return $this->render('errores/error403.html.twig', []);
-        } */
+        }
         $preguntaRepository->remove($pregunta, true);
         
         return new JsonResponse();
@@ -213,9 +175,9 @@ class UserController extends AbstractController
     #[Route('/editarP/{pregunta}', name: 'app_user_editarP', methods: ['POST', 'GET'])]
     public function editarPregunta(Request $request, Pregunta $pregunta, PreguntaRepository $preguntaRepository): Response
     {
-        /* if(($pregunta->getUser() != $this->getUser()) || !(in_array('ROLE_ADMIN', $this->getUser()->getRoles()))){
+        if (!$this->security->isGranted('ROLE_ADMIN') && $pregunta->getUser() !== $this->security->getUser()) {
             return $this->render('errores/error403.html.twig', []);
-        } */
+        }
         $texto = $request->request->get('textoPregunta', null);
         $pregunta->setTexto($texto);
 
@@ -226,11 +188,11 @@ class UserController extends AbstractController
 
 
     #[Route('/borrarR/{respuesta}', name: 'app_user_borrarR', methods: ['POST', 'GET'])]
-    public function borrarRespuesta(Request $request, Respuesta $respuesta, RespuestaRepository $respuestaRepository): Response
+    public function borrarRespuesta(Respuesta $respuesta, RespuestaRepository $respuestaRepository): Response
     {
-        /* if(($respuesta->getUser() != $this->getUser()) || !(in_array('ROLE_ADMIN', $this->getUser()->getRoles()))){
+        if (!$this->security->isGranted('ROLE_ADMIN') && $respuesta->getUser() !== $this->security->getUser()) {
             return $this->render('errores/error403.html.twig', []);
-        } */
+        }
         $respuestaRepository->remove($respuesta, true);
         
         return new JsonResponse();
@@ -240,9 +202,9 @@ class UserController extends AbstractController
     #[Route('/editarR/{respuesta}', name: 'app_user_editarR', methods: ['POST', 'GET'])]
     public function editarRespuesta(Request $request, Respuesta $respuesta, RespuestaRepository $respuestaRepository): Response
     {   
-        /* if(($respuesta->getUser() != $this->getUser()) || !(in_array('ROLE_ADMIN', $this->getUser()->getRoles()))){
+        if (!$this->security->isGranted('ROLE_ADMIN') && $respuesta->getUser() !== $this->security->getUser()) {
             return $this->render('errores/error403.html.twig', []);
-        } */
+        }
         $texto = $request->request->get('textoRespuesta', null);
         $respuesta->setTexto($texto);
 

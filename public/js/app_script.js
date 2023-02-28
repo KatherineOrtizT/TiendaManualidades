@@ -1,6 +1,6 @@
 
                             /* HOMEPAGE */
-
+/* 
 // init Isotope
 var $grid = $('.collection-list').isotope({
     // options
@@ -19,12 +19,34 @@ var filterBtns = $('.filter-button-group').find('button');
         filterBtns.each(function(){
         $(this).removeClass('active-filter-btn');
     });
+} */
+if(window.location.href.indexOf("homepage") != -1){
+    console.log("ENTRA");
+    // Script para activar Isotope y filtrar productos
+    $(document).ready(function() {
+        var $grid = $('.collection-list').isotope({
+        itemSelector: '.col-md-6',
+        percentPosition: true,
+        masonry: {
+            columnWidth: '.col-md-6'
+        }
+        });
+
+        $('.filter-button-group').on('click', 'button', function() {
+        var filterValue = $(this).attr('data-filter');
+        $grid.isotope({
+            filter: filterValue
+        });
+        $('.filter-button-group').find('.active-filter-btn').removeClass('active-filter-btn');
+        $(this).addClass('active-filter-btn');
+        });
+    });
 }
 
 
+                            /*** SHOW (Producto) ***/
 
-                            /* SHOW (Producto) */
-
+//Función que permite cambiar onclick entre una imagen de producto y otra.
 function change_image(image){
 
     var container = document.getElementById("main-image");
@@ -38,11 +60,33 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 
-                            /* CARRITO */
+                            /*** CARRITO ***/
 
+function modificarBadge_carrito(modificarNum=false, esSumar){
+    let numProductosEnCesta = parseInt(localStorage.getItem('numProductosEnCesta')) || 0;
+    if(modificarNum){
+        if(esSumar){
+            numProductosEnCesta++;
+        }else{
+            numProductosEnCesta--;
+        }
+        localStorage.setItem('numProductosEnCesta', numProductosEnCesta);  // Guardar en localStorage
+    }
+    const numProductosCarrito = document.getElementById('num_productos_carrito');
+    if (numProductosEnCesta > 0) {
+        numProductosCarrito.style.display = 'inline-block';
+        numProductosCarrito.textContent = numProductosEnCesta;
+    } else {
+        numProductosCarrito.style.display = 'none';
+        numProductosCarrito.textContent = '';
+    } 
+}
+                            
 
 $(document).ready(function(){
-    
+
+    modificarBadge_carrito();
+
     if(window.location.href.indexOf("producto") != -1){
         console.log("Entra ruta producto");
 
@@ -68,12 +112,14 @@ $(document).ready(function(){
                 },
 
                 success: function (data)
-                {        
-                    console.log(data);        
+                {   
+                    modificarBadge_carrito(true, true);                         
                 }
             });
 
         });
+
+                        /*** PREGUNTAS Y RESPUESTAS ***/
     
                             /* Añadir PREGUNTA */
 
@@ -127,7 +173,8 @@ $(document).ready(function(){
                                 div12.appendChild(tituloNombre121);
                             let parrafo122 = document.createElement("div");
                                 parrafo122.classList.add("text-muted", "small", "mb-0");
-                                let texto_parrafo122 = document.createTextNode(data.fecha.date.toLocaleString('en-GB', { timeZone: 'UTC' }));
+                                let date = new Date(data.fecha.date);
+                                let texto_parrafo122 = document.createTextNode(date.toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }));
                                 parrafo122.appendChild(texto_parrafo122);
                                 div12.appendChild(parrafo122);
 
@@ -317,7 +364,8 @@ $(document).ready(function(){
                             div12.appendChild(tituloNombre121);
                         let parrafo122 = document.createElement("div");
                             parrafo122.classList.add("text-muted", "small", "mb-0");
-                            let texto_parrafo122 = document.createTextNode(data.fecha.date.toLocaleString('en-GB', { timeZone: 'UTC' }));
+                            let date = new Date(data.fecha.date);
+                            let texto_parrafo122 = document.createTextNode(data.fecha.date.toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }));
                             parrafo122.appendChild(texto_parrafo122);
                             div12.appendChild(parrafo122);
 

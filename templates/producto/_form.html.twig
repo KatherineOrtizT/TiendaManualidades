@@ -1,6 +1,54 @@
-{{ form_start(form) }}
+{# {{ form_start(form) }}
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+{{ form_end(form) }} #}
 
-{# https://symfony.com/doc/3.3/reference/forms/twig_reference.html #}
+{{ form_start(form) }}
+  <div class="row mb-3">
+    <div class="col-md-6">
+      {{ form_label(form.nombre) }}
+      {{ form_widget(form.nombre, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+    <div class="col-md-6">
+      {{ form_label(form.descripcion) }}
+      {{ form_widget(form.descripcion, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      {{ form_label(form.precio) }}
+      {{ form_widget(form.precio, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+    <div class="col-md-6">
+      {{ form_label(form.descuento) }}
+      {{ form_widget(form.descuento, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      {{ form_label(form.categoria) }}
+      {{ form_widget(form.categoria, { 'attr': {'class': 'form-select'} }) }}
+    </div>
+    <div class="col-md-6">
+      {{ form_label(form.material) }}
+      {{ form_widget(form.material, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      {{ form_label(form.color) }}
+      {{ form_widget(form.color, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+    <div class="col-md-6">
+      {{ form_label(form.imagen) }}
+      {{ form_widget(form.imagen, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+  </div>
+
+  <div class="mt-5 text-center">
+    <button class="btn pink-btn">{{ button_label|default('Guardar Nuevo Producto') }}</button>
+  </div>
+{{ form_end(form) }}

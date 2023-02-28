@@ -5,8 +5,9 @@
 
 {% block body %}
 	{{ include('comunes/_header.html.twig') }}
-	<h1>Producto</h1>
 
+	<!-- *** PRODUCTO *** -->
+	<h1>Producto</h1>
 
 	<div class="container my-5 pb-5">
 		<div class="row d-flex justify-content-center mt-5">
@@ -19,34 +20,37 @@
 									<img id="main-image" src="{{ asset('/images/' ~ producto.imagen) }}" width="400"/>
 								</div>
 								<div class="thumbnail text-center">
-									<img onclick="change_image(this)" src="{{ asset('/images/lapices.png') }}" width="90">
-									<img onclick="change_image(this)" src="{{ asset('/images/' ~ producto.imagen) }}" width="90">
-									<img onclick="change_image(this)" src="{{ asset('/images/acuarelas_02.png') }}" width="90">
+									<img onclick="change_image(this)" src="{{ asset('/images/lapices.png') }}" width="95">
+									<img onclick="change_image(this)" src="{{ asset('/images/' ~ producto.imagen) }}" width="95">
+									<img onclick="change_image(this)" src="{{ asset('/images/acuarelas_02.png') }}" width="95">
 								</div>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="product p-4">
-								<div class="d-flex justify-content-between align-items-center">
-									<div class="d-flex align-items-center">
-										<i class="fa fa-long-arrow-left"></i>
-										<span class="ml-1">Back</span>
-									</div>
-									<i class="fa fa-shopping-cart text-muted"></i>
-								</div>
 								<div class="mt-4 mb-3">
+									<h5 class="h4">{{ producto.nombre }}</h5>
 									<span class="text-uppercase text-muted brand">Marca</span>
-									<h5 class="text-uppercase">{{ producto.nombre }}</h5>
 									<div class="price d-flex flex-row align-items-center">
-										<span class="act-price">{{ producto.precio }}</span>
-										<div class="ml-2">
-											<small class="dis-price">59</small>
-											<span>{{ producto.descuento }}
-												OFF</span>
+										<span class="h5 py-3">€{{ producto.precio }}</span>
+										{% if producto.descuento %}
+										<div class="h6 ms-3 py-3 color-discount fw-bold">
+											<span>{{ producto.descuento }}%</span>
+											<span>OFF</span>
 										</div>
+										{% endif %}
 									</div>
+									<p class="pb-2">
+										<i class="fa fa-star text-warning"></i>
+										<i class="fa fa-star text-warning"></i>
+										<i class="fa fa-star text-warning"></i>
+										<i class="fa fa-star text-warning"></i>
+										<i class="fa fa-star text-secondary"></i>
+									</p>
 								</div>
-								<p class="about">{{ producto.descripcion }}</p>
+								<p>Categoria: Manualidades</p>
+								<h6 class="fw-bold">Detalles del producto:</h6>
+								<p class="text-truncate">{{ producto.descripcion }}</p>
 
 								<div class="d-flex flex-row mt-3">
 									<span class="pe-3 text-muted">Cantidad</span>
@@ -58,35 +62,12 @@
 										<a href="{{ path('app_producto_edit', {'id': producto.id}) }}" class="text-reset text-decoration-none">edit</a>
 										{{ include('producto/_delete_form.html.twig') }}
 									{% endif %}
-									<div class="sizes mt-5">
-										<h6 class="text-uppercase">Size</h6>
-										<label class="radio">
-											<input type="radio" name="size" value="S" checked>
-											<span>S</span>
-										</label>
-										<label class="radio">
-											<input type="radio" name="size" value="M">
-											<span>M</span>
-										</label>
-										<label class="radio">
-											<input type="radio" name="size" value="L">
-											<span>L</span>
-										</label>
-										<label class="radio">
-											<input type="radio" name="size" value="XL">
-											<span>XL</span>
-										</label>
-										<label class="radio">
-											<input type="radio" name="size" value="XXL">
-											<span>XXL</span>
-										</label>
-									</div>
 									<div class="cart mt-4 align-items-center">
 										<button id="botonAñadirCarrito" class="btn pink-btn text-uppercase mr-2 px-4">Añadir a la cesta</button>
-										<i class="fa fa-heart text-muted"></i>
+										<i class="fa fa-heart text-muted ps-3"></i>
 										<i class="fa fa-share-alt text-muted"></i>
 									</div>
-									<div id="path-to-controller-aniadir" data-href="{{ path('app_producto_carrito', {'id': producto.id}) }}"></div>
+									<div id="path-to-controller-aniadir" data-href="{{ path('app_carrito_aniadirProducto', {'id': producto.id}) }}"></div>
 								</div>
 							</div>
 						</div>
@@ -95,10 +76,8 @@
 			</div>
 		</div>
 
-		{# https://bbbootstrap.com/snippets/bootstrap-ecommerce-single-product-page-size-attribute-59223596 #}
 
-
-		<!-- Busquedas Relacionadas -->
+		<!-- *** BÚSQUEDAS RELACIONADAS *** -->
 		<section class="py-5">
 			<div class="container">
 				<div class="row  p-2 pb-3">
@@ -216,7 +195,7 @@
 				</div>
 			</section>
 
-			<!-- Preguntas -->
+			<!-- *** PPREGUNTAS *** -->
 
 			<div class="container my-5 py-5">
 				<div class="mb-5">

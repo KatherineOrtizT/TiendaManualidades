@@ -49,39 +49,91 @@ class ProductoRepository extends ServiceEntityRepository
             ->andWhere('p.nombre Like :val')
             ->setParameter('val','%'.$value.'%')
             ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
+            ->setMaxResults(20)
             ->getQuery()
             ->getResult()
         ;
     }
 
+    /**
+     * @return Producto[] Returns an array of Producto objects
+     */
+    public function findAll_limit8(): array
+    {
+        $productos = $this->createQueryBuilder('p')
+            ->orderBy('p.id', 'ASC')
+            ->setMaxResults(8)
+            ->getQuery()
+            ->getResult();
+
+        foreach ($productos as $producto) {
+            $producto->category = 'all';
+        }
+
+        return $productos;
+    }
+
+    /**
+     * @return Producto[] Returns an array of Producto objects
+     */
+    public function findProductsByNovelty(): array
+    {
+        $productos = $this->createQueryBuilder('p')
+            ->where('p.fechaCreacion >= :fecha_limite')
+            ->setParameter('fecha_limite', new \DateTime('-15 days'))
+            ->orderBy('p.fechaCreacion', 'DESC')
+            ->setMaxResults(8)
+            ->getQuery()
+            ->getResult();
+
+        foreach ($productos as $producto) {
+            $producto->category = 'new';
+        }
+
+        return $productos;
+    }
+
+    /**
+     * @return Producto[] Returns an array of Producto objects
+     */
+    public function findProductsByDiscount(): array
+    {
+        $productos = $this->createQueryBuilder('p')
+            ->andWhere('p.descuento IS NOT NULL')
+            ->orderBy('p.descuento', 'DESC')
+            ->setMaxResults(8)
+            ->getQuery()
+            ->getResult();
+
+        foreach ($productos as $producto) {
+            $producto->category = 'best';
+        }
+
+        return $productos;
+    }
 
 
+    /**
+     * @return Producto[] Returns an array of Producto objects
+     */
+    public function findTopSellingProducts(): array
+    {
+        $productos = $this->createQueryBuilder('p')
+            ->select('p')
+            ->addSelect('COUNT(c.id) AS HIDDEN sold')
+            ->leftJoin('App\Entity\Compras', 'c', 'WITH', 'c.idProducto = p.id')
+            ->groupBy('p.id')
+            ->having('sold > 0')
+            ->orderBy('sold', 'DESC')
+            ->setMaxResults(8)
+            ->getQuery()
+            ->getResult();
 
-    
+        foreach ($productos as $producto) {
+            $producto->category = 'feat';
+        }
 
-//    /**
-//     * @return Producto[] Returns an array of Producto objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+        return $productos;
+    }
 
-//    public function findOneBySomeField($value): ?Producto
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

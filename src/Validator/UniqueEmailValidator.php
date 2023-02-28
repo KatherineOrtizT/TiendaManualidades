@@ -16,8 +16,12 @@ class UniqueEmailValidator extends ConstraintValidator
         $this->entityManager = $entityManager;
     }
 
-    public function validate($value, Constraint $constraint) :void
+    public function validate($value, Constraint $constraint)
     {
+        if(null === $value || '' === $value){
+            return;
+        }
+
         $userRepository = $this->entityManager->getRepository(User::class);
         $existingUser = $userRepository->findOneBy(['email' => $value]);
 
