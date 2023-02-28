@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+
+      {{ include('comunes/_sidebar-admin.html.twig') }}
+
+      <!-- Content Start -->
+      <div class="content mt-5">
+        
+        <!-- List Products to Edit -->
+        <div class="container-fluid pt-4 px-4 mb-5">
+          <div class="bg-light text-center rounded p-4">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+              <h4 class="mb-0">Lista de Productos</h4>
+            </div>
+            <div class="table-responsive">
+              <table
+                class="table text-start align-middle table-bordered table-hover mb-0"
+              >
+                <thead>
+                  <tr class="text-dark">
+                    <th scope="col">
+                      <input class="form-check-input" type="checkbox" />
+                    </th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Categoría</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Fecha de creación</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for producto in productos %}
+                  <tr>
+                    <td><input class="form-check-input" type="checkbox" /></td>
+                    <td> {{ producto.id }} </td>
+                    <td> {{ producto.nombre }} </td>
+                    <td>€{{ producto.precio }} </td>
+                    <td> {{ producto.categoria }} </td>
+                    <td> {{ producto.stock }} </td>
+                    <td>
+                      {% if producto.estado == 0 %}
+                      No Disponible
+                      {% else %}
+                      Disponible
+                      {% endif %}
+                    </td>
+                    <td>{{ producto.fechaCreacion|format_datetime('medium', 'none', locale='es') }}</td>
+                    <td>
+                      <a class="btn btn-sm btn-primary" href="{{ path('app_producto_edit', {'id': producto.id}) }}">Editar</a>
+                    </td>
+                  </tr>
+                  {% else %}
+                      <tr>
+                          <td colspan="7" class="text-center py-4 fst-italic">No hay productos</td>
+                      </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- Recent Sales End -->
+      </div>
+      <!-- Content End -->
+    </div>
+    
+{% endblock %}

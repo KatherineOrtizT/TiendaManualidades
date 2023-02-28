@@ -1,53 +1,186 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Producto index{% endblock %}
+{% block title %}Producto index
+{% endblock %}
 
 {% block body %}
-    {{ include('comunes/_header.html.twig') }}
-    <div class="container">
-    {# <p>{{datos}}</p> #}
-    <h1 class="py-5">Lista Productos</h1>
-    {# <h4>{{ busqueda }}</h4> #}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Descripcion</th>
-                <th>Precio</th>
-                <th>Descuento</th>
-                <th>Categoria</th>
-                <th>Material</th>
-                <th>Color</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
 
-        {% for producto in productos %}
-            <tr>
-                <td>{{ producto.id }}</td>
-                <td>{{ producto.nombre }}</td>
-                <td>{{ producto.descripcion }}</td>
-                <td>{{ producto.precio }}</td>
-                <td>{{ producto.descuento }}</td>
-                <td>{{ producto.categoria }}</td>
-                <td>{{ producto.material }}</td>
-                <td>{{ producto.color }}</td>
-                <td>
-                    <a href="{{ path('app_producto_show', {'id': producto.id}) }}">show</a>
-                    <a href="{{ path('app_producto_edit', {'id': producto.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">No se han encontrado resultados</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+{{ include('comunes/_header.html.twig') }}
 
-    <a href="{{ path('app_producto_new') }}">Create new</a>
+	<div class="container my-5 py-5">
+		<div class="row pt-4">
+			<div class="col-3 ">
+				<h4 class="mt-4">Filtros</h4>
+				<div class="mt-4 me-5">
+					<h6>ORDENAR POR</h6>
+					<select class="form-select" aria-label="ordenar select">
+						<option selected value="precio-asc">Precio Ascendente</option>
+						<option value="precio-desc">Precio Descendente</option>
+						<option value="nuevos-prod">Nuevos Productos</option>
+					</select>
+				</div>
+				<div class="mt-4 me-5">
+					<h6>CATEGORIA</h6>
+					<div class="form-check ">
+						<div>
+							<input class="form-check-input" type="checkbox" value="" id="categoria1">
+							<label class="form-check-label" for="categoria1">
+								Categoria 1
+							</label>
+						</div>
 
+						<div>
+							<input class="form-check-input" type="checkbox" value="" id="categoria2">
+							<label class="form-check-label" for="categoria2">
+								Categoria 2
+							</label>
+						</div>
+
+						<div>
+							<input class="form-check-input" type="checkbox" value="" id="categoria3">
+							<label class="form-check-label" for="categoria3">
+								Categoria 3
+							</label>
+						</div>
+
+						<div>
+							<input class="form-check-input" type="checkbox" value="" id="categoria4">
+							<label class="form-check-label" for="categoria4">
+								Categoria 4
+							</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="mt-4 me-5">
+					<h6>PRECIO</h6>
+					<label for="rangoPrecio" class="form-label">Elige el precio maximo: €0 - €100</label>
+					<input type="range" class="form-range" id="rangoPrecio">
+				</div>
+
+				<div class="mt-4 me-5">
+					<h6>MATERIAL</h6>
+					<div class="form-check ">
+						<div>
+							<input class="form-check-input" type="checkbox" value="" id="material1">
+							<label class="form-check-label" for="material1">
+								Material 1
+							</label>
+						</div>
+
+						<div>
+							<input class="form-check-input" type="checkbox" value="" id="material2">
+							<label class="form-check-label" for="material2">
+								Material 2
+							</label>
+						</div>
+
+						<div>
+							<input class="form-check-input" type="checkbox" value="" id="material3">
+							<label class="form-check-label" for="material3">
+								Material 3
+							</label>
+						</div>
+
+						<div>
+							<input class="form-check-input" type="checkbox" value="" id="material4">
+							<label class="form-check-label" for="material4">
+								Material 4
+							</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="mt-4 me-5">
+					<h6 class="mb-3">COLOR</h6>
+					<div>
+						<label>
+							<input type="radio" name="colores" value="pink">
+							<img src="/images/app/pink.png" alt="pink">
+						</label>
+						<label>
+							<input type="radio" name="colores" value="blue">
+							<img src="/images/app/blue.png" alt="blue">
+						</label>
+						<label>
+							<input type="radio" name="colores" value="purple">
+							<img src="/images/app/purple.png" alt="purple"">
+						</label>
+						<label>
+							<input type="radio" name="colores" value="yellow">
+							<img src="/images/app/yellow.png" alt="yellow">
+						</label>
+						<label>
+							<input type="radio" name="colores" value="green">
+							<img src="/images/app/green.png" alt="green">
+						</label>
+					</div>
+				</div>
+
+				<div class="mt-4">
+					<button type="button" class="btn outline-btn">Aplicar Filtros</button>
+				</div>
+			</div>
+
+
+			<div class="col">
+				<!-- Productos -->
+				<section id="collection">
+                    <div class="collection-list row gx-0 gy-3"> 
+                        {% for producto in productos %}
+                        <div class="col-md-6 col-lg-4 col-xl-3 p-2 best"> 
+                            <div class="collection-img position-relative"> 
+								<a href="{{ path('app_producto_show', {'id': producto.id}) }}">
+                                	<img src="{{ asset('/images/' ~ producto.imagen) }}" class="w-100" /> 
+								</a>
+                            </div> 
+                            <div class="text-center"> 
+                                <div class="rating mt-3"> 
+                                    <span id="pink"><i class="fas fa-star"></i></span>
+                                    <span id="pink"><i class="fas fa-star"></i></span>
+                                    <span id="pink"><i class="fas fa-star"></i></span>
+                                    <span id="pink"><i class="fas fa-star"></i></span>
+                                    <span id="pink"><i class="fas fa-star"></i></span>
+		                        </div>
+		                        <p class="text-capitalize my-1 text-truncate">{{ producto.nombre }}</p>
+		                        <span class="fw-bold">€ {{ producto.precio }}</span>
+	                        </div>
+							{% if  is_granted('ROLE_ADMIN') %} 
+                            	<div class="text-center">
+							  	{{ include('producto/_delete_form.html.twig') }} 
+                              	<a href="{{ path('app_producto_edit', {'id': producto.id})}}"  class="text-reset text-decoration-none">Editar</a>
+								</div>
+							{% endif %}
+                        </div>
+                        {% else %}
+                            <p class="text-center">No se han encontrado resultados</p>
+                        {% endfor %}
+                    </div>
+                    <div>
+                        <ul class="pagination justify-content-end mt-5">
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous" id="pink">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link text-black disabled" href="#">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link text-black" href="#">2</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link text-black" href="#">3</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next" id="pink">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+        </div>
     </div>
+
 {% endblock %}

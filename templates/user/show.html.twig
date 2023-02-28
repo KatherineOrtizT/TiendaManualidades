@@ -103,7 +103,9 @@
                                     </td>
                                 </tr>
                             {% else %}
-                                <p>no records found</p>
+                                <tr>
+                                    <td colspan="4" class="text-center py-4 fst-italic">Los productos de este pedido fueron devueltos</td>
+                                </tr>
                             {% endfor %} 
                             </tbody>
                         </table>
@@ -116,7 +118,7 @@
           </div>   
     </section> 
     {% else %}
-        <p>no records found</p>
+        <p>No has realizado aún ningún pedido</p>
     {% endfor %} 
    
 

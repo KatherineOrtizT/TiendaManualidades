@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Compras;
+use App\Repository\Func;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,28 +40,92 @@ class ComprasRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Compras[] Returns an array of Compras objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
 
-//    public function findOneBySomeField($value): ?Compras
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+    * Devuelve el número de ventas realizadas hoy.
+    * @return int
+    */
+    public function getVentasHoy(): int
+    {
+        return $this->createQueryBuilder('c')
+        ->select('COUNT(c.id)')
+        ->join('c.idPedido', 'p')
+        ->where('p.fecha = :fecha_actual')
+        ->setParameter('fecha_actual', new \DateTime())
+        ->getQuery()
+        ->getSingleScalarResult();
+    }
+
+
+    /**
+    * Devuelve el número de ventas total.
+    * @return int
+    */
+    public function getTotalVentas(): int
+    {
+        return $this->createQueryBuilder('c')
+            ->select('COUNT(c.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+
+    /**
+     * @return float
+     */
+    public function getIngresosHoy(): float
+    {
+        return (float) $this->createQueryBuilder('c')
+        ->select('SUM(c.unidades * c.precio_compra)')
+        ->join('c.idPedido', 'p')
+        ->where('p.fecha = :fecha')
+        ->setParameter('fecha', new \DateTime())
+        ->getQuery()
+        ->getSingleScalarResult();
+    }
+
+
+    /**
+     * @return float
+     */
+    public function getTotalIngresos(): float
+    {
+        return (float) $this->createQueryBuilder('c')
+            ->select('SUM(c.unidades * c.precio_compra)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+
+    /* public function ultimosCincoPedidos(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.id as id_pedido, p.fecha, u.nombre, SUM(c.unidades * c.precio_compra) as importe, COUNT(c.id) as tiene_compras')
+            ->join('p.idUsuario', 'u')
+            ->leftJoin('p.compras', 'c')
+            ->groupBy('p.id')
+            ->orderBy('p.fecha', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    } */
+
+
+    /* public function ultimosCincoPedidos(): array
+    {
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery('
+            SELECT p.id as id_pedido, p.fecha, u.nombre, SUM(c.unidades * c.precio_compra) as importe, COUNT(c.id) as tiene_compras
+            FROM App\Entity\Pedidos p
+            JOIN p.idUsuario u
+            LEFT JOIN p.compras c
+            GROUP BY p.id
+            ORDER BY p.fecha DESC
+        ');
+
+        $query->setMaxResults(5);
+
+        return $query->getResult();
+    } */
 }

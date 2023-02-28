@@ -43,8 +43,6 @@
                         </td>
                         <td class="align-middle">
                           <div class="d-flex flex-row">
-                            
-
                             <input
                               id="form1"
                               min="1"
@@ -54,9 +52,7 @@
                               type="number"
                               class="form-control form-control-sm"
                               style="width: 50px"
-                            />
-
-                            
+                            /> 
                           </div>
                         </td>
                         <td class="align-middle">
@@ -83,41 +79,43 @@
               </div>
             </div>
           </div>
-          {# <p>{{dump(app.session.get('carrito'))}}<p> #}
 
           <div class="col-md-4 border-start">
             <div class="card mb-4 border-0">
               <div class="card-body">
                 <h3 class="mb-4">Resumen Pago</h3>
                 <ul class="list-group list-group-flush">
-                  <li
-                    class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0"
-                  >
-                    Productos
-                    <span>€53.98</span>
+                  {% set total = 0 %}
+                  {% for producto in app.session.get('carrito') %}
+                  <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                    Producto #{{producto['producto'].id}}  (x{{ producto['cantidad']  }})
+                    <span>€{{ (producto['producto'].precio * producto['cantidad']) }}</span>
+                    {% set total = total + (producto['producto'].precio * producto['cantidad']) %}
                   </li>
-                  <li
-                    class="list-group-item d-flex justify-content-between align-items-center px-0"
-                  >
+                  {% else %}
+                  <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                    Productos
+                    <span>€0</span>
+                  </li>  
+                  {% endfor %}
+                  <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                     Envío
                     <span>Gratis</span>
                   </li>
-                  <li
-                    class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3"
-                  >
+                  <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                     <div>
                       <strong>Total</strong>
                       <strong>
                         <p class="mb-0">(incluye IVA)</p>
                       </strong>
                     </div>
-                    <span><strong>€53.98</strong></span>
+                    <span><strong>€{{total}}</strong></span>
                   </li>
                 </ul>
               
                 {% if app.user %}
                     <div class="d-grid gap-2 my-2">
-                      <a href="{{ path('app_user_comprar') }}" class="btn pink-btn">Finalizar Compra</a>
+                      <a href="{{ path('app_user_comprar') }}" onclick="localStorage.clear()" class="btn pink-btn">Finalizar Compra</a>
                     </div>
                     {% else %}
                     <div class="d-grid gap-2 my-2">
