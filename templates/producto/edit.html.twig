@@ -3,11 +3,22 @@
 {% block title %}Edit Producto{% endblock %}
 
 {% block body %}
-            <h1>Edit Producto</h1>
 
-            {{ include('producto/_form.html.twig', {'button_label': 'Update'}) }}
+<div class="container-xxl position-relative bg-white d-flex p-0">
+{{ include('comunes/_sidebar-admin.html.twig') }}
+    <div class="content mt-5">
+        <div class="row mt-5">
+            <div class="col-md-8">
+                {{ include('producto/_form.html.twig', {'button_label': 'Editar'}) }}
+                <div class="text-end">
+                    <a class="text-end" href="{{ path('app_homepage_index') }}">Ir a Inicio</a>
+                </div>
+            </div>
+    </div>
+</div>
 
-            <a href="{{ path('app_homepage_index') }}">back to list</a>
 
-            {{ include('producto/_delete_form.html.twig') }}
+    {# <a href="{{ path('app_homepage_index') }}">back to list</a>
+
+    {{ include('producto/_delete_form.html.twig') }} #}
 {% endblock %}

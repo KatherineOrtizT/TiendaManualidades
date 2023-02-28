@@ -7,7 +7,7 @@
 <div class="container d-flex flex-column text-center mt-5 justify-content-center">
 <h1>Acceso Denegado</h1>
 <img
-    src="{{ asset('/images/403.gif') }}"
+    src="{{ asset('/images/app/403.gif') }}"
     id="imagen_producto"
     class="img-fluid mx-auto my-5"
     style="width: 120px"
@@ -20,7 +20,7 @@ si no eres redirigido en 5 segundos</span>
 
 </div>
 <script>
-    setTimeout(function() { location.replace(location.origin+"/homepage")},5000);
+    setTimeout(function() { location.replace(location.origin+"/homepage/es")},5000);
 </script>
 
 {% endblock %}

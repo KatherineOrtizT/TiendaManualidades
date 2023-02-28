@@ -27,7 +27,7 @@ class ProductoController extends AbstractController
 
 
     #[Route('/new', name: 'app_producto_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ProductoRepository $productoRepository, ProductoManager $productoManager): Response
+    public function new(Request $request, ProductoManager $productoManager): Response
     {
         $producto = new Producto();
         $form = $this->createForm(ProductoType::class, $producto);
@@ -41,7 +41,11 @@ class ProductoController extends AbstractController
             return $this->redirectToRoute('app_homepage_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('admin/panel-admin.html.twig', [
+        /* return $this->render('admin/panel-admin.html.twig', [
+            'producto' => $producto,
+            'form' => $form,
+        ]); */
+        return $this->render('producto/new.html.twig', [
             'producto' => $producto,
             'form' => $form,
         ]);

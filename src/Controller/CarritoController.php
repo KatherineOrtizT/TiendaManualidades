@@ -14,17 +14,6 @@ use Doctrine\ORM\EntityManagerInterface;
 class CarritoController extends AbstractController
 {
 
-    private $em;
-
-    /**
-     * @param $em
-     */
-    public function __construct(EntityManagerInterface $em)
-    {
-        $this->em = $em;
-    }
-
-
     #[Route('/{id}/aniadirCarrito', name: 'app_carrito_aniadirProducto', methods: ['POST', 'GET'])]
     public function añadirProductoAction(Request $request, Producto $producto, CarritoManager $carritoManager): Response
     {
@@ -42,7 +31,14 @@ class CarritoController extends AbstractController
     {
         $carritoManager->eliminarDel_Carrito($id);
 
-        return $this->redirectToRoute('app_user_carrito', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_carrito', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+    #[Route('/carrito', name: 'app_carrito', methods: ['POST', 'GET'])]
+    public function mostrarCarrito(): Response
+    {        
+        return $this->render('producto/carrito.html.twig', []);   
     }
 
 

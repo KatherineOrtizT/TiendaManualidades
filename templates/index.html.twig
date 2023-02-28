@@ -50,7 +50,6 @@
           </div>
 
           <div class="collection-list mt-4 row gx-0 gy-3">
-            {# {{ dump(productos) }} #}
             {% set counter = 0 %}
             {% for productosBatch in productos %}
               {% for producto in productosBatch %}
@@ -73,7 +72,7 @@
                           <span class="fw-bold">€ {{ producto.precio }}</span>
                             {% if  is_granted('ROLE_ADMIN') %} 
                               {{ include('producto/_delete_form.html.twig') }} 
-                              <a href="{{ path('app_producto_edit', {'id': producto.id})}}"  class="text-reset text-decoration-none">Editar</a>
+                              <a href="{{ path('app_producto_edit', {'id': producto.id}) }}"  class="text-reset text-decoration-none">Editar</a>
                             {% endif %}
                       </div>
                   </div>
@@ -103,7 +102,7 @@
         <div class="special-list row g-0">
           <div class="col-md-6 col-lg-4 col-xl-3 p-2">
             <div class="special-img position-relative overflow-hidden">
-              <img src="/images/beneficio1.jpg" class="w-100" />
+              <img src="/images/app/beneficio1.jpg" class="w-100" />
               <span
                 class="position-absolute d-flex align-items-center justify-content-center text-primary fs-4"
               >
@@ -117,7 +116,7 @@
 
           <div class="col-md-6 col-lg-4 col-xl-3 p-2">
             <div class="special-img position-relative overflow-hidden">
-              <img src="/images/beneficio2.jpg" class="w-100" />
+              <img src="/images/app/beneficio2.jpg" class="w-100" />
               <span
                 class="position-absolute d-flex align-items-center justify-content-center text-primary fs-4"
               >
@@ -133,7 +132,7 @@
 
           <div class="col-md-6 col-lg-4 col-xl-3 p-2">
             <div class="special-img position-relative overflow-hidden">
-              <img src="/images/beneficio3.jpg" class="w-100" />
+              <img src="/images/app/beneficio3.jpg" class="w-100" />
               <span
                 class="position-absolute d-flex align-items-center justify-content-center text-primary fs-4"
               >
@@ -151,7 +150,7 @@
 
           <div class="col-md-6 col-lg-4 col-xl-3 p-2">
             <div class="special-img position-relative overflow-hidden">
-              <img src="/images/beneficio4.jpg" class="w-100" />
+              <img src="/images/app/beneficio4.jpg" class="w-100" />
               <span
                 class="position-absolute d-flex align-items-center justify-content-center text-primary fs-4"
               >
@@ -195,7 +194,7 @@
             class="card text-center border-0 col-md-6 col-lg-4 bg-transparent my-3 px-5"
           >
             <img class="testimonial-img mx-auto d-block"
-            src="/images/testimonial_1.jpg" alt="" />
+            src="/images/app/testimonial_1.jpg" alt="" />
             <div class="card-body px-0">
               <h4 class="card-title">{{ 'Es mi tienda de favorita'|trans }}</h4>
               <p class="card-text mt-3 text-muted">
@@ -214,7 +213,7 @@
           <div
             class="card text-center border-0 col-md-6 col-lg-4 bg-transparent my-3 px-5"
           >
-            <img class="testimonial-img mx-auto d-block"src="/images/testimonial_2.jpg" alt="" />
+            <img class="testimonial-img mx-auto d-block"src="/images/app/testimonial_2.jpg" alt="" />
             <div class="card-body px-0">
               <h4 class="card-title">{{ '¡Me encantan sus productos!'|trans }}</h4>
               <p class="card-text mt-3 text-muted">
@@ -232,7 +231,7 @@
           <div
             class="card text-center border-0 col-md-6 col-lg-4 bg-transparent my-3 px-5"
           >
-            <img class="testimonial-img mx-auto d-block" src="/images/testimonial_3.jpg" alt="" />
+            <img class="testimonial-img mx-auto d-block" src="/images/app/testimonial_3.jpg" alt="" />
             <div class="card-body px-0">
               <h4 class="card-title">{{ 'Mejor servicio al cliente'|trans }}</h4>
               <p class="card-text mt-3 text-muted">

@@ -21,9 +21,9 @@ class LoginController extends AbstractController
 
     }
     #[Route('/logout', name: 'app_logout', methods: ['GET'])]
-    public function logout(AuthenticationUtils $authenticationUtils): Response
+    public function logout(): Response
     {
-        return $this->redirectToRoute('app_homepage_index', [], Response::HTTP_SEE_OTHER);
-        //throw new \Exception('Don\'t forget to activate logout in security.yaml');
+        //This controller can be blank because is never going to be called. The logout is managed in security.yaml
+        throw new \Exception('Don\'t forget to activate logout in security.yaml');
     }
 }

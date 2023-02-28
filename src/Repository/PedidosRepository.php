@@ -39,6 +39,21 @@ class PedidosRepository extends ServiceEntityRepository
         }
     }
 
+
+    public function ultimosCincoPedidos(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.id as id_pedido, p.fecha, u.Nombre, u.Apellidos, SUM(c.unidades * c.precio_compra) as importe, COUNT(c.id) as tiene_compras')
+            ->join('p.idUsuario', 'u')
+            ->leftJoin('p.compras', 'c')
+            ->groupBy('p.id')
+            ->orderBy('p.fecha', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    }
+
+
 //    /**
 //     * @return Pedidos[] Returns an array of Pedidos objects
 //     */

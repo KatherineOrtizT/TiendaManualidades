@@ -44,8 +44,9 @@ if(window.location.href.indexOf("homepage") != -1){
 }
 
 
-                            /* SHOW (Producto) */
+                            /*** SHOW (Producto) ***/
 
+//Función que permite cambiar onclick entre una imagen de producto y otra.
 function change_image(image){
 
     var container = document.getElementById("main-image");
@@ -59,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 
-                            /* CARRITO */
+                            /*** CARRITO ***/
 
 function modificarBadge_carrito(modificarNum=false, esSumar){
     let numProductosEnCesta = parseInt(localStorage.getItem('numProductosEnCesta')) || 0;
@@ -118,6 +119,7 @@ $(document).ready(function(){
 
         });
 
+                        /*** PREGUNTAS Y RESPUESTAS ***/
     
                             /* Añadir PREGUNTA */
 
@@ -171,7 +173,8 @@ $(document).ready(function(){
                                 div12.appendChild(tituloNombre121);
                             let parrafo122 = document.createElement("div");
                                 parrafo122.classList.add("text-muted", "small", "mb-0");
-                                let texto_parrafo122 = document.createTextNode(data.fecha.date.toLocaleString('en-GB', { timeZone: 'UTC' }));
+                                let date = new Date(data.fecha.date);
+                                let texto_parrafo122 = document.createTextNode(date.toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }));
                                 parrafo122.appendChild(texto_parrafo122);
                                 div12.appendChild(parrafo122);
 
@@ -361,7 +364,8 @@ $(document).ready(function(){
                             div12.appendChild(tituloNombre121);
                         let parrafo122 = document.createElement("div");
                             parrafo122.classList.add("text-muted", "small", "mb-0");
-                            let texto_parrafo122 = document.createTextNode(data.fecha.date.toLocaleString('en-GB', { timeZone: 'UTC' }));
+                            let date = new Date(data.fecha.date);
+                            let texto_parrafo122 = document.createTextNode(data.fecha.date.toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }));
                             parrafo122.appendChild(texto_parrafo122);
                             div12.appendChild(parrafo122);
 

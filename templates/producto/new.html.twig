@@ -3,16 +3,17 @@
 {% block title %}New Producto{% endblock %}
 
 {% block body %}
+
+<div class="container-xxl position-relative bg-white d-flex p-0">
+{{ include('comunes/_sidebar-admin.html.twig') }}
+    <div class="content mt-5">
         <div class="row mt-5">
-            <div class="col-md-3">
+            <div class="col-md-8">
+                {{ include('producto/_form.html.twig') }}
+                <div class="text-end">
+                    <a class="text-end" href="{{ path('app_homepage_index') }}">Ir a Inicio</a>
+                </div>
             </div>
-            <div class="col-md-5">
-            <h1>Create new Producto</h1>
-            {{ include('producto/_form.html.twig') }}
-            <a href="{{ path('app_homepage_index') }}">back to list</a>
-            </div>   
-            <div class="col-md-3">
-            </div>
-            </div>
-    
+    </div>
+</div>
 {% endblock %}
