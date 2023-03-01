@@ -38,7 +38,7 @@ class ProductoController extends AbstractController
             
             $productoManager->crear($producto, $imageFile);
 
-            return $this->redirectToRoute('app_homepage_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_producto_new', [], Response::HTTP_SEE_OTHER);
         }
 
         /* return $this->render('admin/panel-admin.html.twig', [
