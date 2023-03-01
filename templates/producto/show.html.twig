@@ -17,7 +17,9 @@
 						<div class="col-md-6">
 							<div class="images p-3">
 								<div class="text-center p-4">
-									<img id="main-image" src="{{ asset('/images/' ~ producto.imagen) }}" width="400"/>
+									<img id="main-image" src="{{ asset('/images/' ~ producto.imagen) }}" 
+									onerror='this.onerror = null; this.src="/images/app/default_Image.png"'
+									width="400"/>
 								</div>
 								<div class="thumbnail text-center">
 									<img onclick="change_image(this)" src="{{ asset('/images/lapices.png') }}" width="95">
@@ -210,7 +212,7 @@
 								{# PREGUNTA con todas sus respuestas #}
 								<div class="card-body border-bottom">
 									<div class="d-flex flex-start align-items-center">
-										<img class="rounded-circle shadow-1-strong me-3" src="{{ asset('/images/' ~ pregunta.user.photo) }}" alt="avatar" width="60" onerror='this.onerror = null; this.src="/images/default_Profile.svg"' height="60"/>
+										<img class="rounded-circle shadow-1-strong me-3" src="{{ asset('/images/' ~ pregunta.user.photo) }}" alt="avatar" width="60" onerror='this.onerror = null; this.src="/images/app/default_Profile.svg"' height="60"/>
 										<div>
 											<h6 class="fw-bold mb-1">{{ pregunta.user.Nombre }}</h6>
 											<p class="text-muted small mb-0">{{ pregunta.fecha|date('Y-m-d H:i') }}</p>
@@ -244,10 +246,10 @@
 										<div class="d-flex flex-start w-100 ps-5">
 											<img id="img-profile" class="rounded-circle shadow-1-strong me-3" alt="avatar" width="40" height="40" 
 											{% if app.user is null %} 
-												src="{{ asset('/images//default_Profile.svg')}}" 
+												src="{{ asset('/images/app/default_Profile.svg')}}" 
 											{% else %} 
 												src="{{ asset('/images/' ~ app.user.photo)}}" 
-												onerror='this.onerror = null; this.src="/images/default_Profile.svg"' 
+												onerror='this.onerror = null; this.src="/images/app/default_Profile.svg"' 
 											{% endif %}
 											/>
 											<div class="form-outline w-100">
@@ -309,7 +311,7 @@
 							{# Text area Pregunta #}
 							<div id="textAreaPublicar" class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
 								<div class="d-flex flex-start w-100">
-									<img id="img-profile" class="rounded-circle shadow-1-strong me-3" alt="avatar" width="40" height="40" {% if app.user is null %} src="{{ asset('/images//default_Profile.svg')}}" {% else %} src="{{ asset('/images/' ~ app.user.photo)}}" onerror='this.onerror = null; this.src="/images/default_Profile.svg"' {% endif %}/>
+									<img id="img-profile" class="rounded-circle shadow-1-strong me-3" alt="avatar" width="40" height="40" {% if app.user is null %} src="{{ asset('/images/app/default_Profile.svg')}}" {% else %} src="{{ asset('/images/' ~ app.user.photo)}}" onerror='this.onerror = null; this.src="/images/app/default_Profile.svg"' {% endif %}/>
 									<div class="form-outline w-100">
 										<label class="form-label" for="textAreaPregunta">Escribe tu pregunta:
 										</label>
