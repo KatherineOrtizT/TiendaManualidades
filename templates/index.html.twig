@@ -20,8 +20,7 @@
             {{ 'Productos Destacados'|trans }}  
           </h2>
         </div>
-        {# {{ dump(app.request.query) }} #}
-        
+
         <div class="row g-0">
           <div
             class="d-flex flex-wrap justify-content-center mt-5 filter-button-group"
@@ -29,7 +28,7 @@
             <button
               type="button"
               class="btn m-2 text-dark active-filter-btn"
-              data-filter="*"
+              data-filter=".all"
             >
               {{ 'Todos'|trans }}
             </button>
@@ -49,13 +48,12 @@
               </button>
             {% endif %}
           </div>
-          {# {{ dump(productos) }} #}
+          
           <div class="collection-list mt-4 row gx-0 gy-3">
             {% set counter = 0 %}
             {% for productosBatch in productos %}
               {% for producto in productosBatch %}
-                {% if counter < 8 %}
-                  <div class="col-md-6 col-lg-4 col-xl-3 p-2  {{ producto.category }}">
+                  <div class="col-md-6 col-lg-4 col-xl-3 p-2 {{ producto.category }}">
                       <div class="collection-img position-relative">
                         <a href="{{ path('app_producto_show', {'id': producto.id}) }}">
                           <img src="{{ asset('/images/' ~  producto.imagen) }}" class="w-100" />
@@ -77,8 +75,6 @@
                             {% endif %}
                       </div>
                   </div>
-                  {% set counter = counter + 1 %}
-                {% endif %}
               {% endfor %}
             {% else %}
                 <p>No hay productos</p>
