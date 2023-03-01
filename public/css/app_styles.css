@@ -11,8 +11,6 @@
   8. Página Admin
   9. Página User Registrado 
   10. About Us
-  11. Carrito
-  12. Página Pago
   --------------
 */
 
@@ -36,7 +34,15 @@ body {
   font-family: var(--sm-font);
 }
 
+.title {
+  font-family: var(--lg-font);
+}
+
 /* buttons */
+
+.btn-primary:hover {
+  color: #fff !important;
+}
 
 .pink-btn {
   background-color: var(--pink) !important;
@@ -63,7 +69,7 @@ body {
   border-color: var(--pink);
 }
 
-.badge{
+.badge {
   background-color: #d686c5;
   padding: 0.25em 0.4em;
   font-size: 75%;
@@ -230,13 +236,52 @@ footer a:hover {
   justify-content: space-around;
 }
 
-.color-discount{
+.color-discount {
   color: #9c3385;
+}
+
+/* -- SHOW (Product Detail Page) -- */
+
+.sidebar .navbar-admin .navbar-admin-nav .nav-admin-link i {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border-radius: 40px;
+}
+
+.content .navbar-admin .sidebar-toggler,
+.content .navbar-admin .navbar-admin-nav .nav-admin-link i {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border-radius: 40px;
+}
+
+@media (max-width: 575.98px) {
+  .content {
+    margin-left: 15px;
+  }
+}
+
+.input-noOutline {
+  width: 100%;
+  height: 65px;
+}
+
+.input-noOutline:focus {
+  box-shadow: none !important;
+  outline: none;
 }
 
 /***** 7. CATALOGO PRODUCTOS *****/
 /*---------------------------*/
-/* HIDE RADIO */
+/* hide radio */
 [type="radio"] {
   position: absolute;
   opacity: 0;
@@ -244,18 +289,17 @@ footer a:hover {
   height: 0;
 }
 
-/* IMAGE STYLES */
+/* image style */
 [type="radio"] + img {
   cursor: pointer;
   width: 2.5rem;
   border-radius: 3px;
 }
 
-/* CHECKED STYLES */
+/* checked style */
 [type="radio"]:checked + img {
   background-color: #e2e2e2;
 }
-
 
 /***** 8. PAGINA ADMIN *****/
 /*------------------------*/
@@ -301,75 +345,31 @@ footer a:hover {
 }
 
 /* sidebar*/
-.sidebar .navbar-admin .navbar-admin-nav .nav-admin-link {
-  padding: 7px 20px;
+.sidebar .navbar-admin .navbar-nav .nav-link {
+  padding: 9px 20px;
   color: black;
   font-weight: 500;
-  border-left: 3px solid #f3f6f9;
+  border-left: solid #f3f6f9;
   border-radius: 0 30px 30px 0;
   outline: none;
 }
 
-.sidebar .navbar-admin .navbar-admin-nav .nav-admin-link:hover,
-.sidebar .navbar-admin .navbar-admin-nav .nav-admin-link.active {
+.sidebar .navbar-admin .navbar-nav .nav-link:hover,
+.sidebar .navbar-admin .navbar-nav .nav-link.active {
   color: var(--pink);
   background: #ffffff;
   border-color: var(--pink);
 }
 
-
-/* -- SHOW (Product Detail Page) -- */
-
-.sidebar .navbar-admin .navbar-admin-nav .nav-admin-link i {
-  width: 40px;
-  height: 40px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: #ffffff;
-  border-radius: 40px;
-}
-
-.content .navbar-admin .sidebar-toggler,
-.content .navbar-admin .navbar-admin-nav .nav-admin-link i {
-  width: 40px;
-  height: 40px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: #ffffff;
-  border-radius: 40px;
-}
-
-@media (max-width: 575.98px) {
-  .content {
-    margin-left: 15px;
-  }
-}
-
-
-.input-noOutline{
-  width: 100%;
-  height: 65px;
-}
-
-.input-noOutline:focus{
-  box-shadow: none !important;
-  outline: none;
-}
-
 /***** 10. ABOUT US *****/
 /*-----------------*/
 .about-header {
+  margin-top: 3rem;
   margin-bottom: 6rem;
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url(../images/app/about.png) center center no-repeat;
   background-size: cover;
-  height: 15rem;
-  font-family: var(--lg-font);
-}
-
-.title {
+  height: 20rem;
   font-family: var(--lg-font);
 }
 
@@ -377,4 +377,3 @@ footer a:hover {
   padding-top: 3rem;
   padding-bottom: 2rem;
 }
-

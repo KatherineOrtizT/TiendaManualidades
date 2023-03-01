@@ -7,6 +7,7 @@
           class="navbar-brand d-flex justify-content-between align-items-center order-lg-0"
           href="{{ path('app_homepage_index') }}"
         >
+          
           <img src="/images/app/logo-icon.png" alt="site logo icon" />
           <span class="fw-lighter ms-2 text-dark">AF</span>
         </a>
@@ -144,6 +145,7 @@
         <form
           action="{{ path ('app_producto_search') }}"
           method="get"
+          name='formBuscar'
           class="modal-content modal-body border-0 p-0"
         >
           <div class="input-group mb-2">
@@ -155,8 +157,9 @@
               placeholder="Busca producto ..."
             />
             <button
-              type="submit"
-              class="btn input-group-text bg-success text-light"
+              type="submit" 
+              name='buscar'
+              class="btn input-group-text bg-primary text-light"
             >
               <i class="fa fa-fw fa-search text-white"></i>
             </button>

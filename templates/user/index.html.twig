@@ -5,16 +5,16 @@
 
 {% block body %}
 	{{ include('comunes/_header.html.twig') }}
-
-	<div class="row mt-5 pt-5">
-		<div class="col-md-3"></div>
-		<div class="col-md-5">
+<div class="container">
+	<div class="row d-flex justify-content-center mt-5 pt-5">
+		
+		<div class="col-md-5 mt-5">
 			{{ form(registration_form, {'attr': {'novalidate':'novalidate'}}) }}
 			</div>
-			<div class="col-md-3"></div>
+			
 		</div>
-		<p class="mb-0 text-center">¿Ya tienes cuenta?
+		<p class="mb-5 text-center">¿Ya tienes cuenta?
 			<span class="me-2 text-primary fw-bold text-decoration-underline" data-bs-toggle="modal" data-bs-target="#loginModal">Log In</span>
 		</p>
-
+</div>
 	{% endblock %}
