@@ -40,6 +40,10 @@ body {
 
 /* buttons */
 
+.btn-primary:hover {
+  color: #fff !important;
+}
+
 .pink-btn {
   background-color: var(--pink) !important;
   color: #fff !important;
