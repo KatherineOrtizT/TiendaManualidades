@@ -6,57 +6,141 @@
     {{ include('comunes/_header.html.twig') }}
     <h1>Usuario</h1>
 
-    {# <table class="table">
-        <tbody>
-            <tr>
-                <th>Foto</th>
-                <td>
-                    <img
-                        src="{{ asset('/images/' ~  user.photo)|default(asset('/images/default_Image.png')) }}"
-                        class="rounded-circle"
-                        height="25"
-                        alt="Imagen de usuario"
-                        loading="lazy"
-                        
-                    />
-                </td>
-            </tr>
-            <tr>
-                <th>Rol</th>
-                <td></td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-        </tbody>
-    </table> #}
-
-   
-    <h1>Listado de compras</h1>
-    <section class="h-100">
+     <section style="background-color: #eee">
       <div class="container py-5">
- 
-        {% for pedido in user.pedidos %}
- 
-        <div class="row d-flex justify-content-center my-4">
-            <div class="col-md-8">
-                <div class="card mb-4">
-                    <div class="table-responsive">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card mb-4">
+              <div class="card-body text-center">
+                <img
+                  src="/images/user.jpg"
+                  alt="avatar"
+                  class="rounded-circle img-fluid my-3"
+                  style="width: 150px; height: 150px"
+                />
+                <p class="text-muted my-2">Usuario Registrado</p>
+                <h4 class="mb-3">Diana Munteanu</h4>
+                <div class="d-flex justify-content-center mb-2">
+                  <button type="button" class="btn outline-btn">Log Out</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div class="card mb-4">
+              <div class="card-body">
+                <div class="row">
+                  <h4 class="mb-5 mt-2">Datos Personales</h4>
+                  <div class="col-sm-3">
+                    <p class="mb-0">Nombre</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">Diana</p>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Apellidos</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">Munteanu</p>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Contraseña</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">*********</p>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Email</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">diana@email.com</p>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Fecha de nacimiento</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">4 NOV 1994</p>
+                  </div>
+                </div>
+                <button type="button" class="btn pink-btn mt-4">
+                  Editar Datos
+                </button>
+              </div>
+            </div>
+            <div class="card mb-4">
+              <div class="card-body">
+                <div class="row">
+                  <h4 class="mb-5 mt-2">Datos de Pago</h4>
+                  <div class="col-sm-3">
+                    <p class="mb-0">Número de tarjeta</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">no hay datos</p>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Titular</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">no hay datos</p>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Código de seguridad</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">no hay datos</p>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Dirección</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">no hay datos</p>
+                  </div>
+                </div>
+
+                <button type="button" class="btn pink-btn mt-4">
+                  Editar Datos
+                </button>
+              </div>
+            </div>
+            <div class="card mb-4">
+              <div class="card-body">
+                <div class="row">
+                  <h4 class="mb-5 mt-2">Historial Compras</h4>
+                  <table class="table">
+                    {% for pedido in user.pedidos %}
                         <table class="table">
                             <thead>
                                 <tr>
-                                <th scope="col" class="h5">
-                                    <p>Nº de pedido: {{ pedido.id }}</p>
-                                    <p>Fecha: {{ pedido.fecha|date('d-m-Y') }}</p>
-                                </th>
+                                    <td scope="col"> <p>Nº de pedido: {{ pedido.id }}</p></td><td></td><td></td><td></td>
+                                    <td scope="col" class="text-end "><p class="me-2">Fecha: {{ pedido.fecha|date('d-m-Y') }}</p></td>                                    
+                                </tr>
+                                <tr>
+                                <th scope="col"> Producto</th>
                                 <th scope="col">ID</th>
                                 <th scope="col">Unidades</th>
                                 <th scope="col">Precio</th>
+                                <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -67,7 +151,7 @@
                                             <img
                                                 src="{{ asset('/images/' ~ compra.idProducto.imagen) }}"
                                                 class="img-fluid rounded-3"
-                                                style="width: 120px"
+                                                style="width: 70px"
                                                 alt="Book"
                                             />
                                             <div class="flex-column ms-4">
@@ -109,17 +193,23 @@
                             {% endfor %} 
                             </tbody>
                         </table>
-                    </div>
+                    {% else %}
+                        <p>No has realizado aún ningún pedido</p>
+                    {% endfor %} 
+                    </table>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
-
-        
-          </div>   
-    </section> 
-    {% else %}
-        <p>No has realizado aún ningún pedido</p>
-    {% endfor %} 
+      </div>
+    </section>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  
    
 
 
