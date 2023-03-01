@@ -28,7 +28,7 @@
             <button
               type="button"
               class="btn m-2 text-dark active-filter-btn"
-              data-filter="*"
+              data-filter=".all"
             >
               {{ 'Todos'|trans }}
             </button>
@@ -42,19 +42,18 @@
             {{ 'Nuevos'|trans }}
             </button>
             {% if  is_granted('ROLE_ADMIN') %} 
-              <button type="button" class="btn m-2 text-white bg-secondary" data-filter=".new">
+              <button type="button" class="btn m-2 text-white bg-secondary">
               <a href="{{ path('app_producto_new') }}" class="text-reset text-decoration-none">
               {{ 'Crear Nuevo producto'|trans }}</a>
               </button>
             {% endif %}
           </div>
-
+          
           <div class="collection-list mt-4 row gx-0 gy-3">
             {% set counter = 0 %}
             {% for productosBatch in productos %}
               {% for producto in productosBatch %}
-                {% if counter < 8 %}
-                  <div class="col-md-6 col-lg-4 col-xl-3 p-2  {{ producto.category }}">
+                  <div class="col-md-6 col-lg-4 col-xl-3 p-2 {{ producto.category }}">
                       <div class="collection-img position-relative">
                         <a href="{{ path('app_producto_show', {'id': producto.id}) }}">
                           <img src="{{ asset('/images/' ~  producto.imagen) }}" class="w-100" />
@@ -76,8 +75,6 @@
                             {% endif %}
                       </div>
                   </div>
-                  {% set counter = counter + 1 %}
-                {% endif %}
               {% endfor %}
             {% else %}
                 <p>No hay productos</p>
@@ -281,4 +278,13 @@
 
     {{ include('comunes/_footer.html.twig') }}
 
+{% if app.request.query.get('error') is not null %}
+  <script>
+    $(document).ready(function(){
+        $("#loginModal").modal('show');
+    });
+  </script>
+{% endif %}
+
 {% endblock %}
+

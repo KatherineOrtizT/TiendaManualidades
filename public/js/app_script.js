@@ -1,29 +1,12 @@
 
                             /* HOMEPAGE */
-/* 
+ 
 // init Isotope
-var $grid = $('.collection-list').isotope({
-    // options
-});
-  
-// filter items on button click
-$('.filter-button-group').on( 'click', 'button', function() {
-    var filterValue = $(this).attr('data-filter');
-    resetFilterBtns();
-    $(this).addClass('active-filter-btn');
-    $grid.isotope({ filter: filterValue });
-});
-  
-var filterBtns = $('.filter-button-group').find('button');
-    function resetFilterBtns(){
-        filterBtns.each(function(){
-        $(this).removeClass('active-filter-btn');
-    });
-} */
 if(window.location.href.indexOf("homepage") != -1){
-    console.log("ENTRA");
+    console.log("ENTRA isotope");
     // Script para activar Isotope y filtrar productos
     $(document).ready(function() {
+        $('.collection-list').isotope({ filter: '.all' })
         var $grid = $('.collection-list').isotope({
         itemSelector: '.col-md-6',
         percentPosition: true,
@@ -32,14 +15,23 @@ if(window.location.href.indexOf("homepage") != -1){
         }
         });
 
+        console.log('Script cargado');
+
         $('.filter-button-group').on('click', 'button', function() {
-        var filterValue = $(this).attr('data-filter');
-        $grid.isotope({
-            filter: filterValue
+            console.log('Botón de filtro presionado');
+            var filterValue = $(this).attr('data-filter');
+            console.log('Valor de filtro:', filterValue);
+            $('.collection-list').isotope({ filter: filterValue });
+            $(this).addClass('active-filter-btn').siblings().removeClass('active-filter-btn');
         });
-        $('.filter-button-group').find('.active-filter-btn').removeClass('active-filter-btn');
-        $(this).addClass('active-filter-btn');
-        });
+        /* $('.filter-button-group').on('click', 'button', function() {
+            var filterValue = $(this).attr('data-filter');
+            $grid.isotope({
+                filter: filterValue
+            });
+            $('.filter-button-group').find('.active-filter-btn').removeClass('active-filter-btn');
+            $(this).addClass('active-filter-btn');
+        }); */
     });
 }
 

@@ -186,7 +186,7 @@
                   <h2 class="fw-bold mb-4">Inicia Sesión</h2>
                   <div class="mb-3">
                     <label for="username" class="form-label">Email:</label>
-                    <input type="text" id="username" name="_username"
+                    <input type="email" id="username" name="_username"
                       class="form-control"
                       id="emailLogin"
                       placeholder="name@example.com"
@@ -198,11 +198,14 @@
                             class="form-control"
                             id="passwordLogin"
                             placeholder="*******">
-                  </div>   
-                                  
+                  </div>
+
+                  {% if app.request.query.get('error') is not null %}
+                    <div class="alert alert-danger">El usuario, contraseña o ambos no son correctos.</div>
+                  {% endif %}                
                   <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"> 
                   <div class="d-grid">
-                  <button type="submit" class="btn btn-outline-dark mt-4">login</button>
+                  <button type="submit" class="btn btn-outline-dark mt-4">Login</button>
                   </div> 
 
 
