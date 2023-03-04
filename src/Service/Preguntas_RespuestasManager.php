@@ -54,5 +54,4 @@ class Preguntas_RespuestasManager
         return $respuesta->jsonSerialize();
     }
 
-
 }

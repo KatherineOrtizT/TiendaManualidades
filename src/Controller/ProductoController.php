@@ -8,7 +8,6 @@ use App\Repository\ProductoRepository;
 use App\Service\ProductoManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -41,10 +40,6 @@ class ProductoController extends AbstractController
             return $this->redirectToRoute('app_producto_new', [], Response::HTTP_SEE_OTHER);
         }
 
-        /* return $this->render('admin/panel-admin.html.twig', [
-            'producto' => $producto,
-            'form' => $form,
-        ]); */
         return $this->render('producto/new.html.twig', [
             'producto' => $producto,
             'form' => $form,

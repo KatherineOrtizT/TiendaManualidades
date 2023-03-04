@@ -1,16 +1,16 @@
 
 {% block body %}
 <!-- navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top mb-5">
-      <div class="container">
-        <a
-          class="navbar-brand d-flex justify-content-between align-items-center order-lg-0"
-          href="{{ path('app_homepage_index') }}"
-        >
-          
-          <img src="/images/app/logo-icon.png" alt="site logo icon" />
-          <span class="fw-lighter ms-2 text-dark">AF</span>
-        </a>
+  <nav class="navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top mb-5">
+    <div class="container">
+      <a
+        class="navbar-brand d-flex justify-content-between align-items-center order-lg-0"
+        href="{{ path('app_homepage_index') }}"
+      >
+        
+        <img src="/images/app/logo-icon.png" alt="site logo icon" />
+        <span class="fw-lighter ms-2 text-dark">AF</span>
+      </a>
 
       <div class="order-lg-2 nav-btns">
 
@@ -73,7 +73,7 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-
+        <!-- Navbar ITEMS -->
         <div class="collapse navbar-collapse order-lg-1" id="navMenu">
           <ul class="navbar-nav mx-auto text-center">           
             <li class="nav-item px-2 py-2">
@@ -94,222 +94,142 @@
              
           </ul>
         </div>
-          
-              <div class="dropdown order-lg-3 ms-3">
-                <a
-                  class="dropdown-toggle text-dark text-decoration-none"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                <i class="fa fa-globe"></i> ES/EN
-                </a>
-                <ul class="dropdown-menu">
-                  <li>
-                    <form method="post" action="{{ path('cambiar_idioma', {'_locale': 'en'}) }}">
-                        <input type="hidden" name="ruta" value="{{ app.request.attributes.get('_route') }}">
-                        <button type="submit" class="dropdown-item">English</button>
-                    </form>
-                  </li>
-                  <li>
-                    <form method="post" action="{{ path('cambiar_idioma', {'_locale': 'es'}) }}">
-                        <input type="hidden" name="ruta" value="{{ app.request.attributes.get('_route') }}">
-                        <button type="submit" class="dropdown-item">Español</button>
-                    </form>
-                  </li>
-                </ul>
-              </div>
-      </div>
-    </nav>
-    <!-- end of navbar -->
 
-    <!-- Modal SEARCH -->
-    <div
-      class="modal fade bg-white"
-      id="searchModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="w-100 pt-1 mb-5 text-right">
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <form
-          action="{{ path ('app_producto_search') }}"
-          method="get"
-          name='formBuscar'
-          class="modal-content modal-body border-0 p-0"
-        >
-          <div class="input-group mb-2">
-            <input
-              type="text"
-              class="form-control"
-              id="inputModalSearch"
-              name="busqueda"
-              placeholder="Busca producto ..."
-            />
-            <button
-              type="submit" 
-              name='buscar'
-              class="btn input-group-text bg-primary text-light"
-            >
-              <i class="fa fa-fw fa-search text-white"></i>
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <!-- End  Modal SEARCH -->
-
-    <!-- Modal LOGIN -->
-    <div
-      class="modal fade"
-      id="loginModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-body">
-            <div class="card-body p-5">
-            
-              <form class="mb-3 mt-md-2" action="{{ path('app_login') }}" method="post">
-                  <h2 class="fw-bold mb-4">Inicia Sesión</h2>
-                  <div class="mb-3">
-                    <label for="username" class="form-label">Email:</label>
-                    <input type="email" id="username" name="_username"
-                      class="form-control"
-                      id="emailLogin"
-                      placeholder="name@example.com"
-                      >
-                  </div>
-                  <div class="mb-3">
-                        <label for="password" class="form-label">Password:</label>
-                        <input type="password" name="_password" 
-                            class="form-control"
-                            id="passwordLogin"
-                            placeholder="*******">
-                  </div>
-
-                  {% if app.request.query.get('error') is not null %}
-                    <div class="alert alert-danger">El usuario, contraseña o ambos no son correctos.</div>
-                  {% endif %}                
-                  <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"> 
-                  <div class="d-grid">
-                  <button type="submit" class="btn btn-outline-dark mt-4">Login</button>
-                  </div> 
-
-
+        <!-- Dropdown LANGUAGE ICONS -->
+        <div class="dropdown order-lg-3 ms-3">
+          <a
+            class="dropdown-toggle text-dark text-decoration-none"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+          <i class="fa fa-globe"></i> ES/EN
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <form method="post" action="{{ path('cambiar_idioma', {'_locale': 'en'}) }}">
+                  <input type="hidden" name="ruta" value="{{ app.request.attributes.get('_route') }}">
+                  <button type="submit" class="dropdown-item">English</button>
               </form>
-              <div>
-                <p class="mb-0 text-center">
-                  ¿No tienes cuenta?
-                  <span
-                    class="me-2 text-primary fw-bold text-decoration-underline"
-                    data-bs-toggle="modal"
-                    data-bs-target="#registerModal"
-                    >Regístrate</span
-                  >
-                </p>
-              </div>
-            </div>
-          </div>
+            </li>
+            <li>
+              <form method="post" action="{{ path('cambiar_idioma', {'_locale': 'es'}) }}">
+                  <input type="hidden" name="ruta" value="{{ app.request.attributes.get('_route') }}">
+                  <button type="submit" class="dropdown-item">Español</button>
+              </form>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
-    <!-- End Modal LOGIN -->
+  </nav>
+<!-- end of navbar -->
 
-    <!-- Modal REGISTER -->
-    {# <div
-      class="modal fade"
-      id="registerModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
+<!-- Modal SEARCH -->
+<div
+  class="modal fade bg-white"
+  id="searchModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="w-100 pt-1 mb-5 text-right">
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <form
+      action="{{ path ('app_producto_search') }}"
+      method="get"
+      name='formBuscar'
+      class="modal-content modal-body border-0 p-0"
     >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-body">
-            <div class="card-body p-5">
-              <form class="mb-3 mt-md-2">
-                <h2 class="fw-bold mb-4">Crear Cuenta Usuario</h2>
-                <div class="mb-3">
-                  <label for="nombre" class="form-label">Nombre</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="nombre"
-                    placeholder="Diana"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="apellidos" class="form-label">Apellidos</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="apellidos"
-                    placeholder="Munteanu"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="fecha" class="form-label">Fecha Nacimiento</label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    id="fecha"
-                    value="yyyy-mm-dd"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="email" class="form-label">Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="email_register"
-                    placeholder="name@example.com"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="password" class="form-label">Contraseña</label>
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="password_register"
-                    placeholder="*******"
-                  />
-                </div>
+      <div class="input-group mb-2">
+        <input
+          type="text"
+          class="form-control"
+          id="inputModalSearch"
+          name="busqueda"
+          placeholder="Busca producto ..."
+        />
+        <button
+          type="submit" 
+          name='buscar'
+          class="btn input-group-text bg-primary text-light"
+        >
+          <i class="fa fa-fw fa-search text-white"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- End  Modal SEARCH -->
 
-                <div class="d-grid">
-                  <button class="btn btn-outline-dark mt-4" type="submit">
-                    Regístrate
-                  </button>
-                </div>
-              </form> #}
-              <div>
-                <p class="mb-0 text-center">
-                  ¿Ya tienes cuenta?
-                  <span
-                    class="me-2 text-primary fw-bold text-decoration-underline"
-                    data-bs-toggle="modal"
-                    data-bs-target="#loginModal"
-                    >Log In</span
+<!-- Modal LOGIN -->
+<div
+  class="modal fade"
+  id="loginModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="card-body p-5">
+        
+          <form class="mb-3 mt-md-2" action="{{ path('app_login') }}" method="post">
+              <h2 class="fw-bold mb-4">Inicia Sesión</h2>
+              <div class="mb-3">
+                <label for="username" class="form-label">Email:</label>
+                <input type="email" id="username" name="_username"
+                  class="form-control"
+                  id="emailLogin"
+                  placeholder="name@example.com"
                   >
-                </p>
               </div>
-            </div>
+              <div class="mb-3">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" name="_password" 
+                        class="form-control"
+                        id="passwordLogin"
+                        placeholder="*******">
+              </div>
+
+              {% if app.request.query.get('error') is not null %}
+                <div class="alert alert-danger">El usuario, contraseña o ambos no son correctos.</div>
+              {% endif %}                
+              <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"> 
+              <div class="d-grid">
+              <button type="submit" class="btn btn-outline-dark mt-4">Login</button>
+              </div> 
+
+
+          </form>
+          <!-- Button REGISTER -->
+          <div>
+            <p class="mb-0 text-center">
+              ¿No tienes cuenta?
+              <span
+                class="me-2 text-primary fw-bold text-decoration-underline"
+                data-bs-toggle="modal"
+                data-bs-target="#registerModal"
+                >Regístrate</span
+              >
+            </p>
           </div>
         </div>
       </div>
     </div>
-    <!-- End Modal REGISTER -->
+  </div>
+
+</div>
+<!-- End Modal LOGIN -->
 
 {% endblock %}

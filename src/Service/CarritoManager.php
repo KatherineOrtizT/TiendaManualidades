@@ -21,10 +21,9 @@ class CarritoManager
         $carrito = $session->get('carrito', []);
         $carrito[]=['producto'=>$producto, 'cantidad'=>$cantidad];
         $session->set('carrito', $carrito);
-        //$session->remove('carrito');
-        //$session->clear();
     }
 
+    
     public function eliminarDel_Carrito($id): void
     {
         $session = $this->requestStack->getSession();

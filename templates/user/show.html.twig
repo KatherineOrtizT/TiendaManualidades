@@ -13,6 +13,7 @@
               <div class="card-body text-center">
                 <img
                   src="{{ asset('/images/' ~  app.user.photo) }}"
+                  onerror='this.onerror = null; this.src="/images/app/default_Profile.svg"'
                   alt="avatar"
                   class="rounded-circle img-fluid my-3"
                   style="width: 150px; height: 150px"

@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Compras;
-use App\Repository\Func;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -96,36 +95,4 @@ class ComprasRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
-
-    /* public function ultimosCincoPedidos(): array
-    {
-        return $this->createQueryBuilder('p')
-            ->select('p.id as id_pedido, p.fecha, u.nombre, SUM(c.unidades * c.precio_compra) as importe, COUNT(c.id) as tiene_compras')
-            ->join('p.idUsuario', 'u')
-            ->leftJoin('p.compras', 'c')
-            ->groupBy('p.id')
-            ->orderBy('p.fecha', 'DESC')
-            ->setMaxResults(5)
-            ->getQuery()
-            ->getResult();
-    } */
-
-
-    /* public function ultimosCincoPedidos(): array
-    {
-        $em = $this->getEntityManager();
-
-        $query = $em->createQuery('
-            SELECT p.id as id_pedido, p.fecha, u.nombre, SUM(c.unidades * c.precio_compra) as importe, COUNT(c.id) as tiene_compras
-            FROM App\Entity\Pedidos p
-            JOIN p.idUsuario u
-            LEFT JOIN p.compras c
-            GROUP BY p.id
-            ORDER BY p.fecha DESC
-        ');
-
-        $query->setMaxResults(5);
-
-        return $query->getResult();
-    } */
 }
