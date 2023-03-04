@@ -276,7 +276,10 @@
 										{# RESPUESTA #}
 										<div class="card-body border-bottom">
 											<div class="d-flex flex-start align-items-center ps-5">
-												<img class="rounded-circle shadow-1-strong me-3" src="{{ asset('/images/' ~ respuesta.user.photo) }}" alt="avatar" width="60" height="60"/>
+												<img class="rounded-circle shadow-1-strong me-3" 
+												src="{{ asset('/images/' ~ respuesta.user.photo) }}" 
+												onerror='this.onerror = null; this.src="/images/app/default_Profile.svg"'
+												alt="avatar" width="60" height="60"/>
 												<div>
 													<h6 class="fw-bold mb-1">{{ respuesta.user.Nombre }}</h6>
 													<p class="text-muted small mb-0">{{ respuesta.fecha|date('Y-m-d H:i') }}</p>
@@ -285,8 +288,8 @@
 											<input id="inputRespuesta{{ respuesta.id }}" class="inputRespuesta input-noOutline border-0 mt-3 mb-4 ms-5 py-2 ps-5" value="{{ respuesta.texto }}" readonly/>
 
 											{# BOTONES editar y borrar respuesta #}
-											<div class="small d-flex justify-content-start">
-												{% if (app.user) and (is_granted('ROLE_ADMIN') or (app.user.id == pregunta.user.id)) %} 
+											<div class="small d-flex justify-content-start ps-5">
+												{% if (app.user) and (is_granted('ROLE_ADMIN') or (app.user.id == respuesta.user.id)) %} 
 													<button type="button" class="boton_BorrarR border-0 btn mx-2 position-relative">
 														<i data-id="{{ respuesta.id }}" class="fas fa-trash-alt"></i>
 													</button>

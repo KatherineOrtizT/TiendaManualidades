@@ -24,14 +24,6 @@ if(window.location.href.indexOf("homepage") != -1){
             $('.collection-list').isotope({ filter: filterValue });
             $(this).addClass('active-filter-btn').siblings().removeClass('active-filter-btn');
         });
-        /* $('.filter-button-group').on('click', 'button', function() {
-            var filterValue = $(this).attr('data-filter');
-            $grid.isotope({
-                filter: filterValue
-            });
-            $('.filter-button-group').find('.active-filter-btn').removeClass('active-filter-btn');
-            $(this).addClass('active-filter-btn');
-        }); */
     });
 }
 
@@ -54,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
                             /*** CARRITO ***/
 
+//Función para modificar 'badge' indicando elementos en el carrito
 function modificarBadge_carrito(modificarNum=false, esSumar){
     let numProductosEnCesta = parseInt(localStorage.getItem('numProductosEnCesta')) || 0;
     if(modificarNum){
@@ -152,7 +145,7 @@ $(document).ready(function(){
                         let imgUser11 = document.createElement('img');
                             imgUser11.classList.add("rounded-circle", "shadow-1-strong", "me-3");
                             imgUser11.setAttribute('src', '/images/'+data.photo);
-                            imgUser11.setAttribute('onerror', 'this.onerror = null; this.src="/images/default_Profile.svg"');
+                            imgUser11.setAttribute('onerror', 'this.onerror = null; this.src="/images/app/default_Profile.svg"');
                             imgUser11.setAttribute('width', '60');
                             imgUser11.setAttribute('height', '60');
                             div1.appendChild(imgUser11);
@@ -241,7 +234,7 @@ $(document).ready(function(){
                             let img411 = document.createElement('img');
                             img411.classList.add("rounded-circle", "shadow-1-strong", "me-3");
                             img411.setAttribute('src', '/images/'+data.photo);
-                            img411.setAttribute('onerror', 'this.onerror = null; this.src="/images/default_Profile.svg"');
+                            img411.setAttribute('onerror', 'this.onerror = null; this.src="/images/app/default_Profile.svg"');
                             img411.setAttribute('width', '40');
                             img411.setAttribute('height', '40');
                             div41.appendChild(img411);
@@ -343,7 +336,7 @@ $(document).ready(function(){
                         let imgUser11 = document.createElement('img');
                             imgUser11.classList.add("rounded-circle", "shadow-1-strong", "me-3");
                             imgUser11.setAttribute('src', '/images/'+data.photo);
-                            imgUser11.setAttribute('onerror', 'this.onerror = null; this.src="/images/default_Profile.svg"');
+                            imgUser11.setAttribute('onerror', 'this.onerror = null; this.src="/images/app/default_Profile.svg"');
                             imgUser11.setAttribute('width', '60');
                             imgUser11.setAttribute('height', '60');
                             div1.appendChild(imgUser11);
